@@ -1,1 +1,1 @@
-{"id":"ci_fachkonzept:req:4.5:A2:Z1","diagrams":[]}
+{"id":"ci_fachkonzept:req:4.5:A1:Z1","diagrams":[{"process":{"id":"ci_fachkonzept:bpmn:ci-bezahlen","labels":["BpmnProcess"],"label":"BpmnProcess","type":null,"title":"Bezahlen","titleEn":null,"editable":false,"doc":"ci_fachkonzept","lang":"de"},"processId":"ci-bezahlen","file":"ci-bezahlen.bpmn","prefix":"ci_fachkonzept:bpmn:","elementIds":["A1"],"elements":[{"id":"A1","name":"Summe der Kartenpreise vom Kundenkonto abbuchen","decision":null}]}]}

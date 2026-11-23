@@ -586,3 +586,36 @@ body.gg-voll-offen::after { content: ""; position: fixed; inset: 0; background: 
 .gg-badge-klick { cursor: pointer; } .gg-badge-klick:hover { background: #a61e1e; }
 .gg-luecke { display: grid; gap: 6px; } .gg-luecke > .card { margin: 0; }
 .quell-link { white-space: nowrap; }
+
+/* Steckbrief der Domäne (UC1) */
+.sb-zahlen { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin: 8px 0 12px; }
+.sb-zahl { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; }
+.sb-zahl strong { font-size: 22px; line-height: 1.2; }
+.sb-karte h2 { font-size: 16px; margin: 0 0 6px; }
+.sb-karte .tabelle { overflow-x: auto; }
+/* Architektur (ArchiMate): Farben der Schichten wie in der Spezifikation üblich, Text dunkel auf hellem Grund */
+.am-filter { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; margin: 4px 0 6px; }
+.am-schalter { white-space: nowrap; }
+.am-diagramm { overflow-x: auto; margin-top: 6px; }
+.mm-svg.am-svg { max-width: none; height: auto; }
+.am-band { opacity: .35; }
+.am-band-titel { font-size: 13px; font-weight: 600; fill: var(--text, #1d2733); }
+.am-band-zahl { font-size: 11px; fill: var(--muted); }
+.am-box { stroke: #4b5563; stroke-width: 1; }
+.am-typ { font-size: 8.5px; fill: #374151; }
+.am-name { font-size: 11px; fill: #111827; }
+.am-link { cursor: pointer; }
+.am-link:hover .am-box, .am-link:focus .am-box { stroke: var(--accent); stroke-width: 2.5; }
+.am-el:focus { outline: none; }
+.am-kante { stroke: var(--muted); stroke-width: .7; opacity: .35; }
+.am-k-Triggering, .am-k-Flow { stroke-dasharray: 4 3; }
+.am-k-Access { stroke-dasharray: 1 3; }
+.am-kante.am-aktiv { stroke: var(--accent); stroke-width: 2; opacity: 1; }
+.am-Strategy .am-box, .am-band.am-Strategy { fill: #f5deaa; }
+.am-Business .am-box, .am-band.am-Business { fill: #ffffb5; }
+.am-Application .am-box, .am-band.am-Application { fill: #b5ffff; }
+.am-Technology .am-box, .am-band.am-Technology, .am-Physical .am-box, .am-band.am-Physical { fill: #c9e7b7; }
+.am-ImplementationMigration .am-box, .am-band.am-ImplementationMigration { fill: #ffe0e0; }
+.am-Motivation .am-box, .am-band.am-Motivation { fill: #ccccff; }
+.am-Other .am-box, .am-band.am-Other { fill: #e5e7eb; }
+.am-dateien { list-style: none; padding: 0; margin: 6px 0 0; display: grid; gap: 6px; }

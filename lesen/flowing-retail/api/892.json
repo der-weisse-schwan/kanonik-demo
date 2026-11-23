@@ -1,1 +1,1 @@
-{"id":"Ereignisse_shipping#sendet GoodsShippedEvent","artifacts":[],"tests":[]}
+{"id":"Ereignisse_shipping#empfaengt ShipGoodsCommand","diagrams":[]}

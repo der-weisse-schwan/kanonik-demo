@@ -6,13 +6,36 @@
 //   Gleichbedeutung, Ableitungen, letzte Entscheidungen); Änderungen dort bitte hier nachziehen.
 //   Volltext der Lücken: volltext.json. Übrige Anfragen (Statistik, Prüfstand, Lücken, Zusatzkarten): api/index.json
 //   (Schlüssel: Pfad + sortierte Parameter). Änderungen werden abgelehnt.
+//   Offline (D5, Paket zum Doppelklicken, file://): Browser laden dort keine Dateien per fetch. Jede Datendatei liegt dann
+//   zusätzlich als <datei>.js daneben (tools/demo_bauen.py --offline) und wird als Skript geladen:
+//   window.KANONIK_DATEI(document.currentScript.src, inhalt).
 (function () {
   const S = window.KANONIK_STATIC;
   if (!S) return;
   const echt = window.fetch.bind(window);
   const daten = S.daten || "./", assets = S.assets || "../app/";
+  const offline = location.protocol === "file:";
+  const wartend = {};
+  window.KANONIK_DATEI = (src, inhalt) => { const w = wartend[src]; if (w) { delete wartend[src]; w(inhalt); } };
+  // Datei als Skript <datei>.js laden (nur offline); Ergebnis: Objekt (JSON) bzw. Text (XML) oder null
+  const skript = (url) => new Promise((ok) => {
+    const src = new URL(url + ".js", location.href).href;
+    wartend[src] = ok;
+    const s = document.createElement("script");
+    s.src = src;
+    s.onerror = () => { delete wartend[src]; ok(null); };
+    document.head.appendChild(s);
+  });
+  // Antwort wie fetch: online die Datei, offline ihr Skript-Zwilling
+  const holen = async (url, opts) => {
+    if (!offline) return echt(url, opts);
+    const x = await skript(url);
+    if (x === null) return new Response("", { status: 404 });
+    return typeof x === "string" ? new Response(x, { status: 200, headers: { "Content-Type": "application/xml" } })
+      : new Response(JSON.stringify(x), { status: 200, headers: { "Content-Type": "application/json" } });
+  };
   const cache = {};
-  const laden = (f) => (cache[f] ||= echt(daten + f).then((r) => (r.ok ? r.json() : null)).catch(() => null));
+  const laden = (f) => (cache[f] ||= holen(daten + f).then((r) => (r.ok ? r.json() : null)).catch(() => null));
   const antwort = (obj, status = 200) => new Response(JSON.stringify(obj), { status, headers: { "Content-Type": "application/json" } });
   const enc = (s) => encodeURIComponent(s);
   function schluessel(pfad, params) {
@@ -400,9 +423,9 @@
   window.fetch = async function (eingabe, opts = {}) {
     const url = typeof eingabe === "string" ? eingabe : eingabe.url;
     const u = new URL(url, location.href);
-    if (u.origin !== location.origin) return echt(eingabe, opts);
+    if (u.origin !== location.origin && !(offline && u.protocol === "file:")) return echt(eingabe, opts);
     const pfad = u.pathname.replace(/^.*?(\/api\/|\/static\/)/, "$1");
-    if (pfad.startsWith("/static/")) return echt(assets + pfad.slice("/static/".length), opts);
+    if (pfad.startsWith("/static/")) return holen(assets + pfad.slice("/static/".length), opts);
     if (!pfad.startsWith("/api/")) return echt(eingabe, opts);
     if ((opts.method || "GET").toUpperCase() !== "GET")
       return antwort({ message: "In der öffentlichen Demo nur lesen" }, 403);
@@ -418,7 +441,7 @@
     const params = [...u.searchParams.entries()];
     const datei = index[schluessel(pfad, params)] || index[schluessel(pfad, params.filter(([k]) => k === "id" || k === "doc"))];
     if (!datei) return antwort({ message: "In der statischen Demo nicht verfügbar" }, 404);
-    return echt(daten + "api/" + datei);
+    return holen(daten + "api/" + datei);
   };
   // Sprung in den Document Structure Viewer: Seite des Dokuments mit #ref (docling.json)
   let ziele = null;

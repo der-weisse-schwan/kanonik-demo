@@ -1,1 +1,1 @@
-{"id":"ci_fachkonzept:process:4.4:A1","diagrams":[{"process":{"id":"ci_fachkonzept:bpmn:ci-plaetze-reservieren","labels":["BpmnProcess"],"label":"BpmnProcess","type":null,"title":"Sitzplätze reservieren","titleEn":null,"editable":false,"doc":"ci_fachkonzept","lang":"de"},"processId":"ci-plaetze-reservieren","file":"ci-plaetze-reservieren.bpmn","prefix":"ci_fachkonzept:bpmn:","elementIds":["A1"],"elements":[{"id":"A1","name":"Sitzplätze für Reservierungsnummer reservieren","decision":null}]}]}
+{"id":"ci_fachkonzept:process:4.3:A2","diagrams":[]}

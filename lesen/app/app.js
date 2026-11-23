@@ -1717,7 +1717,9 @@ function renderSources(cat) {
 }
 
 // ------------------------------------------------------------------ Lücken (FR4, common/luecken.py, abgleich/drei_sichten.py)
-const GAP_CATS = () => [["suche", t("Suchen"), t("Lücken nach Anforderung, Regel, System/Microservice, Package, Klasse/Methode, BPMN-Prozess/Aktivität")],
+const GAP_CATS = () => [["steckbrief", t("Steckbrief der Domäne"), t("Systeme und Rollen, Prozesse, Schnittstellen, Dienste im Code, Kennzahlen und Lücken auf einer Seite")],
+  ["architektur", t("Architektur (ArchiMate)"), t("Enterprise-Architektur aus Fachkonzept und Schnittstellen: Elemente je Schicht als Diagramm, Fachdomänen, Modell zum Laden in Archi")],
+  ["suche", t("Suchen"), t("Lücken nach Anforderung, Regel, System/Microservice, Package, Klasse/Methode, BPMN-Prozess/Aktivität")],
   ["oben", t("Von oben: Fachkonzept → Code"), t("Kapitel, Anforderungen und Regeln mit ihren Lücken und Codestellen")],
   ["unten", t("Von unten: Code → Fachkonzept"), t("Dienste, Dateien und Methoden mit ihren Lücken, Anforderungen und Abschnitten")],
   ["zuordnung", t("Anforderungen je System/Package/Klasse"), t("Anforderungen und Regeln je Microservice, Package und Klasse – zugeordnet über Begriffe, Domänenmodell, Tätigkeiten, Nachrichten und Lücken (heuristisch)")],
@@ -1742,6 +1744,7 @@ const GAP_TYP = () => ({
   partner_abweichend: t("Absender/Empfänger abweichend"), daten_fehlen: t("Nutzdaten fehlen"), feld_nicht_gesetzt: t("Feld nicht gesetzt"),
   attribut_fehlt: t("Attribut fehlt"), klasse_fehlt: t("Klasse fehlt"), variable_abweichend: t("Variable anders geschrieben"),
   feste_daten: t("Feste Daten statt Eingaben"), idempotenz: t("Wiederholung nicht erkannt"), begrenzung_fehlt: t("Begrenzung fehlt"),
+  regelwert_abweichend: t("Regelwert abweichend"), regelwert_fehlt: t("Regelwert nicht geprüft"),
   platzhalter: t("Platzhalter statt Fachlogik"), start_ohne_modell: t("Prozessstart ohne Modell"),
   prozess_fehlt_bpmn: t("Prozess fehlt im BPMN"),
   nachricht_fehlt_schnittstelle: t("Nachricht fehlt in der Schnittstelle"), daten_fehlen_schnittstelle: t("Nutzdaten fehlen in der Schnittstelle"),
@@ -1761,7 +1764,7 @@ function gapCount(c) {
   if (c === "oben") return s ? s.oben.reduce((n, k) => n + k.mit_luecke, 0) : 0;
   if (c === "unten") return s ? s.unten.reduce((n, d) => n + d.dateien.reduce((m, f) => m + f.stellen.length, 0), 0) : 0;
   if (c === "suche") return (state.gap.luecken || []).length;
-  if (c === "zuordnung" || c === "rollen") return null;   // eigene Ansicht, keine Zahl von Lücken
+  if (c === "zuordnung" || c === "rollen" || c === "steckbrief" || c === "architektur") return null;   // eigene Ansicht, keine Zahl von Lücken
   if (c === "typen") return new Set((state.gap.luecken || []).flatMap(gapTypen)).size;
   return c === "abgleich" || c === "graph" ? Object.keys(state.gap.bpmn || {}).length : gapItems(c).length;
 }
@@ -1778,6 +1781,8 @@ async function loadGaps() {
   state.gapGraph = null;                                 // BPMN als Graph neu laden
   state.gapIndex = null;                                 // Suchindex neu laden
   state.gapZuordnung = null;                             // Anforderungen je System/Package/Klasse neu laden
+  state.steckbrief = null;                               // Steckbrief neu laden
+  state.archimate = null;                                // ArchiMate-Modell neu laden (Filter bleiben)
   renderGaps(state.gapCat || "oben");
 }
 function renderGapList() {
@@ -2142,6 +2147,188 @@ function gapUnten() {
   return karten;
 }
 // Anforderungen und Regeln je System/Microservice, Package und Klasse (abgleich/zuordnung.py, heuristisch)
+// ------------------------------------------------------------------ Architektur (ArchiMate, kanonik/archimate_sicht.py)
+const AM_SCHICHT = () => ({ Strategy: t("Strategie"), Business: t("Geschäft"), Application: t("Anwendung"), Technology: t("Technologie"),
+  Physical: t("Physisch"), ImplementationMigration: t("Umsetzung und Migration"), Motivation: t("Motivation"), Other: t("Übergreifend") });
+const AM_ASPEKT = () => ({ ActiveStructure: t("Aktive Struktur"), Behavior: t("Verhalten"), PassiveStructure: t("Passive Struktur"),
+  Motivation: t("Motivation"), Composite: t("Zusammensetzung") });
+const AM_OHNE = "__ohne__";
+const AM_ZWECK = () => ({ "model.xml": t("für Archi und andere ArchiMate-Werkzeuge (Datei → Importieren → Open Exchange XML Model)"),
+  "model.ttl": t("für Triple-Stores und Ontologie-Werkzeuge"), "model.json": t("für eigene Auswertungen"),
+  "load.cypher": t("für Neo4j: in den Graphen der Domäne laden") });
+async function amHerunterladen(name) {
+  try {
+    const r = await fetch(`/api/archimate/datei?${new URLSearchParams({ name })}`);
+    if (!r.ok) throw new Error(t("Datei nicht verfügbar: {f}", { f: name }));
+    const a = h("a", { href: URL.createObjectURL(await r.blob()), download: name });
+    document.body.append(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 30000);
+  } catch (e) { toast(e.message, true); }
+}
+function amAuswahl(m) {
+  const f = state.amFilter;
+  const q = (f.text || "").trim().toLowerCase();
+  return m.elemente.filter((e) => e.typ !== "Grouping" && f.schichten.has(e.schicht)
+    && (f.domaene === "" || (f.domaene === AM_OHNE ? !e.domaenen.length : e.domaenen.includes(f.domaene)))
+    && (!q || e.name.toLowerCase().includes(q) || e.typ.toLowerCase().includes(q)));
+}
+function amDiagramm(m, els) {
+  // Breite wie der Platz im Detailbereich (Schrift 1:1 lesbar), schmal: waagrecht scrollen
+  const W = Math.max(720, Math.min(1800, (($("detail") || {}).clientWidth || 1200) - 80)), L = 110, BW = 150, BH = 40, G = 10, PAD = 14;
+  const proZeile = Math.max(1, Math.floor((W - L - PAD) / (BW + G)));
+  const ord = (a) => Math.max(0, m.aspekte.indexOf(a));
+  const pos = {}, baender = [];
+  let y = 0;
+  for (const s of m.schichten.map((x) => x.id)) {
+    const xs = els.filter((e) => e.schicht === s).sort((a, b) => ord(a.aspekt) - ord(b.aspekt) || a.typ.localeCompare(b.typ) || a.name.localeCompare(b.name));
+    if (!xs.length) continue;
+    const zeilen = Math.ceil(xs.length / proZeile), hoehe = zeilen * (BH + G) + PAD * 2 - G;
+    baender.push({ s, y, hoehe, n: xs.length });
+    xs.forEach((e, i) => { pos[e.id] = { x: L + PAD + (i % proZeile) * (BW + G), y: y + PAD + Math.floor(i / proZeile) * (BH + G), e }; });
+    y += hoehe + 6;
+  }
+  if (!baender.length) return h("div", { class: "muted small", text: t("Keine Elemente für diese Auswahl.") });
+  const svg = svgRoot(W, y, t("ArchiMate-Diagramm nach Schichten"));
+  svg.setAttribute("class", "mm-svg am-svg");
+  const namen = AM_SCHICHT();
+  for (const b of baender) {
+    svg.append(sv("rect", { x: 0, y: b.y, width: W, height: b.hoehe, rx: 8, class: `am-band am-${b.s}` }));
+    svg.append(sv("text", { x: 10, y: b.y + 20, class: "am-band-titel" }, namen[b.s] || b.s));
+    svg.append(sv("text", { x: 10, y: b.y + 36, class: "am-band-zahl" }, String(b.n)));
+  }
+  const kanten = sv("g", { class: "am-kanten" });
+  const zeigen = state.amFilter.assoziation;
+  for (const r of m.beziehungen) {
+    const a = pos[r.quelle], b = pos[r.ziel];
+    if (!a || !b || r.quelle === r.ziel || (!zeigen && r.typ === "Association")) continue;
+    const ln = sv("line", { x1: a.x + BW / 2, y1: a.y + BH / 2, x2: b.x + BW / 2, y2: b.y + BH / 2, class: `am-kante am-k-${r.typ}`, "data-quelle": r.quelle, "data-ziel": r.ziel });
+    ln.append(sv("title", {}, `${a.e.name} —${r.typ}→ ${b.e.name}`));
+    kanten.append(ln);
+  }
+  svg.append(kanten);
+  for (const p of Object.values(pos)) {
+    const e = p.e;
+    const g = sv("g", { class: `am-el am-${e.schicht}${e.knoten ? " am-link" : ""}`, tabindex: e.knoten ? "0" : "-1",
+      role: e.knoten ? "link" : "img", "aria-label": `${e.name} (${e.typ})` });
+    g.append(sv("title", {}, `${e.name}\n${e.typ} · ${AM_ASPEKT()[e.aspekt] || e.aspekt}${e.beschreibung ? "\n" + e.beschreibung : ""}`));
+    g.append(sv("rect", { x: p.x, y: p.y, width: BW, height: BH, rx: e.aspekt === "Behavior" ? 12 : 3, class: "am-box" }));
+    g.append(sv("text", { x: p.x + 6, y: p.y + 12, class: "am-typ" }, e.typ));
+    const n = e.name.length > 23 ? e.name.slice(0, 22) + "…" : e.name;
+    g.append(sv("text", { x: p.x + 6, y: p.y + 29, class: "am-name" }, n));
+    const hl = (an) => kanten.querySelectorAll(`[data-quelle="${CSS.escape(e.id)}"],[data-ziel="${CSS.escape(e.id)}"]`).forEach((l) => l.classList.toggle("am-aktiv", an));
+    g.addEventListener("mouseenter", () => hl(true)); g.addEventListener("mouseleave", () => hl(false));
+    g.addEventListener("focus", () => hl(true)); g.addEventListener("blur", () => hl(false));
+    if (e.knoten) {
+      g.addEventListener("click", () => openNode(e.knoten));
+      g.addEventListener("keydown", (ev) => { if (ev.key === "Enter") openNode(e.knoten); });
+    }
+    svg.append(g);
+  }
+  return h("div", { class: "am-diagramm" }, svg);
+}
+function gapArchitektur() {
+  if (!state.archimate) {
+    api("/api/archimate").then((r) => { state.archimate = r; if (state.gapCat === "architektur") renderGaps("architektur"); })
+      .catch((e) => toast(e.message, true));
+    return [h("div", { class: "muted small", text: t("ArchiMate-Modell wird geladen …") })];
+  }
+  const m = state.archimate;
+  if (!m.verfuegbar) return [h("div", { class: "card muted", text: t("Noch kein ArchiMate-Modell – python make_out.py --only archimate") })];
+  const namen = AM_SCHICHT();
+  if (!state.amFilter) {
+    const viele = m.elemente.length > 120;               // Motivation (Anforderungen, Einschränkungen) zuerst ausgeblendet
+    state.amFilter = { domaene: "", text: "", assoziation: false,
+      schichten: new Set(m.schichten.map((s) => s.id).filter((s) => !(viele && s === "Motivation"))) };
+  }
+  const f = state.amFilter, neu = () => renderGaps("architektur");
+  const zahl = (wert, text) => h("div", { class: "sb-zahl" }, h("strong", { text: String(wert) }), h("span", { class: "muted small", text }));
+  const zahlen = h("div", { class: "sb-zahlen" }, zahl(m.zahlen.elemente, t("Elemente")), zahl(m.zahlen.beziehungen, t("Beziehungen")),
+    zahl(m.zahlen.typen, t("Elementtypen")), zahl(m.domaenen.length, t("Fachdomänen")),
+    ...m.schichten.map((s) => zahl(s.elemente, namen[s.id] || s.id)));
+  const laden = h("section", { class: "card sb-karte" }, h("h2", { text: t("Modell laden") }),
+    h("p", { class: "small", text: t("Das Modell lässt sich in ein ArchiMate-Werkzeug laden, z. B. Archi: Datei → Importieren → „Open Exchange XML Model“, dann model.xml wählen. Die Sichten je Fachdomäne sind enthalten.") }),
+    h("ul", { class: "am-dateien" }, ...m.dateien.map((d) => h("li", {},
+      h("button", { type: "button", onclick: () => amHerunterladen(d.name), text: t("{f} herunterladen", { f: d.name }) }),
+      h("span", { class: "small" }, ` ${d.format} · ${Math.max(1, Math.round(d.bytes / 1024))} KB · `),
+      h("span", { class: "muted small", text: AM_ZWECK()[d.name] || "" })))));
+  const sel = h("select", { "aria-label": t("Fachdomäne"), onchange: (e) => { f.domaene = e.target.value; neu(); } },
+    h("option", { value: "", text: t("alle Fachdomänen") }),
+    ...m.domaenen.map((d) => h("option", { value: d.id, text: `${d.name} (${d.elemente})` })),
+    h("option", { value: AM_OHNE, text: t("ohne Fachdomäne") }));
+  sel.value = f.domaene;
+  const suche = h("input", { type: "search", value: f.text, placeholder: t("Element oder Typ filtern"), "aria-label": t("Element oder Typ filtern"),
+    onchange: (e) => { f.text = e.target.value; neu(); } });
+  const schalter = m.schichten.map((s) => h("label", { class: "small am-schalter" },
+    h("input", { type: "checkbox", checked: f.schichten.has(s.id), onchange: (e) => { e.target.checked ? f.schichten.add(s.id) : f.schichten.delete(s.id); neu(); } }),
+    ` ${namen[s.id] || s.id} (${s.elemente})`));
+  const asso = h("label", { class: "small am-schalter" }, h("input", { type: "checkbox", checked: f.assoziation, onchange: (e) => { f.assoziation = e.target.checked; neu(); } }),
+    ` ${t("Assoziationen zeigen")}`);
+  const els = amAuswahl(m);
+  const diag = h("section", { class: "card sb-karte" }, h("h2", { text: t("Diagramm nach Schichten") }),
+    h("div", { class: "am-filter" }, sel, suche, ...schalter, asso),
+    h("div", { class: "muted small", text: t("{n} Elemente · Zeiger auf ein Element hebt seine Beziehungen hervor; Klick öffnet den Knoten im Graphen.", { n: els.length }) }),
+    amDiagramm(m, els),
+    m.leere_schichten.length ? h("div", { class: "muted small", text: t("Ohne Elemente: {s}", { s: m.leere_schichten.map((s) => namen[s] || s).join(", ") }) }) : null);
+  const dn = Object.fromEntries(m.domaenen.map((d) => [d.id, d.name]));
+  const liste = h("details", { class: "card sb-karte" }, h("summary", {}, h("strong", { text: t("Elemente als Liste") }), ` (${els.length})`),
+    h("div", { class: "tabelle" }, h("table", { class: "small" },
+      h("thead", {}, h("tr", {}, ...[t("Element"), t("Typ"), t("Schicht"), t("Fachdomäne"), t("Kapitel")].map((x) => h("th", { text: x })))),
+      h("tbody", {}, ...els.map((e) => h("tr", {},
+        h("td", {}, e.knoten ? h("a", { href: nodeHash(e.knoten), text: e.name, onclick: (ev) => { ev.preventDefault(); openNode(e.knoten); } }) : e.name),
+        h("td", { class: "mono", text: e.typ }), h("td", { text: namen[e.schicht] || e.schicht }),
+        h("td", { text: e.domaenen.map((d) => dn[d] || d).join(", ") || "–" }), h("td", { text: e.kapitel.join(", ") || "–" })))))));
+  return [h("div", { class: "muted small", text: t("Stand {s}", { s: m.stand }) }), zahlen, diag, laden, liste];
+}
+// ------------------------------------------------------------------ Steckbrief der Domäne (UC1, kanonik/steckbrief.py)
+function gapSteckbrief() {
+  if (!state.steckbrief) {
+    api("/api/steckbrief").then((r) => { state.steckbrief = r; if (state.gapCat === "steckbrief") renderGaps("steckbrief"); })
+      .catch((e) => toast(e.message, true));
+    return [h("div", { class: "muted small", text: t("Steckbrief wird geladen …") })];
+  }
+  const s = state.steckbrief, k = s.kennzahlen || {}, lz = k.luecken || {};
+  const zahl = (wert, text) => h("div", { class: "sb-zahl" }, h("strong", { text: wert === undefined || wert === null ? "–" : String(wert) }), h("span", { class: "muted small", text }));
+  const karte = (titel, ...inhalt) => h("section", { class: "card sb-karte" }, h("h2", { text: titel }), ...inhalt);
+  const tabelle = (kopf, zeilen) => zeilen.length ? h("div", { class: "tabelle" }, h("table", { class: "small" },
+    h("thead", {}, h("tr", {}, ...kopf.map((x) => h("th", { text: x })))), h("tbody", {}, ...zeilen.map((z) => h("tr", {}, ...z.map((c) => h("td", {}, c)))))))
+    : h("div", { class: "muted small", text: t("keine") });
+  const d = s.domaene || {}, q = s.quellen || {}, c = q.code || {};
+  const kopf = karte(d.titel || d.name || t("Domäne"),
+    d.beschreibung ? h("p", { text: d.beschreibung }) : null,
+    h("div", { class: "small" }, h("strong", { text: t("Dokumente") + ": " }), (q.dokumente || []).map((x) => x.titel).join(", ") || "–"),
+    c.url ? h("div", { class: "small" }, h("strong", { text: t("Code") + ": " }), h("a", { href: c.url, target: "_blank", rel: "noopener", text: c.url }),
+      c.commit ? h("span", { class: "mono muted", text: ` @ ${String(c.commit).slice(0, 7)}` }) : null, c.rights ? ` · ${c.rights}` : null) : null);
+  const zahlen = h("div", { class: "sb-zahlen" },
+    zahl(k.anforderungen, t("Anforderungen")), zahl(k.regeln, t("Regeln")), zahl(k.begriffe, t("Begriffe")),
+    zahl((s.systeme || []).length, t("Rollen und Systeme")), zahl(k.dienste, t("Dienste im Code")), zahl(k.klassen, t("Klassen")),
+    zahl(k.eintraege ? `${k.zugeordnet}/${k.eintraege}` : null, t("Anforderungen mit Code")),
+    zahl(lz.gesamt, t("Lücken")),
+    ...[["regression", t("Trefferquote gegen geprüfte Funde")], ["unabhaengig", t("Trefferquote gegen unabhängig erhobene Lücken")]]
+      .map(([a, text]) => ((k.orakel || {})[a] || {}).trefferquote != null ? zahl(`${Math.round(100 * k.orakel[a].trefferquote)} %`, text) : null));
+  const sys = karte(t("Rollen und Systeme"), tabelle([t("Rolle bzw. System"), t("englisch"), t("Aufgabe"), t("Anforderungen")],
+    (s.systeme || []).map((x) => [x.name, x.en || "–", x.aufgabe || "–", String(x.anforderungen || 0)])));
+  const p = s.prozesse || {};
+  const proz = karte(t("Prozesse"),
+    h("div", { class: "small" }, t("{a} aus dem Fachkonzept abgeleitet, {v} Modelle im Code-Repository", { a: (p.abgeleitet || []).length, v: (p.vorhanden || []).length })),
+    (p.vergleich || []).length ? tabelle([t("Prozess"), t("vorhanden"), t("Elemente"), t("gefunden")],
+      p.vergleich.map((x) => [x.prozess, x.vorhanden || "–", String(x.elemente), String(x.gefunden)])) : null);
+  const ss = s.schnittstellen || {};
+  const sst = karte(t("Schnittstellen"),
+    h("div", { class: "small" }, t("{n} Nachrichten laut Fachkonzept · im Code {r} REST-Operationen, {e} Ereignis-Operationen", { n: (ss.nachrichtentabelle || []).length, r: ss.rest || 0, e: ss.ereignisse || 0 })),
+    tabelle([t("Nachricht"), t("von"), t("an")], (ss.nachrichtentabelle || []).map((x) => [x.name, x.absender || "–", (x.empfaenger || []).join(", ")])));
+  const dien = karte(t("Dienste im Code"), tabelle([t("Dienst"), t("Klassen"), t("REST"), t("sendet"), t("empfängt"), t("Anforderungen")],
+    (s.dienste || []).map((x) => [h("span", { class: "mono", text: x.dienst }), String(x.klassen), String(x.rest),
+      (x.sendet || []).join(", ") || (x.worker || []).length ? (x.sendet || []).concat((x.worker || []).map((w) => `⚙ ${w}`)).join(", ") : "–",
+      (x.empfaengt || []).join(", ") || "–", String(x.anforderungen)])));
+  const art = GAP_ART(), sichtName = (v) => (v === "beide" ? t("BPMN und Code") : v === "schnittstelle" ? t("Schnittstelle") : String(v).toUpperCase());
+  const lue = karte(t("Lücken"),
+    h("div", { class: "small" }, [...Object.entries(lz.sicht || {}).map(([v, n]) => `${sichtName(v)} ${n}`),
+      ...Object.entries(lz.art || {}).map(([v, n]) => `${art[v] || v} ${n}`)].join(" · ") || "–"),
+    tabelle([t("Kennung"), t("Lücke"), t("Art"), t("Sicht"), t("Lückentyp")],
+      (s.luecken || []).map((x) => [h("a", { href: "#", text: x.id, onclick: (e) => { e.preventDefault(); zuAnsicht("gap", "suche"); } }), x.titel,
+        art[x.art] || x.art, sichtName(x.sicht), gapTypName(x.regel)])));
+  return [kopf, zahlen, sys, proz, sst, dien, lue];
+}
 function gapZuordnungLaden(cat) {
   if (state.gapZuordnung) return true;
   api("/api/luecken/zuordnung").then((r) => { state.gapZuordnung = r; if (state.gapCat === cat) renderGaps(cat); })
@@ -2262,7 +2449,9 @@ function renderGaps(cat) {
   renderGapList();
   const [, title, hint] = GAP_CATS().find((x) => x[0] === cat);
   const parts = [h("div", { class: "node-head" }, h("h1", { text: title }), h("div", { class: "muted small", text: hint }))];
-  if (!state.gap.luecken.length && !Object.keys(state.gap.bpmn || {}).length)
+  if (cat === "steckbrief") parts.push(...gapSteckbrief());
+  else if (cat === "architektur") parts.push(...gapArchitektur());
+  else if (!state.gap.luecken.length && !Object.keys(state.gap.bpmn || {}).length)
     parts.push(h("div", { class: "card muted", text: t("Noch kein Abgleich – python make_out.py --only code abgleich") }));
   else if (cat === "abgleich") parts.push(...gapAbgleich());
   else if (cat === "graph") parts.push(...gapGraph());

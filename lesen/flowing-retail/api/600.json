@@ -1,1 +1,1 @@
-{"id":"fr_fachkonzept:req:5.3:A1:T1","diagrams":[]}
+{"id":"fr_fachkonzept:req:5.2:A2:Z1","diagrams":[{"process":{"id":"fr_fachkonzept:bpmn:fr-kreditkarte-belasten","labels":["BpmnProcess"],"label":"BpmnProcess","type":null,"title":"Kreditkarte belasten","titleEn":null,"editable":false,"doc":"fr_fachkonzept","lang":"de"},"processId":"fr-kreditkarte-belasten","file":"fr-kreditkarte-belasten.bpmn","prefix":"fr_fachkonzept:bpmn:","elementIds":["A2"],"elements":[{"id":"A2","name":"Transaktionsnummer speichern","decision":null}]}]}

@@ -1,1 +1,1 @@
-{"enabled":false,"grund":"Chat in der öffentlichen Demo nicht verfügbar"}
+{"datei":"src/main/java/io/pillopl/library/lending/patronprofile/model/PatronProfiles.java","start":2,"zeile":6,"zeilen":["","import io.pillopl.library.lending.patron.model.PatronId;","","@FunctionalInterface","public interface PatronProfiles {","","    PatronProfile fetchFor(PatronId patronId);","","}","",""],"gesamt":12}
