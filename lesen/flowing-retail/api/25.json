@@ -1,0 +1,1 @@
+{"datei":"kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/persistence/OrderRepository.java","start":3,"zeile":7,"zeilen":["import org.springframework.data.repository.CrudRepository;","","import io.flowing.retail.kafka.order.domain.Order;","","public interface OrderRepository extends CrudRepository<Order, String> {","","}"],"gesamt":9}

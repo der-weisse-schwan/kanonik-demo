@@ -1,0 +1,1 @@
+{"datei":"src/main/java/io/pillopl/library/lending/patron/application/hold/FindBookOnHold.java","start":6,"zeile":10,"zeilen":["import io.pillopl.library.lending.patron.model.PatronId;","import io.vavr.control.Option;","","@FunctionalInterface","public interface FindBookOnHold {","","    Option<BookOnHold> findBookOnHold(BookId bookId, PatronId patronId);","}"],"gesamt":13}

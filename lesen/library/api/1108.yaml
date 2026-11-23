@@ -1,0 +1,425 @@
+openapi: 3.1.0
+info:
+  title: library – REST (aus dem Code)
+  version: 5225ff7a0f0c
+  description: Erzeugt von Kanonik aus dem Quelltext (Code First); x-kanonik-code verweist je Element auf die Code-Stelle.
+tags:
+- name: patronprofile
+paths:
+  /profiles/{patronId}:
+    get:
+      operationId: patronprofile.PatronProfileController.patronProfile
+      tags:
+      - patronprofile
+      summary: patron profile
+      x-kanonik-code:
+        dienst: patronprofile
+        klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+        datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+        zeile: 56
+        methode: patronProfile
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L56
+      parameters:
+      - name: patronId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        x-kanonik-code:
+          dienst: patronprofile
+          klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+          datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+          zeile: 56
+          methode: patronProfile
+          url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L56
+          parameter: patronId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResource'
+  /profiles/{patronId}/checkouts:
+    get:
+      operationId: patronprofile.PatronProfileController.findCheckouts
+      tags:
+      - patronprofile
+      summary: find checkouts
+      x-kanonik-code:
+        dienst: patronprofile
+        klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+        datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+        zeile: 82
+        methode: findCheckouts
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L82
+      parameters:
+      - name: patronId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        x-kanonik-code:
+          dienst: patronprofile
+          klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+          datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+          zeile: 82
+          methode: findCheckouts
+          url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L82
+          parameter: patronId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/web_Checkout'
+  /profiles/{patronId}/checkouts/{bookId}:
+    get:
+      operationId: patronprofile.PatronProfileController.findCheckout
+      tags:
+      - patronprofile
+      summary: find checkout
+      x-kanonik-code:
+        dienst: patronprofile
+        klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+        datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+        zeile: 93
+        methode: findCheckout
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L93
+      parameters:
+      - name: patronId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        x-kanonik-code:
+          dienst: patronprofile
+          klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+          datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+          zeile: 93
+          methode: findCheckout
+          url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L93
+          parameter: patronId
+      - name: bookId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        x-kanonik-code:
+          dienst: patronprofile
+          klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+          datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+          zeile: 93
+          methode: findCheckout
+          url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L93
+          parameter: bookId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/web_Checkout'
+  /profiles/{patronId}/holds:
+    get:
+      operationId: patronprofile.PatronProfileController.findHolds
+      tags:
+      - patronprofile
+      summary: find holds
+      x-kanonik-code:
+        dienst: patronprofile
+        klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+        datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+        zeile: 61
+        methode: findHolds
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L61
+      parameters:
+      - name: patronId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        x-kanonik-code:
+          dienst: patronprofile
+          klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+          datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+          zeile: 61
+          methode: findHolds
+          url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L61
+          parameter: patronId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/web_Hold'
+    post:
+      operationId: patronprofile.PatronProfileController.placeHold
+      tags:
+      - patronprofile
+      summary: place hold
+      x-kanonik-code:
+        dienst: patronprofile
+        klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+        datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+        zeile: 101
+        methode: placeHold
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L101
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlaceHoldRequest'
+        x-kanonik-code:
+          dienst: patronprofile
+          klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+          datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+          zeile: 101
+          methode: placeHold
+          url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L101
+          parameter: request
+      parameters:
+      - name: patronId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        x-kanonik-code:
+          dienst: patronprofile
+          klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+          datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+          zeile: 101
+          methode: placeHold
+          url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L101
+          parameter: patronId
+      responses:
+        '200':
+          description: OK
+  /profiles/{patronId}/holds/{bookId}:
+    get:
+      operationId: patronprofile.PatronProfileController.findHold
+      tags:
+      - patronprofile
+      summary: find hold
+      x-kanonik-code:
+        dienst: patronprofile
+        klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+        datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+        zeile: 73
+        methode: findHold
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L73
+      parameters:
+      - name: patronId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        x-kanonik-code:
+          dienst: patronprofile
+          klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+          datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+          zeile: 73
+          methode: findHold
+          url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L73
+          parameter: patronId
+      - name: bookId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        x-kanonik-code:
+          dienst: patronprofile
+          klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+          datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+          zeile: 73
+          methode: findHold
+          url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L73
+          parameter: bookId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/web_Hold'
+    delete:
+      operationId: patronprofile.PatronProfileController.cancelHold
+      tags:
+      - patronprofile
+      summary: cancel hold
+      x-kanonik-code:
+        dienst: patronprofile
+        klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+        datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+        zeile: 117
+        methode: cancelHold
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L117
+      parameters:
+      - name: patronId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        x-kanonik-code:
+          dienst: patronprofile
+          klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+          datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+          zeile: 117
+          methode: cancelHold
+          url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L117
+          parameter: patronId
+      - name: bookId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        x-kanonik-code:
+          dienst: patronprofile
+          klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+          datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+          zeile: 117
+          methode: cancelHold
+          url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L117
+          parameter: bookId
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    PlaceHoldRequest:
+      title: PlaceHoldRequest
+      x-kanonik-code:
+        dienst: patronprofile
+        klasse: io.pillopl.library.lending.patronprofile.web.PlaceHoldRequest
+        datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+        zeile: 184
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L184
+      type: object
+      properties:
+        bookId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: patronprofile
+            klasse: io.pillopl.library.lending.patronprofile.web.PlaceHoldRequest
+            datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+            zeile: 185
+            feld: bookId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L185
+        libraryBranchId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: patronprofile
+            klasse: io.pillopl.library.lending.patronprofile.web.PlaceHoldRequest
+            datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+            zeile: 186
+            feld: libraryBranchId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L186
+        numberOfDays:
+          type: integer
+          format: int32
+          x-kanonik-code:
+            dienst: patronprofile
+            klasse: io.pillopl.library.lending.patronprofile.web.PlaceHoldRequest
+            datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+            zeile: 187
+            feld: numberOfDays
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L187
+    ProfileResource:
+      title: ProfileResource
+      x-kanonik-code:
+        dienst: patronprofile
+        klasse: io.pillopl.library.lending.patronprofile.web.ProfileResource
+        datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+        zeile: 143
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L143
+      type: object
+      properties:
+        patronId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: patronprofile
+            klasse: io.pillopl.library.lending.patronprofile.web.ProfileResource
+            datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+            zeile: 145
+            feld: patronId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L145
+    web_Checkout:
+      title: Checkout
+      x-kanonik-code:
+        dienst: patronprofile
+        klasse: io.pillopl.library.lending.patronprofile.web.Checkout
+        datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+        zeile: 170
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L170
+      type: object
+      properties:
+        bookId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: patronprofile
+            klasse: io.pillopl.library.lending.patronprofile.web.Checkout
+            datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+            zeile: 172
+            feld: bookId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L172
+        till:
+          type: string
+          format: date-time
+          x-kanonik-code:
+            dienst: patronprofile
+            klasse: io.pillopl.library.lending.patronprofile.web.Checkout
+            datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+            zeile: 173
+            feld: till
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L173
+    web_Hold:
+      title: Hold
+      x-kanonik-code:
+        dienst: patronprofile
+        klasse: io.pillopl.library.lending.patronprofile.web.Hold
+        datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+        zeile: 158
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L158
+      type: object
+      properties:
+        bookId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: patronprofile
+            klasse: io.pillopl.library.lending.patronprofile.web.Hold
+            datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+            zeile: 160
+            feld: bookId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L160
+        till:
+          type: string
+          format: date-time
+          x-kanonik-code:
+            dienst: patronprofile
+            klasse: io.pillopl.library.lending.patronprofile.web.Hold
+            datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+            zeile: 161
+            feld: till
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L161

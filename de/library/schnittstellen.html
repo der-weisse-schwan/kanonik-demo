@@ -1,0 +1,1861 @@
+<!doctype html><html lang="de" data-design="kern"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Schnittstellen aus dem Code – Kanonik – vom Fachkonzept zum Code</title><meta name="description" content="Das Projekt hat keine Schnittstellenbeschreibung. Kanonik hat sie aus dem Quelltext erzeugt: OpenAPI für REST, AsyncAPI für Ereignisse und Nachrichten. Jedes …"><meta name="keywords" content="Knowledge Graph, Wissensgraph, Spec-Driven Development, spezifikationsgetriebene Entwicklung, Fachkonzept, Anforderungen, Traceability, Nachverfolgbarkeit, Gap-Analyse, BPMN, Domain-Driven Design, Ontologie, Requirements Engineering"><meta name="author" content="Mykhaylo Khazanovych"><meta name="copyright" content="© 2026 Mykhaylo Khazanovych"><link rel="canonical" href="https://kanonik.eu/de/library/schnittstellen.html"><link rel="alternate" hreflang="de" href="https://kanonik.eu/de/library/schnittstellen.html"><link rel="alternate" hreflang="en" href="https://kanonik.eu/en/library/schnittstellen.html"><link rel="alternate" hreflang="x-default" href="https://kanonik.eu/de/library/schnittstellen.html"><meta property="og:url" content="https://kanonik.eu/de/library/schnittstellen.html"><meta property="og:image" content="https://kanonik.eu/design/logo/og-bild-de.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta property="og:type" content="website"><meta property="og:title" content="Schnittstellen aus dem Code – Kanonik – vom Fachkonzept zum Code"><meta property="og:description" content="Das Projekt hat keine Schnittstellenbeschreibung. Kanonik hat sie aus dem Quelltext erzeugt: OpenAPI für REST, AsyncAPI für Ereignisse und Nachrichten. Jedes …"><meta property="og:locale" content="de_DE"><link rel="stylesheet" href="../../demo.css"><link rel="stylesheet" href="../../design/kern/fira-sans.css"><link rel="stylesheet" href="../../design/kern/kern-tokens.css"><link rel="stylesheet" href="../../design/design-kern.css"><link rel="icon" href="../../design/logo/favicon.svg" type="image/svg+xml"><link rel="icon" href="../../design/logo/favicon-32.png" type="image/png"><link rel="apple-touch-icon" href="../../design/logo/apple-touch-icon.png"></head><body><header><a class="marke" href="../../de/index.html"><svg class="logo-zeichen" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><g style="stroke:var(--logo-a,#2044aa);stroke-width:5;stroke-linecap:round;fill:none"><path d="M18 14V50"/><path d="M18 32L46 14"/><path d="M18 32L46 50" style="stroke:var(--logo-b,#007155)"/></g><g style="fill:var(--logo-a,#2044aa)"><circle cx="18" cy="14" r="6.5"/><circle cx="18" cy="32" r="6.5"/><circle cx="18" cy="50" r="6.5"/><circle cx="46" cy="14" r="6.5"/></g><circle cx="46" cy="50" r="6.5" style="fill:var(--logo-grund,#fff);stroke:var(--logo-b,#007155);stroke-width:4"/></svg>Kanonik – vom Fachkonzept zum Code</a><nav><a href="../../de/index.html">Start</a><a href="../../de/cinema/index.html">Kino: Kartenreservierung</a><a href="../../de/flowing-retail/index.html">Online-Handel: Bestellabwicklung</a><a href="../../de/library/index.html">Bibliothek: Ausleihe</a><a href="../../de/kundenansprache/ueberblick.html">Für Ihr Unternehmen</a><a href="../../de/themen/einfuehrung.html">Themen</a></nav><span class="sprachen"><a class="aktiv" href="../../de/library/schnittstellen.html">DE</a><a class="" href="../../en/library/schnittstellen.html">EN</a></span></header><main><p class='klein'><a href='index.html'>← zurück</a></p><h1>Schnittstellen aus dem Code: Bibliothek: Ausleihe</h1><p>Das Projekt hat keine Schnittstellenbeschreibung. Kanonik hat sie aus dem Quelltext erzeugt: OpenAPI für REST, AsyncAPI für Ereignisse und Nachrichten. Jedes Element verweist auf seine Codestelle (x-kanonik-code).</p><h2>REST-Operationen (OpenAPI)</h2><div class='tabelle'><table><tr><th>Dienst</th><th>Operation</th><th>Anfrage</th><th>Antwort</th><th>Codestelle</th></tr><tr><td>patronprofile</td><td><code>GET /profiles/{patronId}</code></td><td></td><td>ProfileResource</td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L56" title="Codestelle in der geprüften Fassung auf GitHub">PatronProfileController.patronProfile</a></td></tr><tr><td>patronprofile</td><td><code>GET /profiles/{patronId}/checkouts</code></td><td></td><td>Checkout[]</td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L82" title="Codestelle in der geprüften Fassung auf GitHub">PatronProfileController.findCheckouts</a></td></tr><tr><td>patronprofile</td><td><code>GET /profiles/{patronId}/checkouts/{bookId}</code></td><td></td><td>Checkout</td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L93" title="Codestelle in der geprüften Fassung auf GitHub">PatronProfileController.findCheckout</a></td></tr><tr><td>patronprofile</td><td><code>GET /profiles/{patronId}/holds</code></td><td></td><td>Hold[]</td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L61" title="Codestelle in der geprüften Fassung auf GitHub">PatronProfileController.findHolds</a></td></tr><tr><td>patronprofile</td><td><code>POST /profiles/{patronId}/holds</code></td><td>PlaceHoldRequest</td><td></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L101" title="Codestelle in der geprüften Fassung auf GitHub">PatronProfileController.placeHold</a></td></tr><tr><td>patronprofile</td><td><code>GET /profiles/{patronId}/holds/{bookId}</code></td><td></td><td>Hold</td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L73" title="Codestelle in der geprüften Fassung auf GitHub">PatronProfileController.findHold</a></td></tr><tr><td>patronprofile</td><td><code>DELETE /profiles/{patronId}/holds/{bookId}</code></td><td></td><td></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L117" title="Codestelle in der geprüften Fassung auf GitHub">PatronProfileController.cancelHold</a></td></tr></table></div><h2>Ereignisse und Nachrichten (AsyncAPI)</h2><div class='tabelle'><table><tr><th>Dienst</th><th>Richtung</th><th>Nachricht</th><th>Inhalt</th><th>Kanal</th><th>Codestelle</th></tr><tr><td>book</td><td>empfängt</td><td>BookCheckedOut</td><td>BookCheckedOut</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/book/application/PatronEventsHandler.java#L32" title="Codestelle in der geprüften Fassung auf GitHub">PatronEventsHandler.handle</a></td></tr><tr><td>book</td><td>empfängt</td><td>BookHoldCanceled</td><td>BookHoldCanceled</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/book/application/PatronEventsHandler.java#L46" title="Codestelle in der geprüften Fassung auf GitHub">PatronEventsHandler.handle</a></td></tr><tr><td>book</td><td>empfängt</td><td>BookHoldExpired</td><td>BookHoldExpired</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/book/application/PatronEventsHandler.java#L39" title="Codestelle in der geprüften Fassung auf GitHub">PatronEventsHandler.handle</a></td></tr><tr><td>book</td><td>empfängt</td><td>BookInstanceAddedToCatalogue</td><td>BookInstanceAddedToCatalogue</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/book/application/CreateAvailableBookOnInstanceAddedEventHandler.java#L20" title="Codestelle in der geprüften Fassung auf GitHub">CreateAvailableBookOnInstanceAddedEventHandler.handle</a></td></tr><tr><td>book</td><td>empfängt</td><td>BookPlacedOnHold</td><td>BookPlacedOnHold</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/book/application/PatronEventsHandler.java#L25" title="Codestelle in der geprüften Fassung auf GitHub">PatronEventsHandler.handle</a></td></tr><tr><td>book</td><td>empfängt</td><td>BookReturned</td><td>BookReturned</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/book/application/PatronEventsHandler.java#L53" title="Codestelle in der geprüften Fassung auf GitHub">PatronEventsHandler.handle</a></td></tr><tr><td>book</td><td>sendet</td><td>BookDuplicateHoldFound</td><td>BookDuplicateHoldFound</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/book/application/PatronEventsHandler.java#L68" title="Codestelle in der geprüften Fassung auf GitHub">PatronEventsHandler.raiseDuplicateHoldFoundEvent</a></td></tr><tr><td>catalogue</td><td>sendet</td><td>BookInstanceAddedToCatalogue</td><td>BookInstanceAddedToCatalogue</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/catalogue/Catalogue.java#L35" title="Codestelle in der geprüften Fassung auf GitHub">Catalogue.saveAndPublishEvent</a></td></tr><tr><td>dailysheet</td><td>empfängt</td><td>BookCheckedOut</td><td>BookCheckedOut</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/dailysheet/infrastructure/SheetsReadModel.java#L132" title="Codestelle in der geprüften Fassung auf GitHub">SheetsReadModel.handle</a></td></tr><tr><td>dailysheet</td><td>empfängt</td><td>BookHoldExpired</td><td>BookHoldExpired</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/dailysheet/infrastructure/SheetsReadModel.java#L123" title="Codestelle in der geprüften Fassung auf GitHub">SheetsReadModel.handle</a></td></tr><tr><td>dailysheet</td><td>empfängt</td><td>BookPlacedOnHold</td><td>BookPlacedOnHold</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/dailysheet/infrastructure/SheetsReadModel.java#L91" title="Codestelle in der geprüften Fassung auf GitHub">SheetsReadModel.handle</a></td></tr><tr><td>dailysheet</td><td>empfängt</td><td>BookReturned</td><td>BookReturned</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/dailysheet/infrastructure/SheetsReadModel.java#L159" title="Codestelle in der geprüften Fassung auf GitHub">SheetsReadModel.handle</a></td></tr><tr><td>dailysheet</td><td>sendet</td><td>BookHoldExpired</td><td>BookHoldExpired</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/dailysheet/model/ExpiredHold.java#L15" title="Codestelle in der geprüften Fassung auf GitHub">ExpiredHold.toEvent</a></td></tr><tr><td>dailysheet</td><td>sendet</td><td>OverdueCheckoutRegistered</td><td>OverdueCheckoutRegistered</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/dailysheet/model/OverdueCheckout.java#L15" title="Codestelle in der geprüften Fassung auf GitHub">OverdueCheckout.toEvent</a></td></tr><tr><td>lending</td><td>empfängt</td><td>BookDuplicateHoldFound</td><td>BookDuplicateHoldFound</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/application/hold/HandleDuplicateHold.java#L29" title="Codestelle in der geprüften Fassung auf GitHub">HandleDuplicateHold.handle</a></td></tr><tr><td>lending</td><td>sendet</td><td>BookCheckedOut</td><td>BookCheckedOut</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/Patron.java#L67" title="Codestelle in der geprüften Fassung auf GitHub">Patron.checkOut</a></td></tr><tr><td>lending</td><td>sendet</td><td>BookCheckingOutFailed</td><td>BookCheckingOutFailed</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/Patron.java#L67" title="Codestelle in der geprüften Fassung auf GitHub">Patron.checkOut</a></td></tr><tr><td>lending</td><td>sendet</td><td>BookHoldCanceled</td><td>BookHoldCanceled</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/Patron.java#L60" title="Codestelle in der geprüften Fassung auf GitHub">Patron.cancelHold</a></td></tr><tr><td>lending</td><td>sendet</td><td>BookHoldCancelingFailed</td><td>BookHoldCancelingFailed</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/Patron.java#L60" title="Codestelle in der geprüften Fassung auf GitHub">Patron.cancelHold</a></td></tr><tr><td>lending</td><td>sendet</td><td>BookHoldFailed</td><td>BookHoldFailed</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/Patron.java#L48" title="Codestelle in der geprüften Fassung auf GitHub">Patron.placeOnHold</a></td></tr><tr><td>lending</td><td>sendet</td><td>BookPlacedOnHold</td><td>BookPlacedOnHold</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/Patron.java#L48" title="Codestelle in der geprüften Fassung auf GitHub">Patron.placeOnHold</a></td></tr><tr><td>lending</td><td>sendet</td><td>BookPlacedOnHoldEvents</td><td>BookPlacedOnHoldEvents</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/Patron.java#L48" title="Codestelle in der geprüften Fassung auf GitHub">Patron.placeOnHold</a></td></tr><tr><td>lending</td><td>sendet</td><td>MaximumNumberOhHoldsReached</td><td>MaximumNumberOhHoldsReached</td><td><code>spring-application-event</code></td><td><a href="https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/Patron.java#L48" title="Codestelle in der geprüften Fassung auf GitHub">Patron.placeOnHold</a></td></tr></table></div><h2 id='openapi.yaml'>openapi.yaml</h2><p class='klein'><a href='../../schnittstellen/library/openapi.yaml' download>herunterladen</a></p><details><summary>Datei vollständig</summary><pre class='yaml' tabindex='0'>openapi: 3.1.0
+info:
+  title: library – REST (aus dem Code)
+  version: 5225ff7a0f0c
+  description: Erzeugt von Kanonik aus dem Quelltext (Code First); x-kanonik-code verweist je Element auf die Code-Stelle.
+tags:
+- name: patronprofile
+paths:
+  /profiles/{patronId}:
+    get:
+      operationId: patronprofile.PatronProfileController.patronProfile
+      tags:
+      - patronprofile
+      summary: patron profile
+      x-kanonik-code:
+        dienst: patronprofile
+        klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+        datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+        zeile: 56
+        methode: patronProfile
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L56
+      parameters:
+      - name: patronId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        x-kanonik-code:
+          dienst: patronprofile
+          klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+          datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+          zeile: 56
+          methode: patronProfile
+          url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L56
+          parameter: patronId
+      responses:
+        &#x27;200&#x27;:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: &#x27;#/components/schemas/ProfileResource&#x27;
+  /profiles/{patronId}/checkouts:
+    get:
+      operationId: patronprofile.PatronProfileController.findCheckouts
+      tags:
+      - patronprofile
+      summary: find checkouts
+      x-kanonik-code:
+        dienst: patronprofile
+        klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+        datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+        zeile: 82
+        methode: findCheckouts
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L82
+      parameters:
+      - name: patronId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        x-kanonik-code:
+          dienst: patronprofile
+          klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+          datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+          zeile: 82
+          methode: findCheckouts
+          url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L82
+          parameter: patronId
+      responses:
+        &#x27;200&#x27;:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: &#x27;#/components/schemas/web_Checkout&#x27;
+  /profiles/{patronId}/checkouts/{bookId}:
+    get:
+      operationId: patronprofile.PatronProfileController.findCheckout
+      tags:
+      - patronprofile
+      summary: find checkout
+      x-kanonik-code:
+        dienst: patronprofile
+        klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+        datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+        zeile: 93
+        methode: findCheckout
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L93
+      parameters:
+      - name: patronId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        x-kanonik-code:
+          dienst: patronprofile
+          klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+          datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+          zeile: 93
+          methode: findCheckout
+          url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L93
+          parameter: patronId
+      - name: bookId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        x-kanonik-code:
+          dienst: patronprofile
+          klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+          datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+          zeile: 93
+          methode: findCheckout
+          url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L93
+          parameter: bookId
+      responses:
+        &#x27;200&#x27;:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: &#x27;#/components/schemas/web_Checkout&#x27;
+  /profiles/{patronId}/holds:
+    get:
+      operationId: patronprofile.PatronProfileController.findHolds
+      tags:
+      - patronprofile
+      summary: find holds
+      x-kanonik-code:
+        dienst: patronprofile
+        klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+        datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+        zeile: 61
+        methode: findHolds
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L61
+      parameters:
+      - name: patronId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        x-kanonik-code:
+          dienst: patronprofile
+          klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+          datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+          zeile: 61
+          methode: findHolds
+          url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L61
+          parameter: patronId
+      responses:
+        &#x27;200&#x27;:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: &#x27;#/components/schemas/web_Hold&#x27;
+    post:
+      operationId: patronprofile.PatronProfileController.placeHold
+      tags:
+      - patronprofile
+      summary: place hold
+      x-kanonik-code:
+        dienst: patronprofile
+        klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+        datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+        zeile: 101
+        methode: placeHold
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L101
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: &#x27;#/components/schemas/PlaceHoldRequest&#x27;
+        x-kanonik-code:
+          dienst: patronprofile
+          klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+          datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+          zeile: 101
+          methode: placeHold
+          url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L101
+          parameter: request
+      parameters:
+      - name: patronId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        x-kanonik-code:
+          dienst: patronprofile
+          klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+          datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+          zeile: 101
+          methode: placeHold
+          url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L101
+          parameter: patronId
+      responses:
+        &#x27;200&#x27;:
+          description: OK
+  /profiles/{patronId}/holds/{bookId}:
+    get:
+      operationId: patronprofile.PatronProfileController.findHold
+      tags:
+      - patronprofile
+      summary: find hold
+      x-kanonik-code:
+        dienst: patronprofile
+        klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+        datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+        zeile: 73
+        methode: findHold
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L73
+      parameters:
+      - name: patronId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        x-kanonik-code:
+          dienst: patronprofile
+          klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+          datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+          zeile: 73
+          methode: findHold
+          url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L73
+          parameter: patronId
+      - name: bookId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        x-kanonik-code:
+          dienst: patronprofile
+          klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+          datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+          zeile: 73
+          methode: findHold
+          url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L73
+          parameter: bookId
+      responses:
+        &#x27;200&#x27;:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: &#x27;#/components/schemas/web_Hold&#x27;
+    delete:
+      operationId: patronprofile.PatronProfileController.cancelHold
+      tags:
+      - patronprofile
+      summary: cancel hold
+      x-kanonik-code:
+        dienst: patronprofile
+        klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+        datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+        zeile: 117
+        methode: cancelHold
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L117
+      parameters:
+      - name: patronId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        x-kanonik-code:
+          dienst: patronprofile
+          klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+          datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+          zeile: 117
+          methode: cancelHold
+          url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L117
+          parameter: patronId
+      - name: bookId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        x-kanonik-code:
+          dienst: patronprofile
+          klasse: io.pillopl.library.lending.patronprofile.web.PatronProfileController
+          datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+          zeile: 117
+          methode: cancelHold
+          url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L117
+          parameter: bookId
+      responses:
+        &#x27;200&#x27;:
+          description: OK
+components:
+  schemas:
+    PlaceHoldRequest:
+      title: PlaceHoldRequest
+      x-kanonik-code:
+        dienst: patronprofile
+        klasse: io.pillopl.library.lending.patronprofile.web.PlaceHoldRequest
+        datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+        zeile: 184
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L184
+      type: object
+      properties:
+        bookId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: patronprofile
+            klasse: io.pillopl.library.lending.patronprofile.web.PlaceHoldRequest
+            datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+            zeile: 185
+            feld: bookId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L185
+        libraryBranchId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: patronprofile
+            klasse: io.pillopl.library.lending.patronprofile.web.PlaceHoldRequest
+            datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+            zeile: 186
+            feld: libraryBranchId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L186
+        numberOfDays:
+          type: integer
+          format: int32
+          x-kanonik-code:
+            dienst: patronprofile
+            klasse: io.pillopl.library.lending.patronprofile.web.PlaceHoldRequest
+            datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+            zeile: 187
+            feld: numberOfDays
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L187
+    ProfileResource:
+      title: ProfileResource
+      x-kanonik-code:
+        dienst: patronprofile
+        klasse: io.pillopl.library.lending.patronprofile.web.ProfileResource
+        datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+        zeile: 143
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L143
+      type: object
+      properties:
+        patronId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: patronprofile
+            klasse: io.pillopl.library.lending.patronprofile.web.ProfileResource
+            datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+            zeile: 145
+            feld: patronId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L145
+    web_Checkout:
+      title: Checkout
+      x-kanonik-code:
+        dienst: patronprofile
+        klasse: io.pillopl.library.lending.patronprofile.web.Checkout
+        datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+        zeile: 170
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L170
+      type: object
+      properties:
+        bookId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: patronprofile
+            klasse: io.pillopl.library.lending.patronprofile.web.Checkout
+            datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+            zeile: 172
+            feld: bookId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L172
+        till:
+          type: string
+          format: date-time
+          x-kanonik-code:
+            dienst: patronprofile
+            klasse: io.pillopl.library.lending.patronprofile.web.Checkout
+            datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+            zeile: 173
+            feld: till
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L173
+    web_Hold:
+      title: Hold
+      x-kanonik-code:
+        dienst: patronprofile
+        klasse: io.pillopl.library.lending.patronprofile.web.Hold
+        datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+        zeile: 158
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L158
+      type: object
+      properties:
+        bookId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: patronprofile
+            klasse: io.pillopl.library.lending.patronprofile.web.Hold
+            datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+            zeile: 160
+            feld: bookId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L160
+        till:
+          type: string
+          format: date-time
+          x-kanonik-code:
+            dienst: patronprofile
+            klasse: io.pillopl.library.lending.patronprofile.web.Hold
+            datei: src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java
+            zeile: 161
+            feld: till
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patronprofile/web/PatronProfileController.java#L161
+</pre></details><h2 id='asyncapi.yaml'>asyncapi.yaml</h2><p class='klein'><a href='../../schnittstellen/library/asyncapi.yaml' download>herunterladen</a></p><details><summary>Datei vollständig</summary><pre class='yaml' tabindex='0'>asyncapi: 3.0.0
+info:
+  title: library – Ereignisse (aus dem Code)
+  version: 5225ff7a0f0c
+  description: Erzeugt von Kanonik aus dem Quelltext (Code First); x-kanonik-code verweist je Element auf die Code-Stelle.
+channels:
+  spring-application-event:
+    messages:
+      BookDuplicateHoldFound:
+        $ref: &#x27;#/components/messages/BookDuplicateHoldFound&#x27;
+      BookHoldFailed:
+        $ref: &#x27;#/components/messages/BookHoldFailed&#x27;
+      BookPlacedOnHold:
+        $ref: &#x27;#/components/messages/BookPlacedOnHold&#x27;
+      BookPlacedOnHoldEvents:
+        $ref: &#x27;#/components/messages/BookPlacedOnHoldEvents&#x27;
+      MaximumNumberOhHoldsReached:
+        $ref: &#x27;#/components/messages/MaximumNumberOhHoldsReached&#x27;
+      BookHoldCanceled:
+        $ref: &#x27;#/components/messages/BookHoldCanceled&#x27;
+      BookHoldCancelingFailed:
+        $ref: &#x27;#/components/messages/BookHoldCancelingFailed&#x27;
+      BookCheckedOut:
+        $ref: &#x27;#/components/messages/BookCheckedOut&#x27;
+      BookCheckingOutFailed:
+        $ref: &#x27;#/components/messages/BookCheckingOutFailed&#x27;
+      BookInstanceAddedToCatalogue:
+        $ref: &#x27;#/components/messages/BookInstanceAddedToCatalogue&#x27;
+      BookHoldExpired:
+        $ref: &#x27;#/components/messages/BookHoldExpired&#x27;
+      BookReturned:
+        $ref: &#x27;#/components/messages/BookReturned&#x27;
+      OverdueCheckoutRegistered:
+        $ref: &#x27;#/components/messages/OverdueCheckoutRegistered&#x27;
+    description: Spring-Anwendungsereignisse (im Prozess)
+    x-kanonik-transport: spring-application-event
+operations:
+  book.empfaengt.BookCheckedOut:
+    action: receive
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/BookCheckedOut&#x27;
+    x-kanonik-dienst: book
+    x-kanonik-code:
+    - dienst: book
+      klasse: io.pillopl.library.lending.book.application.PatronEventsHandler
+      datei: src/main/java/io/pillopl/library/lending/book/application/PatronEventsHandler.java
+      zeile: 32
+      methode: handle
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/book/application/PatronEventsHandler.java#L32
+  book.empfaengt.BookHoldCanceled:
+    action: receive
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/BookHoldCanceled&#x27;
+    x-kanonik-dienst: book
+    x-kanonik-code:
+    - dienst: book
+      klasse: io.pillopl.library.lending.book.application.PatronEventsHandler
+      datei: src/main/java/io/pillopl/library/lending/book/application/PatronEventsHandler.java
+      zeile: 46
+      methode: handle
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/book/application/PatronEventsHandler.java#L46
+  book.empfaengt.BookHoldExpired:
+    action: receive
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/BookHoldExpired&#x27;
+    x-kanonik-dienst: book
+    x-kanonik-code:
+    - dienst: book
+      klasse: io.pillopl.library.lending.book.application.PatronEventsHandler
+      datei: src/main/java/io/pillopl/library/lending/book/application/PatronEventsHandler.java
+      zeile: 39
+      methode: handle
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/book/application/PatronEventsHandler.java#L39
+  book.empfaengt.BookInstanceAddedToCatalogue:
+    action: receive
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/BookInstanceAddedToCatalogue&#x27;
+    x-kanonik-dienst: book
+    x-kanonik-code:
+    - dienst: book
+      klasse: io.pillopl.library.lending.book.application.CreateAvailableBookOnInstanceAddedEventHandler
+      datei: src/main/java/io/pillopl/library/lending/book/application/CreateAvailableBookOnInstanceAddedEventHandler.java
+      zeile: 20
+      methode: handle
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/book/application/CreateAvailableBookOnInstanceAddedEventHandler.java#L20
+  book.empfaengt.BookPlacedOnHold:
+    action: receive
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/BookPlacedOnHold&#x27;
+    x-kanonik-dienst: book
+    x-kanonik-code:
+    - dienst: book
+      klasse: io.pillopl.library.lending.book.application.PatronEventsHandler
+      datei: src/main/java/io/pillopl/library/lending/book/application/PatronEventsHandler.java
+      zeile: 25
+      methode: handle
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/book/application/PatronEventsHandler.java#L25
+  book.empfaengt.BookReturned:
+    action: receive
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/BookReturned&#x27;
+    x-kanonik-dienst: book
+    x-kanonik-code:
+    - dienst: book
+      klasse: io.pillopl.library.lending.book.application.PatronEventsHandler
+      datei: src/main/java/io/pillopl/library/lending/book/application/PatronEventsHandler.java
+      zeile: 53
+      methode: handle
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/book/application/PatronEventsHandler.java#L53
+  book.sendet.BookDuplicateHoldFound:
+    action: send
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/BookDuplicateHoldFound&#x27;
+    x-kanonik-dienst: book
+    x-kanonik-code:
+    - dienst: book
+      klasse: io.pillopl.library.lending.book.application.PatronEventsHandler
+      datei: src/main/java/io/pillopl/library/lending/book/application/PatronEventsHandler.java
+      zeile: 68
+      methode: raiseDuplicateHoldFoundEvent
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/book/application/PatronEventsHandler.java#L68
+  catalogue.sendet.BookInstanceAddedToCatalogue:
+    action: send
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/BookInstanceAddedToCatalogue&#x27;
+    x-kanonik-dienst: catalogue
+    x-kanonik-code:
+    - dienst: catalogue
+      klasse: io.pillopl.library.catalogue.Catalogue
+      datei: src/main/java/io/pillopl/library/catalogue/Catalogue.java
+      zeile: 35
+      methode: saveAndPublishEvent
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/catalogue/Catalogue.java#L35
+  dailysheet.empfaengt.BookCheckedOut:
+    action: receive
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/BookCheckedOut&#x27;
+    x-kanonik-dienst: dailysheet
+    x-kanonik-code:
+    - dienst: dailysheet
+      klasse: io.pillopl.library.lending.dailysheet.infrastructure.SheetsReadModel
+      datei: src/main/java/io/pillopl/library/lending/dailysheet/infrastructure/SheetsReadModel.java
+      zeile: 132
+      methode: handle
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/dailysheet/infrastructure/SheetsReadModel.java#L132
+  dailysheet.empfaengt.BookHoldExpired:
+    action: receive
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/BookHoldExpired&#x27;
+    x-kanonik-dienst: dailysheet
+    x-kanonik-code:
+    - dienst: dailysheet
+      klasse: io.pillopl.library.lending.dailysheet.infrastructure.SheetsReadModel
+      datei: src/main/java/io/pillopl/library/lending/dailysheet/infrastructure/SheetsReadModel.java
+      zeile: 123
+      methode: handle
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/dailysheet/infrastructure/SheetsReadModel.java#L123
+  dailysheet.empfaengt.BookPlacedOnHold:
+    action: receive
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/BookPlacedOnHold&#x27;
+    x-kanonik-dienst: dailysheet
+    x-kanonik-code:
+    - dienst: dailysheet
+      klasse: io.pillopl.library.lending.dailysheet.infrastructure.SheetsReadModel
+      datei: src/main/java/io/pillopl/library/lending/dailysheet/infrastructure/SheetsReadModel.java
+      zeile: 91
+      methode: handle
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/dailysheet/infrastructure/SheetsReadModel.java#L91
+  dailysheet.empfaengt.BookReturned:
+    action: receive
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/BookReturned&#x27;
+    x-kanonik-dienst: dailysheet
+    x-kanonik-code:
+    - dienst: dailysheet
+      klasse: io.pillopl.library.lending.dailysheet.infrastructure.SheetsReadModel
+      datei: src/main/java/io/pillopl/library/lending/dailysheet/infrastructure/SheetsReadModel.java
+      zeile: 159
+      methode: handle
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/dailysheet/infrastructure/SheetsReadModel.java#L159
+  dailysheet.sendet.BookHoldExpired:
+    action: send
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/BookHoldExpired&#x27;
+    x-kanonik-dienst: dailysheet
+    x-kanonik-code:
+    - dienst: dailysheet
+      klasse: io.pillopl.library.lending.dailysheet.model.ExpiredHold
+      datei: src/main/java/io/pillopl/library/lending/dailysheet/model/ExpiredHold.java
+      zeile: 15
+      methode: toEvent
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/dailysheet/model/ExpiredHold.java#L15
+  dailysheet.sendet.OverdueCheckoutRegistered:
+    action: send
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/OverdueCheckoutRegistered&#x27;
+    x-kanonik-dienst: dailysheet
+    x-kanonik-code:
+    - dienst: dailysheet
+      klasse: io.pillopl.library.lending.dailysheet.model.OverdueCheckout
+      datei: src/main/java/io/pillopl/library/lending/dailysheet/model/OverdueCheckout.java
+      zeile: 15
+      methode: toEvent
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/dailysheet/model/OverdueCheckout.java#L15
+  lending.empfaengt.BookDuplicateHoldFound:
+    action: receive
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/BookDuplicateHoldFound&#x27;
+    x-kanonik-dienst: lending
+    x-kanonik-code:
+    - dienst: lending
+      klasse: io.pillopl.library.lending.patron.application.hold.HandleDuplicateHold
+      datei: src/main/java/io/pillopl/library/lending/patron/application/hold/HandleDuplicateHold.java
+      zeile: 29
+      methode: handle
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/application/hold/HandleDuplicateHold.java#L29
+  lending.sendet.BookCheckedOut:
+    action: send
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/BookCheckedOut&#x27;
+    x-kanonik-dienst: lending
+    x-kanonik-code:
+    - dienst: lending
+      klasse: io.pillopl.library.lending.patron.model.Patron
+      datei: src/main/java/io/pillopl/library/lending/patron/model/Patron.java
+      zeile: 67
+      methode: checkOut
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/Patron.java#L67
+  lending.sendet.BookCheckingOutFailed:
+    action: send
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/BookCheckingOutFailed&#x27;
+    x-kanonik-dienst: lending
+    x-kanonik-code:
+    - dienst: lending
+      klasse: io.pillopl.library.lending.patron.model.Patron
+      datei: src/main/java/io/pillopl/library/lending/patron/model/Patron.java
+      zeile: 67
+      methode: checkOut
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/Patron.java#L67
+  lending.sendet.BookHoldCanceled:
+    action: send
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/BookHoldCanceled&#x27;
+    x-kanonik-dienst: lending
+    x-kanonik-code:
+    - dienst: lending
+      klasse: io.pillopl.library.lending.patron.model.Patron
+      datei: src/main/java/io/pillopl/library/lending/patron/model/Patron.java
+      zeile: 60
+      methode: cancelHold
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/Patron.java#L60
+  lending.sendet.BookHoldCancelingFailed:
+    action: send
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/BookHoldCancelingFailed&#x27;
+    x-kanonik-dienst: lending
+    x-kanonik-code:
+    - dienst: lending
+      klasse: io.pillopl.library.lending.patron.model.Patron
+      datei: src/main/java/io/pillopl/library/lending/patron/model/Patron.java
+      zeile: 60
+      methode: cancelHold
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/Patron.java#L60
+  lending.sendet.BookHoldFailed:
+    action: send
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/BookHoldFailed&#x27;
+    x-kanonik-dienst: lending
+    x-kanonik-code:
+    - dienst: lending
+      klasse: io.pillopl.library.lending.patron.model.Patron
+      datei: src/main/java/io/pillopl/library/lending/patron/model/Patron.java
+      zeile: 48
+      methode: placeOnHold
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/Patron.java#L48
+  lending.sendet.BookPlacedOnHold:
+    action: send
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/BookPlacedOnHold&#x27;
+    x-kanonik-dienst: lending
+    x-kanonik-code:
+    - dienst: lending
+      klasse: io.pillopl.library.lending.patron.model.Patron
+      datei: src/main/java/io/pillopl/library/lending/patron/model/Patron.java
+      zeile: 48
+      methode: placeOnHold
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/Patron.java#L48
+  lending.sendet.BookPlacedOnHoldEvents:
+    action: send
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/BookPlacedOnHoldEvents&#x27;
+    x-kanonik-dienst: lending
+    x-kanonik-code:
+    - dienst: lending
+      klasse: io.pillopl.library.lending.patron.model.Patron
+      datei: src/main/java/io/pillopl/library/lending/patron/model/Patron.java
+      zeile: 48
+      methode: placeOnHold
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/Patron.java#L48
+  lending.sendet.MaximumNumberOhHoldsReached:
+    action: send
+    channel:
+      $ref: &#x27;#/channels/spring-application-event&#x27;
+    messages:
+    - $ref: &#x27;#/channels/spring-application-event/messages/MaximumNumberOhHoldsReached&#x27;
+    x-kanonik-dienst: lending
+    x-kanonik-code:
+    - dienst: lending
+      klasse: io.pillopl.library.lending.patron.model.Patron
+      datei: src/main/java/io/pillopl/library/lending/patron/model/Patron.java
+      zeile: 48
+      methode: placeOnHold
+      url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/Patron.java#L48
+components:
+  messages:
+    BookCheckedOut:
+      name: BookCheckedOut
+      title: Book Checked Out
+      payload:
+        $ref: &#x27;#/components/schemas/PatronEvent_BookCheckedOut&#x27;
+      x-kanonik-code:
+        dienst: lending
+        klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookCheckedOut
+        datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+        zeile: 107
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L107
+    BookCheckingOutFailed:
+      name: BookCheckingOutFailed
+      title: Book Checking Out Failed
+      payload:
+        $ref: &#x27;#/components/schemas/PatronEvent_BookCheckingOutFailed&#x27;
+      x-kanonik-code:
+        dienst: lending
+        klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookCheckingOutFailed
+        datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+        zeile: 157
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L157
+    BookDuplicateHoldFound:
+      name: BookDuplicateHoldFound
+      title: Book Duplicate Hold Found
+      payload:
+        $ref: &#x27;#/components/schemas/BookDuplicateHoldFound&#x27;
+      x-kanonik-code:
+        dienst: book
+        klasse: io.pillopl.library.lending.book.model.BookDuplicateHoldFound
+        datei: src/main/java/io/pillopl/library/lending/book/model/BookDuplicateHoldFound.java
+        zeile: 12
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/book/model/BookDuplicateHoldFound.java#L12
+    BookHoldCanceled:
+      name: BookHoldCanceled
+      title: Book Hold Canceled
+      payload:
+        $ref: &#x27;#/components/schemas/PatronEvent_BookHoldCanceled&#x27;
+      x-kanonik-code:
+        dienst: lending
+        klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldCanceled
+        datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+        zeile: 176
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L176
+    BookHoldCancelingFailed:
+      name: BookHoldCancelingFailed
+      title: Book Hold Canceling Failed
+      payload:
+        $ref: &#x27;#/components/schemas/PatronEvent_BookHoldCancelingFailed&#x27;
+      x-kanonik-code:
+        dienst: lending
+        klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldCancelingFailed
+        datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+        zeile: 193
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L193
+    BookHoldExpired:
+      name: BookHoldExpired
+      title: Book Hold Expired
+      payload:
+        $ref: &#x27;#/components/schemas/PatronEvent_BookHoldExpired&#x27;
+      x-kanonik-code:
+        dienst: lending
+        klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldExpired
+        datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+        zeile: 210
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L210
+    BookHoldFailed:
+      name: BookHoldFailed
+      title: Book Hold Failed
+      payload:
+        $ref: &#x27;#/components/schemas/PatronEvent_BookHoldFailed&#x27;
+      x-kanonik-code:
+        dienst: lending
+        klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldFailed
+        datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+        zeile: 138
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L138
+    BookInstanceAddedToCatalogue:
+      name: BookInstanceAddedToCatalogue
+      title: Book Instance Added To Catalogue
+      payload:
+        $ref: &#x27;#/components/schemas/BookInstanceAddedToCatalogue&#x27;
+      x-kanonik-code:
+        dienst: catalogue
+        klasse: io.pillopl.library.catalogue.BookInstanceAddedToCatalogue
+        datei: src/main/java/io/pillopl/library/catalogue/BookInstanceAddedToCatalogue.java
+        zeile: 13
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/catalogue/BookInstanceAddedToCatalogue.java#L13
+    BookPlacedOnHold:
+      name: BookPlacedOnHold
+      title: Book Placed On Hold
+      payload:
+        $ref: &#x27;#/components/schemas/PatronEvent_BookPlacedOnHold&#x27;
+      x-kanonik-code:
+        dienst: lending
+        klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookPlacedOnHold
+        datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+        zeile: 44
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L44
+    BookPlacedOnHoldEvents:
+      name: BookPlacedOnHoldEvents
+      title: Book Placed On Hold Events
+      payload:
+        $ref: &#x27;#/components/schemas/PatronEvent_BookPlacedOnHoldEvents&#x27;
+      x-kanonik-code:
+        dienst: lending
+        klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookPlacedOnHoldEvents
+        datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+        zeile: 67
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L67
+    BookReturned:
+      name: BookReturned
+      title: Book Returned
+      payload:
+        $ref: &#x27;#/components/schemas/PatronEvent_BookReturned&#x27;
+      x-kanonik-code:
+        dienst: lending
+        klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookReturned
+        datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+        zeile: 128
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L128
+    MaximumNumberOhHoldsReached:
+      name: MaximumNumberOhHoldsReached
+      title: Maximum Number Oh Holds Reached
+      payload:
+        $ref: &#x27;#/components/schemas/PatronEvent_MaximumNumberOhHoldsReached&#x27;
+      x-kanonik-code:
+        dienst: lending
+        klasse: io.pillopl.library.lending.patron.model.PatronEvent.MaximumNumberOhHoldsReached
+        datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+        zeile: 92
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L92
+    OverdueCheckoutRegistered:
+      name: OverdueCheckoutRegistered
+      title: Overdue Checkout Registered
+      payload:
+        $ref: &#x27;#/components/schemas/PatronEvent_OverdueCheckoutRegistered&#x27;
+      x-kanonik-code:
+        dienst: lending
+        klasse: io.pillopl.library.lending.patron.model.PatronEvent.OverdueCheckoutRegistered
+        datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+        zeile: 227
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L227
+  schemas:
+    BookDuplicateHoldFound:
+      title: BookDuplicateHoldFound
+      x-kanonik-code:
+        dienst: book
+        klasse: io.pillopl.library.lending.book.model.BookDuplicateHoldFound
+        datei: src/main/java/io/pillopl/library/lending/book/model/BookDuplicateHoldFound.java
+        zeile: 12
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/book/model/BookDuplicateHoldFound.java#L12
+      type: object
+      properties:
+        eventId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: book
+            klasse: io.pillopl.library.lending.book.model.BookDuplicateHoldFound
+            datei: src/main/java/io/pillopl/library/lending/book/model/BookDuplicateHoldFound.java
+            zeile: 13
+            feld: eventId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/book/model/BookDuplicateHoldFound.java#L13
+        when:
+          type: string
+          format: date-time
+          x-kanonik-code:
+            dienst: book
+            klasse: io.pillopl.library.lending.book.model.BookDuplicateHoldFound
+            datei: src/main/java/io/pillopl/library/lending/book/model/BookDuplicateHoldFound.java
+            zeile: 14
+            feld: when
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/book/model/BookDuplicateHoldFound.java#L14
+        firstPatronId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: book
+            klasse: io.pillopl.library.lending.book.model.BookDuplicateHoldFound
+            datei: src/main/java/io/pillopl/library/lending/book/model/BookDuplicateHoldFound.java
+            zeile: 15
+            feld: firstPatronId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/book/model/BookDuplicateHoldFound.java#L15
+        secondPatronId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: book
+            klasse: io.pillopl.library.lending.book.model.BookDuplicateHoldFound
+            datei: src/main/java/io/pillopl/library/lending/book/model/BookDuplicateHoldFound.java
+            zeile: 16
+            feld: secondPatronId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/book/model/BookDuplicateHoldFound.java#L16
+        libraryBranchId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: book
+            klasse: io.pillopl.library.lending.book.model.BookDuplicateHoldFound
+            datei: src/main/java/io/pillopl/library/lending/book/model/BookDuplicateHoldFound.java
+            zeile: 17
+            feld: libraryBranchId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/book/model/BookDuplicateHoldFound.java#L17
+        bookId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: book
+            klasse: io.pillopl.library.lending.book.model.BookDuplicateHoldFound
+            datei: src/main/java/io/pillopl/library/lending/book/model/BookDuplicateHoldFound.java
+            zeile: 18
+            feld: bookId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/book/model/BookDuplicateHoldFound.java#L18
+      required:
+      - eventId
+      - when
+      - firstPatronId
+      - secondPatronId
+      - libraryBranchId
+      - bookId
+    BookInstanceAddedToCatalogue:
+      title: BookInstanceAddedToCatalogue
+      x-kanonik-code:
+        dienst: catalogue
+        klasse: io.pillopl.library.catalogue.BookInstanceAddedToCatalogue
+        datei: src/main/java/io/pillopl/library/catalogue/BookInstanceAddedToCatalogue.java
+        zeile: 13
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/catalogue/BookInstanceAddedToCatalogue.java#L13
+      type: object
+      properties:
+        eventId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: catalogue
+            klasse: io.pillopl.library.catalogue.BookInstanceAddedToCatalogue
+            datei: src/main/java/io/pillopl/library/catalogue/BookInstanceAddedToCatalogue.java
+            zeile: 15
+            feld: eventId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/catalogue/BookInstanceAddedToCatalogue.java#L15
+        isbn:
+          type: string
+          x-kanonik-code:
+            dienst: catalogue
+            klasse: io.pillopl.library.catalogue.BookInstanceAddedToCatalogue
+            datei: src/main/java/io/pillopl/library/catalogue/BookInstanceAddedToCatalogue.java
+            zeile: 16
+            feld: isbn
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/catalogue/BookInstanceAddedToCatalogue.java#L16
+        type:
+          $ref: &#x27;#/components/schemas/BookType&#x27;
+          x-kanonik-code:
+            dienst: catalogue
+            klasse: io.pillopl.library.catalogue.BookInstanceAddedToCatalogue
+            datei: src/main/java/io/pillopl/library/catalogue/BookInstanceAddedToCatalogue.java
+            zeile: 17
+            feld: type
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/catalogue/BookInstanceAddedToCatalogue.java#L17
+        bookId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: catalogue
+            klasse: io.pillopl.library.catalogue.BookInstanceAddedToCatalogue
+            datei: src/main/java/io/pillopl/library/catalogue/BookInstanceAddedToCatalogue.java
+            zeile: 18
+            feld: bookId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/catalogue/BookInstanceAddedToCatalogue.java#L18
+        when:
+          type: string
+          format: date-time
+          x-kanonik-code:
+            dienst: catalogue
+            klasse: io.pillopl.library.catalogue.BookInstanceAddedToCatalogue
+            datei: src/main/java/io/pillopl/library/catalogue/BookInstanceAddedToCatalogue.java
+            zeile: 19
+            feld: when
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/catalogue/BookInstanceAddedToCatalogue.java#L19
+    BookType:
+      title: BookType
+      x-kanonik-code:
+        dienst: catalogue
+        klasse: io.pillopl.library.catalogue.BookType
+        datei: src/main/java/io/pillopl/library/catalogue/BookType.java
+        zeile: 3
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/catalogue/BookType.java#L3
+      type: string
+      enum:
+      - Restricted
+      - Circulating
+    PatronEvent_BookCheckedOut:
+      title: BookCheckedOut
+      x-kanonik-code:
+        dienst: lending
+        klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookCheckedOut
+        datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+        zeile: 107
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L107
+      type: object
+      properties:
+        eventId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookCheckedOut
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 108
+            feld: eventId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L108
+        when:
+          type: string
+          format: date-time
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookCheckedOut
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 109
+            feld: when
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L109
+        patronId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookCheckedOut
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 110
+            feld: patronId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L110
+        bookId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookCheckedOut
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 111
+            feld: bookId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L111
+        bookType:
+          $ref: &#x27;#/components/schemas/BookType&#x27;
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookCheckedOut
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 112
+            feld: bookType
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L112
+        libraryBranchId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookCheckedOut
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 113
+            feld: libraryBranchId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L113
+        till:
+          type: string
+          format: date-time
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookCheckedOut
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 114
+            feld: till
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L114
+      required:
+      - eventId
+      - when
+      - patronId
+      - bookId
+      - bookType
+      - libraryBranchId
+      - till
+    PatronEvent_BookCheckingOutFailed:
+      title: BookCheckingOutFailed
+      x-kanonik-code:
+        dienst: lending
+        klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookCheckingOutFailed
+        datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+        zeile: 157
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L157
+      type: object
+      properties:
+        eventId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookCheckingOutFailed
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 158
+            feld: eventId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L158
+        reason:
+          type: string
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookCheckingOutFailed
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 159
+            feld: reason
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L159
+        when:
+          type: string
+          format: date-time
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookCheckingOutFailed
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 160
+            feld: when
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L160
+        patronId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookCheckingOutFailed
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 161
+            feld: patronId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L161
+        bookId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookCheckingOutFailed
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 162
+            feld: bookId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L162
+        libraryBranchId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookCheckingOutFailed
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 163
+            feld: libraryBranchId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L163
+      required:
+      - eventId
+      - reason
+      - when
+      - patronId
+      - bookId
+      - libraryBranchId
+    PatronEvent_BookHoldCanceled:
+      title: BookHoldCanceled
+      x-kanonik-code:
+        dienst: lending
+        klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldCanceled
+        datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+        zeile: 176
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L176
+      type: object
+      properties:
+        eventId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldCanceled
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 177
+            feld: eventId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L177
+        when:
+          type: string
+          format: date-time
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldCanceled
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 178
+            feld: when
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L178
+        patronId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldCanceled
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 179
+            feld: patronId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L179
+        bookId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldCanceled
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 180
+            feld: bookId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L180
+        libraryBranchId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldCanceled
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 181
+            feld: libraryBranchId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L181
+      required:
+      - eventId
+      - when
+      - patronId
+      - bookId
+      - libraryBranchId
+    PatronEvent_BookHoldCancelingFailed:
+      title: BookHoldCancelingFailed
+      x-kanonik-code:
+        dienst: lending
+        klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldCancelingFailed
+        datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+        zeile: 193
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L193
+      type: object
+      properties:
+        eventId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldCancelingFailed
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 194
+            feld: eventId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L194
+        when:
+          type: string
+          format: date-time
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldCancelingFailed
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 195
+            feld: when
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L195
+        patronId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldCancelingFailed
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 196
+            feld: patronId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L196
+        bookId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldCancelingFailed
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 197
+            feld: bookId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L197
+        libraryBranchId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldCancelingFailed
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 198
+            feld: libraryBranchId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L198
+      required:
+      - eventId
+      - when
+      - patronId
+      - bookId
+      - libraryBranchId
+    PatronEvent_BookHoldExpired:
+      title: BookHoldExpired
+      x-kanonik-code:
+        dienst: lending
+        klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldExpired
+        datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+        zeile: 210
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L210
+      type: object
+      properties:
+        eventId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldExpired
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 211
+            feld: eventId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L211
+        when:
+          type: string
+          format: date-time
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldExpired
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 212
+            feld: when
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L212
+        patronId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldExpired
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 213
+            feld: patronId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L213
+        bookId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldExpired
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 214
+            feld: bookId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L214
+        libraryBranchId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldExpired
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 215
+            feld: libraryBranchId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L215
+      required:
+      - eventId
+      - when
+      - patronId
+      - bookId
+      - libraryBranchId
+    PatronEvent_BookHoldFailed:
+      title: BookHoldFailed
+      x-kanonik-code:
+        dienst: lending
+        klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldFailed
+        datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+        zeile: 138
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L138
+      type: object
+      properties:
+        eventId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldFailed
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 139
+            feld: eventId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L139
+        reason:
+          type: string
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldFailed
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 140
+            feld: reason
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L140
+        when:
+          type: string
+          format: date-time
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldFailed
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 141
+            feld: when
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L141
+        patronId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldFailed
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 142
+            feld: patronId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L142
+        bookId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldFailed
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 143
+            feld: bookId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L143
+        libraryBranchId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookHoldFailed
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 144
+            feld: libraryBranchId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L144
+      required:
+      - eventId
+      - reason
+      - when
+      - patronId
+      - bookId
+      - libraryBranchId
+    PatronEvent_BookPlacedOnHold:
+      title: BookPlacedOnHold
+      x-kanonik-code:
+        dienst: lending
+        klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookPlacedOnHold
+        datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+        zeile: 44
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L44
+      type: object
+      properties:
+        eventId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookPlacedOnHold
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 45
+            feld: eventId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L45
+        when:
+          type: string
+          format: date-time
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookPlacedOnHold
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 46
+            feld: when
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L46
+        patronId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookPlacedOnHold
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 47
+            feld: patronId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L47
+        bookId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookPlacedOnHold
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 48
+            feld: bookId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L48
+        bookType:
+          $ref: &#x27;#/components/schemas/BookType&#x27;
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookPlacedOnHold
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 49
+            feld: bookType
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L49
+        libraryBranchId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookPlacedOnHold
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 50
+            feld: libraryBranchId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L50
+        holdFrom:
+          type: string
+          format: date-time
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookPlacedOnHold
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 51
+            feld: holdFrom
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L51
+        holdTill:
+          type: string
+          format: date-time
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookPlacedOnHold
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 52
+            feld: holdTill
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L52
+      required:
+      - eventId
+      - when
+      - patronId
+      - bookId
+      - bookType
+      - libraryBranchId
+      - holdFrom
+    PatronEvent_BookPlacedOnHoldEvents:
+      title: BookPlacedOnHoldEvents
+      x-kanonik-code:
+        dienst: lending
+        klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookPlacedOnHoldEvents
+        datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+        zeile: 67
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L67
+      type: object
+      properties:
+        eventId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookPlacedOnHoldEvents
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 68
+            feld: eventId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L68
+        patronId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookPlacedOnHoldEvents
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 69
+            feld: patronId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L69
+        bookPlacedOnHold:
+          $ref: &#x27;#/components/schemas/PatronEvent_BookPlacedOnHold&#x27;
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookPlacedOnHoldEvents
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 70
+            feld: bookPlacedOnHold
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L70
+        maximumNumberOhHoldsReached:
+          $ref: &#x27;#/components/schemas/PatronEvent_MaximumNumberOhHoldsReached&#x27;
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookPlacedOnHoldEvents
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 71
+            feld: maximumNumberOhHoldsReached
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L71
+      required:
+      - eventId
+      - patronId
+      - bookPlacedOnHold
+      - maximumNumberOhHoldsReached
+    PatronEvent_BookReturned:
+      title: BookReturned
+      x-kanonik-code:
+        dienst: lending
+        klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookReturned
+        datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+        zeile: 128
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L128
+      type: object
+      properties:
+        eventId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookReturned
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 129
+            feld: eventId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L129
+        when:
+          type: string
+          format: date-time
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookReturned
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 130
+            feld: when
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L130
+        patronId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookReturned
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 131
+            feld: patronId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L131
+        bookId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookReturned
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 132
+            feld: bookId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L132
+        bookType:
+          $ref: &#x27;#/components/schemas/BookType&#x27;
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookReturned
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 133
+            feld: bookType
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L133
+        libraryBranchId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.BookReturned
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 134
+            feld: libraryBranchId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L134
+      required:
+      - eventId
+      - when
+      - patronId
+      - bookId
+      - bookType
+      - libraryBranchId
+    PatronEvent_MaximumNumberOhHoldsReached:
+      title: MaximumNumberOhHoldsReached
+      x-kanonik-code:
+        dienst: lending
+        klasse: io.pillopl.library.lending.patron.model.PatronEvent.MaximumNumberOhHoldsReached
+        datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+        zeile: 92
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L92
+      type: object
+      properties:
+        eventId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.MaximumNumberOhHoldsReached
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 93
+            feld: eventId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L93
+        when:
+          type: string
+          format: date-time
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.MaximumNumberOhHoldsReached
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 94
+            feld: when
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L94
+        patronId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.MaximumNumberOhHoldsReached
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 95
+            feld: patronId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L95
+        numberOfHolds:
+          type: integer
+          format: int32
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.MaximumNumberOhHoldsReached
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 96
+            feld: numberOfHolds
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L96
+      required:
+      - eventId
+      - when
+      - patronId
+    PatronEvent_OverdueCheckoutRegistered:
+      title: OverdueCheckoutRegistered
+      x-kanonik-code:
+        dienst: lending
+        klasse: io.pillopl.library.lending.patron.model.PatronEvent.OverdueCheckoutRegistered
+        datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+        zeile: 227
+        url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L227
+      type: object
+      properties:
+        eventId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.OverdueCheckoutRegistered
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 228
+            feld: eventId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L228
+        when:
+          type: string
+          format: date-time
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.OverdueCheckoutRegistered
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 229
+            feld: when
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L229
+        patronId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.OverdueCheckoutRegistered
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 230
+            feld: patronId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L230
+        bookId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.OverdueCheckoutRegistered
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 231
+            feld: bookId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L231
+        libraryBranchId:
+          type: string
+          format: uuid
+          x-kanonik-code:
+            dienst: lending
+            klasse: io.pillopl.library.lending.patron.model.PatronEvent.OverdueCheckoutRegistered
+            datei: src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java
+            zeile: 232
+            feld: libraryBranchId
+            url: https://github.com/ddd-by-examples/library/blob/5225ff7a0f0c1e0751b91cdd64f925cd001d7555/src/main/java/io/pillopl/library/lending/patron/model/PatronEvent.java#L232
+      required:
+      - eventId
+      - when
+      - patronId
+      - bookId
+      - libraryBranchId
+</pre></details></main><footer>Beispielprojekte unter Apache-2.0, Fachkonzepte für diese Demo geschrieben · <a href="mailto:mykhaylo.khazanovych@googlemail.com">Kontakt</a> · © 2026 Mykhaylo Khazanovych · <a href="../../de/rechte.html">Rechte und Lizenzen</a> · <a href="../../de/impressum.html">Impressum</a> · <a href="../../de/datenschutz.html">Datenschutz</a> · Stand 23.11.2026</footer></body></html>

@@ -1,0 +1,169 @@
+openapi: 3.1.0
+info:
+  title: flowing-retail – REST (aus dem Code)
+  version: 24465429195e
+  description: Erzeugt von Kanonik aus dem Quelltext (Code First); x-kanonik-code verweist je Element auf die Code-Stelle.
+tags:
+- name: checkout
+- name: monitor
+paths:
+  /api/cart/order:
+    put:
+      operationId: checkout.ShopRestController.placeOrder
+      tags:
+      - checkout
+      summary: place order
+      x-kanonik-code:
+        dienst: checkout
+        klasse: io.flowing.retail.checkout.rest.ShopRestController
+        datei: kafka/java/checkout/src/main/java/io/flowing/retail/checkout/rest/ShopRestController.java
+        zeile: 24
+        methode: placeOrder
+        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/checkout/src/main/java/io/flowing/retail/checkout/rest/ShopRestController.java#L24
+      parameters:
+      - name: customerId
+        in: query
+        required: true
+        schema:
+          type: string
+        x-kanonik-code:
+          dienst: checkout
+          klasse: io.flowing.retail.checkout.rest.ShopRestController
+          datei: kafka/java/checkout/src/main/java/io/flowing/retail/checkout/rest/ShopRestController.java
+          zeile: 24
+          methode: placeOrder
+          url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/checkout/src/main/java/io/flowing/retail/checkout/rest/ShopRestController.java#L24
+          parameter: customerId
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+  /event:
+    get:
+      operationId: monitor.MonitorRestController.getAllEvents
+      tags:
+      - monitor
+      summary: get all events
+      x-kanonik-code:
+        dienst: monitor
+        klasse: io.flowing.retail.monitor.web.MonitorRestController
+        datei: kafka/java/monitor/src/main/java/io/flowing/retail/monitor/web/MonitorRestController.java
+        zeile: 21
+        methode: getAllEvents
+        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/monitor/src/main/java/io/flowing/retail/monitor/web/MonitorRestController.java#L21
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/PastEvent'
+  /event/{traceId}:
+    get:
+      operationId: monitor.MonitorRestController.getAllEvents_2
+      tags:
+      - monitor
+      summary: get all events
+      x-kanonik-code:
+        dienst: monitor
+        klasse: io.flowing.retail.monitor.web.MonitorRestController
+        datei: kafka/java/monitor/src/main/java/io/flowing/retail/monitor/web/MonitorRestController.java
+        zeile: 26
+        methode: getAllEvents
+        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/monitor/src/main/java/io/flowing/retail/monitor/web/MonitorRestController.java#L26
+      parameters:
+      - name: traceId
+        in: path
+        required: true
+        schema:
+          type: string
+        x-kanonik-code:
+          dienst: monitor
+          klasse: io.flowing.retail.monitor.web.MonitorRestController
+          datei: kafka/java/monitor/src/main/java/io/flowing/retail/monitor/web/MonitorRestController.java
+          zeile: 26
+          methode: getAllEvents
+          url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/monitor/src/main/java/io/flowing/retail/monitor/web/MonitorRestController.java#L26
+          parameter: traceId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PastEvent'
+components:
+  schemas:
+    PastEvent:
+      title: PastEvent
+      x-kanonik-code:
+        dienst: monitor
+        klasse: io.flowing.retail.monitor.domain.PastEvent
+        datei: kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java
+        zeile: 3
+        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java#L3
+      type: object
+      properties:
+        transactionId:
+          type: string
+          x-kanonik-code:
+            dienst: monitor
+            klasse: io.flowing.retail.monitor.domain.PastEvent
+            datei: kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java
+            zeile: 5
+            feld: transactionId
+            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java#L5
+        type:
+          type: string
+          x-kanonik-code:
+            dienst: monitor
+            klasse: io.flowing.retail.monitor.domain.PastEvent
+            datei: kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java
+            zeile: 6
+            feld: type
+            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java#L6
+        name:
+          type: string
+          x-kanonik-code:
+            dienst: monitor
+            klasse: io.flowing.retail.monitor.domain.PastEvent
+            datei: kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java
+            zeile: 7
+            feld: name
+            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java#L7
+        content:
+          type: string
+          x-kanonik-code:
+            dienst: monitor
+            klasse: io.flowing.retail.monitor.domain.PastEvent
+            datei: kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java
+            zeile: 8
+            feld: content
+            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java#L8
+        sender:
+          type: string
+          x-kanonik-code:
+            dienst: monitor
+            klasse: io.flowing.retail.monitor.domain.PastEvent
+            datei: kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java
+            zeile: 9
+            feld: sender
+            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java#L9
+        sourceJson:
+          type: string
+          x-kanonik-code:
+            dienst: monitor
+            klasse: io.flowing.retail.monitor.domain.PastEvent
+            datei: kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java
+            zeile: 11
+            feld: sourceJson
+            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java#L11

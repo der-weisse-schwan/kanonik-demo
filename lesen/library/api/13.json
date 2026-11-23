@@ -1,0 +1,1 @@
+{"datei":"src/main/java/io/pillopl/library/catalogue/BookId.java","start":5,"zeile":9,"zeilen":["","import java.util.UUID;","","@Value","public class BookId {","","    @NonNull","    UUID bookId;","}"],"gesamt":13}

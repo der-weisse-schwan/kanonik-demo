@@ -1,0 +1,78 @@
+/* Erscheinungsbild „KERN“ (UX-Standard der öffentlichen Verwaltung, kern/) für alle Oberflächen – Curator,
+   Lese-Oberfläche, Job-Steuerung, Ontologie-Curator, Quelltext-Ansicht, Demo-Seiten. Standard; design.js setzt
+   <html data-design="kern">, „Kanonik (klassisch)“ nimmt es weg (Anzeige → Erscheinungsbild bzw. ?design=klassisch).
+
+   Grundsatz: Die Gestaltungsvariablen von Kanonik (app.css) werden auf die semantischen KERN-Variablen gelegt –
+   Farben, Rahmen, Schrift (Fira Sans), Fokus, Rückmeldungen, hell und dunkel. Die Bausteine von Kanonik bleiben; nur
+   wo KERN eine klare Form vorgibt (Schaltflächen, Eingabefelder, Reiter, Fokus), folgen sie ihr. Bewusste Abweichung:
+   Schriftgrößen und Abstände bleiben dicht (Fachanwendung mit Tabellen und Listen statt Bürgerformular; KERN beginnt
+   bei 16 px). */
+html[data-design="kern"] {
+  --bg: var(--kern-color-layout-background-hued);
+  --panel: var(--kern-color-layout-background-default);
+  --text: var(--kern-color-layout-text-default);
+  --muted: var(--kern-color-layout-text-muted);
+  --line: var(--kern-color-decorative-border-default);
+  --accent: var(--kern-color-action-default);
+  --accent-text: var(--kern-color-action-on-default);
+  --focus: var(--kern-color-action-focus-default);
+  --changed: var(--kern-color-feedback-warning-background);
+  --changed-line: var(--kern-color-feedback-warning);
+  --danger: var(--kern-color-feedback-danger);
+  --s-extracted: var(--kern-color-feedback-default);
+  --s-extracted-bg: var(--kern-color-feedback-default-background);
+  --s-curated: var(--kern-color-feedback-warning);
+  --s-curated-bg: var(--kern-color-feedback-warning-background);
+  --s-confirmed: var(--kern-color-feedback-success);
+  --s-confirmed-bg: var(--kern-color-feedback-success-background);
+  --s-rejected: var(--kern-color-feedback-danger);
+  --s-rejected-bg: var(--kern-color-feedback-danger-background);
+  --ok: var(--kern-color-feedback-success);                 /* Job-Steuerung, Ontologie-Curator */
+  --warn: var(--kern-color-feedback-warning);
+  --sel: color-mix(in oklch, var(--kern-color-action-default) 10%, transparent);
+  --kk-radius: var(--kern-metric-border-radius-default, 4px);
+}
+html[data-design="kern"] body { font-family: var(--kern-typography-font-family-default), system-ui, sans-serif; }
+html[data-design="kern"] :focus-visible {
+  outline: 3px solid var(--kern-color-action-focus-default); outline-offset: 2px;
+  box-shadow: 0 0 0 6px var(--kern-color-layout-background-default);
+}
+/* Kopfzeile: Marke mit Akzentlinie wie die KERN-Kopfzeile */
+html[data-design="kern"] .topbar { border-bottom: 3px solid var(--accent); }
+html[data-design="kern"] .brand strong, html[data-design="kern"] .brand { font-weight: 600; }
+/* Schaltflächen: sekundär umrandet in der Aktionsfarbe, primär gefüllt; eckiger Radius */
+html[data-design="kern"] button {
+  border: 2px solid var(--accent); color: var(--accent); background: var(--panel); border-radius: var(--kk-radius); font-weight: 600;
+}
+html[data-design="kern"] button:hover:not(:disabled) { background: color-mix(in oklch, var(--accent) 10%, var(--panel)); }
+html[data-design="kern"] button.primary { background: var(--accent); color: var(--accent-text); }
+html[data-design="kern"] button.primary:hover:not(:disabled) { background: color-mix(in oklch, var(--accent) 85%, black); }
+html[data-design="kern"] button.danger { border-color: var(--danger); color: var(--danger); }
+html[data-design="kern"] button.small { padding: 1px 8px; }
+html[data-design="kern"] button.link, html[data-design="kern"] .tabs button { border: none; background: none; font-weight: inherit; }
+html[data-design="kern"] a, html[data-design="kern"] a.link { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+/* Eingabefelder: kräftiger Rahmen, Formularhintergrund */
+html[data-design="kern"] input[type=text], html[data-design="kern"] input[type=search], html[data-design="kern"] input[type=number],
+html[data-design="kern"] select, html[data-design="kern"] textarea {
+  border: 1px solid var(--kern-color-form-input-border); background: var(--kern-color-form-input-background); border-radius: var(--kk-radius);
+}
+/* Reiter: Auswahl als kräftige Unterstreichung in der Aktionsfarbe */
+html[data-design="kern"] [role=tab] { border: none; background: none; border-radius: 0; font-weight: 600; color: var(--muted); }
+html[data-design="kern"] [role=tab]:hover:not(:disabled) { background: color-mix(in oklch, var(--accent) 8%, transparent); color: var(--accent); }
+html[data-design="kern"] [role=tab][aria-selected=true], html[data-design="kern"] .tabs button[aria-selected=true] {
+  color: var(--accent); background: none; box-shadow: inset 0 -3px 0 var(--accent); }
+html[data-design="kern"] .results li[aria-selected=true] { box-shadow: inset 4px 0 0 var(--accent); }
+/* Karten und Kennzeichen: KERN-Radien, Kennzeichen eckiger (Badge) */
+html[data-design="kern"] .card { border-radius: var(--kern-metric-border-radius-large, 8px); border-color: var(--line); }
+html[data-design="kern"] .pill, html[data-design="kern"] .badge { border-radius: var(--kk-radius); }
+html[data-design="kern"] .node-head h1 { font-weight: 600; }
+html[data-design="kern"] .card h2 { font-weight: 600; }
+/* Tabellen (Lücken nach Typ, Rollen je System, Pfade): Kopfzeile abgesetzt */
+html[data-design="kern"] table th { background: var(--bg); }
+html[data-design="kern"] .gap-rollen th { border-bottom: 2px solid var(--line); }
+/* Auswahl des Erscheinungsbilds in der Kopfzeile (Job-Steuerung, Ontologie-Curator) – in beiden Erscheinungsbildern */
+.design-wahl select { font-size: 12px; padding: 2px 6px; width: auto; }
+/* Logo (Bildzeichen, design.js) – in beiden Erscheinungsbildern; Farben folgen hell/dunkel */
+.logo-zeichen { --logo-a: var(--accent, #2044aa); --logo-b: var(--kern-color-feedback-success, #007155); --logo-grund: var(--panel, #fff);
+  width: 22px; height: 22px; flex: none; vertical-align: -5px; margin-right: 8px; }
+[data-logo] { display: inline-flex; align-items: center; }

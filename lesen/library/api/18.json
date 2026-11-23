@@ -1,0 +1,1 @@
+{"datei":"src/main/java/io/pillopl/library/catalogue/CatalogueDatabase.java","start":49,"zeile":53,"zeilen":["}","","@Data","@NoArgsConstructor(access = AccessLevel.PACKAGE)","class BookDatabaseRow {","    String isbn;","    String author;","    String title;","","    Book toBook() {","        return new Book(isbn, author, title);","    }","}"],"gesamt":61}

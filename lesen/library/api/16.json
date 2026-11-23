@@ -1,0 +1,1 @@
+{"datei":"src/main/java/io/pillopl/library/catalogue/BookType.java","start":1,"zeile":3,"zeilen":["package io.pillopl.library.catalogue;","","public enum BookType {","    Restricted, Circulating","}",""],"gesamt":6}

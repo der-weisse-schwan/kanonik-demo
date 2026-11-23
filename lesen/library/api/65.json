@@ -1,0 +1,1 @@
+{"datei":"src/main/java/io/pillopl/library/lending/patron/model/PatronType.java","start":1,"zeile":3,"zeilen":["package io.pillopl.library.lending.patron.model;","","public enum PatronType {Researcher, Regular}"],"gesamt":3}

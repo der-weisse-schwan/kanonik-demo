@@ -1,0 +1,20 @@
+:root{--bg:#f6f7f9;--panel:#fff;--text:#1d2129;--muted:#5b6270;--line:#dde1e7;--accent:#2f6fde}
+@media (prefers-color-scheme:dark){:root{--bg:#15171b;--panel:#1d2026;--text:#e6e8ec;--muted:#a3a9b5;--line:#2e333b;--accent:#7aa7ff}}
+*{box-sizing:border-box}body{margin:0;font:15px/1.55 system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text)}
+header{display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding:12px 24px;border-bottom:1px solid var(--line);background:var(--panel)}
+header .marke{font-weight:700}header nav{display:flex;gap:14px;flex-wrap:wrap;flex:1}header a{color:var(--text);text-decoration:none}
+header a:hover{color:var(--accent)}.sprachen a{margin-left:8px;font-size:13px}.sprachen a.aktiv{font-weight:700}
+main{max-width:980px;margin:0 auto;padding:24px 16px 48px}h1{font-size:28px;margin:8px 0 12px}h2{font-size:19px;margin:28px 0 8px}
+a{color:var(--accent)}.muted{color:var(--muted)}.klein{font-size:13px}
+.kacheln{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin:16px 0}
+.kachel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px}figure.bild{margin:10px 0 4px}figure.bild img{display:block;max-width:100%;height:auto;border:1px solid var(--line);border-radius:6px}.kachel-bild{margin:-4px 0 10px}.kachel-bild img{aspect-ratio:1280/500;object-fit:cover;object-position:top left}.kachel h3{margin:0 0 6px;font-size:17px}
+table{border-collapse:collapse;width:100%;background:var(--panel);font-size:14px}th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:var(--bg)}.tabelle{overflow-x:auto}.tabelle code{white-space:nowrap}pre.yaml{max-height:70vh;overflow:auto;background:var(--bg);border:1px solid var(--line);padding:10px;font-size:12px}ol.tour li{margin:10px 0}.pill{display:inline-block;border:1px solid var(--line);border-radius:10px;padding:0 7px;font-size:12px}
+footer{max-width:980px;margin:0 auto;padding:16px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+code{font-size:13px}a.kennung{white-space:nowrap}
+html[data-design=kern] body{font-family:"Fira Sans",system-ui,sans-serif}html[data-design=kern] header{border-bottom:3px solid var(--accent)}
+header .marke{display:inline-flex;align-items:center;color:var(--text);text-decoration:none}
+.logo-zeichen{--logo-a:var(--accent);--logo-b:var(--kern-color-feedback-success,#007155);--logo-grund:var(--panel);width:24px;height:24px;margin-right:9px;flex:none}
+html[data-design=kern] .kachel{border-radius:8px}html[data-design=kern] .pill{border-radius:4px}
+html[data-design=kern] a{text-underline-offset:2px}html[data-design=kern] header a{color:var(--text)}html[data-design=kern] header a.marke{text-decoration:none}
+html[data-design=kern] :focus-visible{outline:3px solid var(--kern-color-action-focus-default);outline-offset:2px}

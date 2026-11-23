@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kanonik-Kuration</title>
+<link rel="stylesheet" href="../app/app.css">
+<link rel="stylesheet" href="../../design/kern/fira-sans.css">
+<link rel="stylesheet" href="../../design/kern/kern-tokens.css">
+<link rel="stylesheet" href="../../design/design-kern.css">
+<script src="../../design/design.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand" data-logo>
+    <strong id="brand-title" data-i18n>Kanonik-Kuration</strong>
+    <span id="mode" class="badge"></span>
+    <span id="app-version" class="app-version"></span>
+    <a class="about-link" href="../../de/cinema/index.html">← Demo</a><a class="about-link" href="../../de/impressum.html">Impressum</a><a class="about-link" href="../../de/datenschutz.html">Datenschutz</a><span id="ro-badge" class="badge ro-badge" hidden data-i18n>Nur lesen</span>
+    <a id="about-link" class="about-link" href="/about" target="_blank" rel="noopener" hidden data-i18n>Über diese Demo</a>
+    <a id="rules-link" class="about-link" href="/rules" target="_blank" rel="noopener" hidden data-i18n>Regeln vorführen</a>
+  </div>
+  <div id="stats" class="stats" aria-live="polite"></div>
+  <button id="basis-btn" type="button" class="small basis-btn" aria-expanded="false" title="Grundlage der nächsten Entscheidung: Dokumentstellen, Knoten, Quellen, Begründung" data-i18n-title><span data-i18n>Grundlage</span> <span id="basis-count" class="basis-count"></span></button>
+  <button id="win-pin" type="button" class="small" hidden></button>
+  <button id="chat-btn" type="button" class="small chat-btn" aria-expanded="false" title="Fragen an den Wissensgraphen (Sprachmodell mit lesendem Zugriff)" data-i18n-title data-i18n>Chat</button>
+  <details id="quellen-menu" data-maske="quellen-menue" class="display" hidden>
+    <summary data-i18n>Quellen</summary>
+    <div id="quellen-body" class="display-body quellen-body"></div>
+  </details>
+  <details id="display" data-maske="anzeige" class="display">
+    <summary data-i18n>Anzeige</summary>
+    <div id="display-body" class="display-body"></div>
+  </details>
+  <label class="lang">
+    <span data-i18n>Sprache</span>
+    <select id="lang" aria-label="Sprache der Oberfläche" data-i18n-aria-label></select>
+  </label>
+  <label class="user">
+    <span data-i18n>Bearbeiter</span>
+    <input id="user" type="text" autocomplete="name" placeholder="Name" data-i18n-placeholder maxlength="80">
+  </label>
+</header>
+
+<main class="layout">
+  <aside class="sidebar" aria-label="Suche" data-i18n-aria-label>
+    <div class="tabs" role="tablist">
+      <button id="tab-nodes" type="button" role="tab" aria-selected="true" data-i18n>Knoten</button>
+      <button id="tab-props" type="button" role="tab" aria-selected="false" data-i18n>Beziehungsvorschläge</button>
+      <button id="tab-review" type="button" role="tab" aria-selected="false" data-i18n>Prüfstand</button>
+      <button id="tab-meta" type="button" role="tab" aria-selected="false" data-i18n>Metamodell</button>
+      <button id="tab-onto" type="button" role="tab" aria-selected="false" title="Fachontologie: Klassen nach Sicht, Eigenschaften und Brücken, Knoten je Klasse (nur lesen; bearbeitet im Ontologie-Curator)" data-i18n-title data-i18n>Ontologie</button>
+      <button id="tab-dec" type="button" role="tab" aria-selected="false" title="Entscheidungen prüfen: geänderte Grundlage, ohne Grundlage, zurückgenommen, Auswertung je Quelle" data-i18n-title data-i18n>Entscheidungen</button>
+      <button id="tab-src" type="button" role="tab" aria-selected="false" title="Quellen der Domäne: vorhandene Eingaben, Vorschläge des Quellen-Agenten entscheiden, suchen und aufnehmen" data-i18n-title data-i18n>Quellen</button>
+      <button id="tab-gap" type="button" role="tab" aria-selected="false" title="Lücken zwischen Fachkonzept, BPMN und Code (Abgleich der drei Sichten): prüfen und entscheiden" data-i18n-title data-i18n>Lücken</button>
+    </div>
+    <form id="prop-form" class="search" role="search" hidden>
+      <input id="pq" type="search" placeholder="Benennung oder ID eines Endknotens, Beleg …" aria-label="Suchbegriff (Vorschläge)" data-i18n-placeholder data-i18n-aria-label>
+      <div class="filters">
+        <select id="p-type" aria-label="Beziehungstyp" data-i18n-aria-label><option value="" data-i18n>alle Beziehungen</option></select>
+        <select id="p-doc" aria-label="Dokument" data-i18n-aria-label><option value="" data-i18n>alle Dokumente</option></select>
+        <select id="p-status" aria-label="Status der Zuordnung" data-i18n-aria-label></select>
+        <select id="p-method" aria-label="Verfahren" data-i18n-aria-label><option value="" data-i18n>alle Verfahren</option></select>
+        <select id="p-herkunft" aria-label="Herkunft" data-i18n-aria-label title="Herkunft: wer die Aussage geliefert hat (Dokument, Sprachmodell, Regel, Fachexperte …)" data-i18n-title><option value="" data-i18n>alle Herkünfte</option></select>
+        <label class="score-filter"><span data-i18n>Score ab</span> <input id="p-min" type="number" min="0" max="1" step="0.05" placeholder="0"></label>
+        <label class="score-filter" title="Nur Embedding bzw. Abkürzung ohne weiteren Beleg" data-i18n-title><input id="p-weak" type="checkbox"> <span data-i18n>schwache ausblenden</span></label>
+        <label class="score-filter" title="Vorschläge, deren Klassen nach der Fachontologie weder gleich noch Ober-/Unterklasse sind bzw. zwischen denen die Ontologie keine Eigenschaft hat" data-i18n-title><input id="p-onto" type="checkbox" checked> <span data-i18n>gegen Ontologie ausblenden</span></label>
+        <select id="p-sicht" aria-label="Sicht" data-i18n-aria-label title="Sichten der Fachontologie: fachlich (rechtlich und operativ), technisch (IT); Brücken verbinden beide" data-i18n-title>
+          <option value="" data-i18n>beide Sichten</option>
+          <option value="bruecke" data-i18n>nur Brücken (fachlich ↔ technisch)</option>
+          <option value="fachlich" data-i18n>innerhalb fachlich</option>
+          <option value="technisch" data-i18n>innerhalb technisch</option>
+        </select>
+        <select id="p-agent" aria-label="Empfehlung des Agenten" data-i18n-aria-label title="Empfehlung des Kurations-Agenten (agent/kurations_agent.py) – er entscheidet nicht, übernommen wird hier" data-i18n-title hidden>
+          <option value="" data-i18n>alle (Agent)</option>
+          <option value="bestaetigen" data-i18n>Agent: bestätigen</option>
+          <option value="ablehnen" data-i18n>Agent: ablehnen</option>
+          <option value="unklar" data-i18n>Agent: unklar</option>
+          <option value="ohne" data-i18n>ohne Empfehlung</option>
+        </select>
+        <select id="p-same" aria-label="Gleiche Benennung" data-i18n-aria-label>
+          <option value="first" data-i18n>gleiche Benennung zuerst</option>
+          <option value="only" data-i18n>nur gleiche Benennung</option>
+          <option value="" data-i18n>nach Score</option>
+        </select>
+      </div>
+    </form>
+    <form id="meta-form" class="search" role="search" hidden>
+      <input id="mq" type="search" placeholder="Typ oder Beschreibung …" aria-label="Suchbegriff (Metamodell)" data-i18n-placeholder data-i18n-aria-label>
+      <div class="filters">
+        <select id="m-kind" aria-label="Art" data-i18n-aria-label>
+          <option value="" data-i18n>Knoten- und Beziehungstypen</option>
+          <option value="node" data-i18n>nur Knotentypen</option>
+          <option value="rel" data-i18n>nur Beziehungstypen</option>
+        </select>
+        <label class="check-filter"><input id="m-used" type="checkbox"> <span data-i18n>nur im Graphen vorhandene</span></label>
+      </div>
+    </form>
+    <form id="onto-form" class="search" role="search" hidden>
+      <input id="oq" type="search" placeholder="Klasse suchen …" aria-label="Suchbegriff (Ontologie)" data-i18n-placeholder data-i18n-aria-label>
+      <div class="filters">
+        <select id="o-sicht" aria-label="Sicht" data-i18n-aria-label>
+          <option value="" data-i18n>beide Sichten</option>
+          <option value="fachlich" data-i18n>fachlich (rechtlich und operativ)</option>
+          <option value="technisch" data-i18n>technisch (IT)</option>
+          <option value="offen" data-i18n>Sicht offen</option>
+        </select>
+      </div>
+    </form>
+    <form id="search-form" class="search" role="search">
+      <input id="q" type="search" placeholder="Benennung, Abkürzung, Anforderungs-ID, Nachricht …" aria-label="Suchbegriff" data-i18n-placeholder data-i18n-aria-label>
+      <div class="filters">
+        <select id="f-type" aria-label="Knotentyp" data-i18n-aria-label><option value="" data-i18n>alle Typen</option></select>
+        <select id="f-status" aria-label="Status" data-i18n-aria-label><option value="" data-i18n>alle Status</option></select>
+        <select id="f-doc" aria-label="Dokument" data-i18n-aria-label><option value="" data-i18n>alle Dokumente</option></select>
+        <select id="f-herkunft" aria-label="Herkunft" data-i18n-aria-label title="Herkunft: wer die Aussage geliefert hat (Dokument, Sprachmodell, Regel, Fachexperte …)" data-i18n-title><option value="" data-i18n>alle Herkünfte</option></select>
+      </div>
+      <details id="adv" class="adv">
+        <summary><span data-i18n>Erweiterte Suche (Eigenschaften)</span> <span id="adv-count" class="pill mini"></span></summary>
+        <div id="adv-rows" class="adv-rows"></div>
+        <div class="adv-actions">
+          <button type="button" id="adv-add" class="small" data-i18n>+ Filter</button>
+          <button type="button" id="adv-clear" class="small" data-i18n>Filter löschen</button>
+        </div>
+        <div id="adv-hint" class="muted small" data-i18n>Eigenschaften des gewählten Knotentyps; alle Filter müssen zutreffen.</div>
+      </details>
+    </form>
+    <div id="result-info" class="muted small"></div>
+    <ul id="results" class="results" role="listbox" aria-label="Treffer" data-i18n-aria-label></ul>
+  </aside>
+
+  <section id="detail" class="detail" aria-live="polite">
+    <div class="empty">
+      <h2 data-i18n>Knoten auswählen</h2>
+      <p><span data-i18n>Links suchen und einen Treffer anklicken. Bearbeitbar sind nur die Felder, die in curation_config.json freigegeben sind.</span></p>
+      <p class="muted" data-i18n>Strg+S speichert.</p>
+    </div>
+  </section>
+</main>
+
+<section id="basis" data-maske="grundlage" class="basis" aria-label="Grundlage der nächsten Entscheidung" data-i18n-aria-label hidden></section>
+<aside id="chat-panel" data-maske="chat" class="chat-panel" aria-label="Chat" hidden>
+  <div class="chat-head">
+    <strong data-i18n>Chat</strong>
+    <span id="chat-model" class="badge"></span>
+    <span class="spacer"></span>
+    <button id="chat-clear" type="button" class="small" data-i18n>Neues Gespräch</button>
+    <button id="chat-close" type="button" class="small" aria-label="Schließen" data-i18n-aria-label>×</button>
+  </div>
+  <div id="chat-note" class="chat-note small"></div>
+  <div id="chat-log" class="chat-log" aria-live="polite"></div>
+  <form id="chat-form" class="chat-form" autocomplete="off">
+    <textarea id="chat-q" rows="3" placeholder="Frage an den Wissensgraphen … (Strg+Enter senden)" aria-label="Frage" data-i18n-placeholder data-i18n-aria-label></textarea>
+    <button id="chat-send" type="submit" class="primary" data-i18n>Fragen</button>
+  </form>
+</aside>
+<div id="toast" class="toast" role="status" hidden></div>
+<script>window.KANONIK_STATIC = {daten: "./", assets: "../app/"};</script><script src="../app/static.js"></script><script src="../app/app.js"></script>
+
+
+
+</body>
+</html>
