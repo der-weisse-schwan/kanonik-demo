@@ -1198,5 +1198,13 @@
  "Zum Urteil": "For your judgement",
  "spricht dagegen": "speaks against it",
  "stützt die Lücke": "supports the gap",
- "zu prüfen": "to check"
+ "zu prüfen": "to check",
+ "Eingaben": "Inputs",
+ "Eingaben der Domäne: Dokumente, Schnittstellen, Code, Rechte und Freigabe (Job-Steuerung)": "Inputs of the domain: documents, interfaces, code, rights and release (job control)",
+ "Jobs": "Jobs",
+ "Kuration": "Curation",
+ "Lese-Oberfläche für Entwickler und Tester": "Read-only interface for developers and testers",
+ "Lesen": "Read",
+ "Schritte der Pipeline ausführen, Stand und Protokolle (Job-Steuerung)": "Run pipeline steps, status and logs (job control)",
+ "Sichten": "Views"
 }

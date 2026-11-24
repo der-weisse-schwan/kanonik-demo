@@ -17,9 +17,13 @@
     <span id="mode" class="badge"></span>
     <span id="app-version" class="app-version"></span>
     <a class="about-link" href="../../de/cinema/index.html">← Demo</a><a class="about-link" href="../../de/impressum.html">Impressum</a><a class="about-link" href="../../de/datenschutz.html">Datenschutz</a><span id="ro-badge" class="badge ro-badge" hidden data-i18n>Nur lesen</span>
-    <a id="about-link" class="about-link" href="/about" target="_blank" rel="noopener" hidden data-i18n>Über diese Demo</a>
-    <a id="rules-link" class="about-link" href="/rules" target="_blank" rel="noopener" hidden data-i18n>Regeln vorführen</a>
   </div>
+  <nav id="sichten" class="sichten" aria-label="Sichten" data-i18n-aria-label hidden>
+    <button type="button" data-sicht="" aria-current="true" data-i18n>Kuration</button>
+    <button type="button" data-sicht="eingaben" title="Eingaben der Domäne: Dokumente, Schnittstellen, Code, Rechte und Freigabe (Job-Steuerung)" data-i18n-title data-i18n>Eingaben</button>
+    <button type="button" data-sicht="jobs" title="Schritte der Pipeline ausführen, Stand und Protokolle (Job-Steuerung)" data-i18n-title data-i18n>Jobs</button>
+    <button type="button" data-sicht="lesen" title="Lese-Oberfläche für Entwickler und Tester" data-i18n-title data-i18n>Lesen</button>
+  </nav>
   <div id="stats" class="stats" aria-live="polite"></div>
   <button id="basis-btn" type="button" class="small basis-btn" aria-expanded="false" title="Grundlage der nächsten Entscheidung: Dokumentstellen, Knoten, Quellen, Begründung" data-i18n-title><span data-i18n>Grundlage</span> <span id="basis-count" class="basis-count"></span></button>
   <button id="win-pin" type="button" class="small" hidden></button>
@@ -42,6 +46,7 @@
   </label>
 </header>
 
+<section id="sicht-rahmen" class="sicht-rahmen" hidden><iframe id="sicht-frame" title="Sicht"></iframe></section>
 <main class="layout">
   <aside class="sidebar" aria-label="Suche" data-i18n-aria-label>
     <div class="tabs" role="tablist">

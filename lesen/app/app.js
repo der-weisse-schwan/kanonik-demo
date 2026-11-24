@@ -15,7 +15,7 @@ async function loadLang() {
   document.documentElement.lang = I18N.lang;
   if (I18N.lang === "de") return;
   try {
-    const res = await fetch(`/static/i18n/${I18N.lang}.json`, { cache: "no-store" });
+    const res = await fetch(`static/i18n/${I18N.lang}.json`, { cache: "no-store" });
     if (res.ok) I18N.dict = await res.json();
   } catch { /* ohne Übersetzung: deutsche Texte */ }
 }
@@ -75,7 +75,7 @@ function h(tag, attrs = {}, ...children) {
 const $ = (id) => document.getElementById(id);
 // Statische Lese-Oberfläche der öffentlichen Demo (curator/static/static.js, tools/demo_lesen.py): Dateien statt Server
 const STATIC = !!window.KANONIK_STATIC;
-const ASSET = (window.KANONIK_STATIC && window.KANONIK_STATIC.assets) || "/static/";
+const ASSET = (window.KANONIK_STATIC && window.KANONIK_STATIC.assets) || "static/";
 function pill(status) {
   const s = status || "extracted";
   return h("span", { class: `pill st-${s}`, text: STATUS_DE[s] || s });
@@ -119,10 +119,10 @@ async function api(path, opts = {}) {
 }
 // Nach jeder Änderung (Speichern, Status, Zuordnung, Verknüpfung, Sammelaktion, neuer Begriff …) die Liste links
 // neu laden – Treffer bzw. Beziehungsvorschläge zeigen dann Status und Zählungen ohne „neu laden“ (v62.7.2)
-const NO_REFRESH = ["/api/chat", "/api/chat/key"];
+const NO_REFRESH = ["api/chat", "api/chat/key"];
 function changesData(path, opts) {
   const m = String((opts && opts.method) || "GET").toUpperCase();
-  return m !== "GET" && m !== "HEAD" && path.startsWith("/api/") && !NO_REFRESH.includes(path.split("?")[0]);
+  return m !== "GET" && m !== "HEAD" && path.startsWith("api/") && !NO_REFRESH.includes(path.split("?")[0]);
 }
 // v62.7.4: Vorschläge, die sich durch die Entscheidung schon transitiv ergeben, schließt der Server gleich ab
 // (abgelehnt mit Grund und Weg); hier eigenes Feld mit der Liste und „Rückgängig“ (Sammelentscheidung „transitiv“)
@@ -133,7 +133,7 @@ function showTransitiv(tr) {
   const undo = async () => {
     const user = $("user").value.trim();
     if (!user) { toast(t("Bitte oben einen Bearbeiternamen eintragen."), true); return; }
-    try { const r = await api("/api/batch/undo", { method: "POST", body: JSON.stringify({ batch: tr.batch, user }) });
+    try { const r = await api("api/batch/undo", { method: "POST", body: JSON.stringify({ batch: tr.batch, user }) });
       toast(t("{d} zurückgenommen", { d: r.done })); box.hidden = true;
       if (state.node) openNode(state.node.id, { force: true, label: state.node.type ? null : state.node.label }); }
     catch (e) { toast(e.message, true); }
@@ -167,7 +167,7 @@ async function apiRaw(path, opts) {
   try { body = await res.json(); } catch { /* leer */ }
   if (!res.ok) {
     // Pfad unbekannt (Antwort des Webservers, nicht des Curators): Oberfläche neuer als der laufende Server
-    const stale = res.status === 404 && body && body.detail === "Not Found" && path.startsWith("/api/");
+    const stale = res.status === 404 && body && body.detail === "Not Found" && path.startsWith("api/");
     const err = new Error(stale ? t("Der laufende Curator kennt {p} noch nicht – die Oberfläche ist neuer als der Server. Bitte den Curator neu starten.", { p: path.split("?")[0] })
       : errorText(body) || `HTTP ${res.status}`);
     err.status = res.status; err.body = body;
@@ -247,7 +247,7 @@ function ttl(x) {
 // Abkürzungen im Titel (v63.0.4): <abbr> mit der langen Form beim Zeigen (aus den Begriffen/Rollen, /api/abbreviations)
 const ABBR = { map: {}, rx: null };
 async function loadAbbr() {
-  try { ABBR.map = await api("/api/abbreviations"); } catch { ABBR.map = {}; }
+  try { ABBR.map = await api("api/abbreviations"); } catch { ABBR.map = {}; }
   const keys = Object.keys(ABBR.map).sort((a, b) => b.length - a.length).map((k) => k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
   ABBR.rx = keys.length ? new RegExp(`(?<![\\p{L}\\p{N}])(${keys.join("|")})(?![\\p{L}\\p{N}])`, "gu") : null;
 }
@@ -325,7 +325,7 @@ const isDirty = () => Object.keys(changes()).length > 0;
 // ------------------------------------------------------------------ Kopf, Suche
 async function loadStats() {
   try {
-    const s = await api("/api/stats");
+    const s = await api("api/stats");
     const el = $("stats");
     el.replaceChildren(...Object.keys(STATUS_DE).filter((k) => s[k]).map((k) =>
       h("span", { class: `pill st-${k}`, title: STATUS_DE[k] }, `${STATUS_DE[k]} ${s[k]}`)));
@@ -350,7 +350,7 @@ async function search(more = false, { keep = false } = {}) {
   if (fl.length) p.set("filters", JSON.stringify(fl));
   let res;
   try {
-    res = await api(`/api/search?${p}`);
+    res = await api(`api/search?${p}`);
   } catch (e) { if (isSeq("nodes", seq)) { listDone("nodes"); toast(t("Suche fehlgeschlagen: {msg}", { msg: e.message }), true); } return; }
   if (!isSeq("nodes", seq)) return;                 // inzwischen neuere Suche
   const keepScroll = more || keep ? $("results").scrollTop : 0;
@@ -398,7 +398,7 @@ function activeFilters() {
 async function propKeys(label) {
   const key = label || "";
   if (!state.propKeys[key]) {
-    try { state.propKeys[key] = await api(`/api/props?${new URLSearchParams(label ? { label } : {})}`); }
+    try { state.propKeys[key] = await api(`api/props?${new URLSearchParams(label ? { label } : {})}`); }
     catch (e) { toast(e.message, true); state.propKeys[key] = []; }
   }
   return state.propKeys[key];
@@ -469,11 +469,63 @@ function nodeHash(id, label) {
 }
 function parseHash() {
   const raw = location.hash.slice(1);
-  if (!raw || raw.startsWith("v=")) return null;      // #v=…: Ansicht (Reiter, Kategorie), kein Knoten
+  if (!raw || raw.startsWith("v=") || raw.startsWith("s=")) return null;   // #s=…: Sicht (Eingaben, Jobs)      // #v=…: Ansicht (Reiter, Kategorie), kein Knoten
   if (!raw.startsWith("n=")) return { id: decodeURIComponent(raw), label: null };      // ältere Links: nur die ID
   const p = new URLSearchParams(raw);
   return { id: p.get("n"), label: p.get("l") };
 }
+// ---------------------------------------------------------------- Sichten (v65.119)
+// Eingaben, Jobs und Lesen: die Job-Steuerung bzw. Lese-Oberfläche im selben Fenster, über den Proxy des Curators
+// (kanonik/proxy.py, ein Port, kein CORS). #s=eingaben|jobs|lesen; „Kuration“ führt zur letzten Ansicht zurück.
+const SICHTEN = { eingaben: "jobs/#eingaben", jobs: "jobs/#jobs", lesen: "lesen/" };
+function sichtAusHash() {
+  const raw = location.hash.slice(1);
+  if (!raw.startsWith("s=")) return null;
+  const s = new URLSearchParams(raw).get("s");
+  return SICHTEN[s] ? s : null;
+}
+function zeigeSicht(s, push = true) {
+  s = SICHTEN[s] ? s : null;
+  const fr = $("sicht-frame");
+  $("sicht-rahmen").hidden = !s;
+  document.querySelector("main.layout").hidden = !!s;
+  document.body.classList.toggle("sicht-aktiv", !!s);
+  for (const b of document.querySelectorAll("#sichten button")) b.setAttribute("aria-current", String((b.dataset.sicht || null) === s));
+  if (s && fr.dataset.src !== SICHTEN[s]) {
+    const gleich = fr.dataset.src && fr.dataset.src.split("#")[0] === SICHTEN[s].split("#")[0];
+    try { if (gleich && fr.contentWindow && fr.contentWindow.location.pathname.endsWith(SICHTEN[s].split("#")[0])) fr.contentWindow.location.hash = SICHTEN[s].split("#")[1] || ""; else fr.src = SICHTEN[s]; }
+    catch { fr.src = SICHTEN[s]; }
+    fr.dataset.src = SICHTEN[s];
+  }
+  if (s) fr.title = t({ eingaben: "Eingaben", jobs: "Jobs", lesen: "Lesen" }[s]);
+  if (push) {
+    const h = s ? `#s=${s}` : (state.kurationsHash || "");
+    if (location.hash !== h) history.pushState({ s }, "", h || location.pathname + location.search);
+  }
+  if (!s) state.shownHash = location.hash;
+  state.sicht = s;
+}
+function initSichten() {
+  if (STATIC || !state.config.proxy) return;
+  $("sichten").hidden = false;
+  for (const b of document.querySelectorAll("#sichten button")) {
+    b.addEventListener("click", () => {
+      if (!state.sicht && b.dataset.sicht) state.kurationsHash = location.hash;
+      zeigeSicht(b.dataset.sicht || null);
+    });
+  }
+  // die Job-Steuerung meldet ihre Seite (Eingaben ↔ Jobs innerhalb des Rahmens gewechselt)
+  window.addEventListener("message", (e) => {
+    const s = e.origin === location.origin && e.data && e.data.kanonik_sicht;
+    if (!s || !SICHTEN[s] || !state.sicht || state.sicht === "lesen" || s === state.sicht) return;
+    $("sicht-frame").dataset.src = SICHTEN[s];
+    zeigeSicht(s, false);
+    history.replaceState({ s }, "", `#s=${s}`);
+  });
+  const s = sichtAusHash();
+  if (s) zeigeSicht(s, false);
+}
+
 async function openNode(id, { force = false, push = true, label = null } = {}) {
   if (!force && state.node && isDirty() && id !== state.node.id) {
     state.pending = { id, label };
@@ -486,7 +538,7 @@ async function openNode(id, { force = false, push = true, label = null } = {}) {
   if (label) q.set("label", label);
   const seq = (state.openSeq = (state.openSeq || 0) + 1);
   detailLoading(true);
-  try { node = await api(`/api/node?${q}`); } catch (e) { if (seq === state.openSeq) { detailLoading(false); toast(e.message, true); } return; }
+  try { node = await api(`api/node?${q}`); } catch (e) { if (seq === state.openSeq) { detailLoading(false); toast(e.message, true); } return; }
   if (seq !== state.openSeq) return;                // inzwischen anderer Knoten angefordert: ältere Antwort verwerfen
   detailLoading(false);
   state.node = node; state.selected = id; state.pending = null; state.errors = {};
@@ -719,7 +771,7 @@ async function removeEvidence(n, evs, all) {
   if (all && !window.confirm(t("{n} Quellbelege von „{t}“ entfernen? Sie bleiben auch nach dem nächsten Laden entfernt (Protokoll); die Begründung aus „Grundlage“ wird mitgeschrieben.", { n: evs.length, t: ttl(n) }))) return;
   let res;
   try {
-    res = await api("/api/evidence/action", { method: "POST", body: JSON.stringify({ id: n.id, view_label: n.type ? null : n.label, user, action: "remove",
+    res = await api("api/evidence/action", { method: "POST", body: JSON.stringify({ id: n.id, view_label: n.type ? null : n.label, user, action: "remove",
       items: evs.map((e) => ({ type: e.type, element: e.element_id })), comment: ($("comment") || {}).value || null }) });
   } catch (e) { toast(e.message, true); return; }
   toast(t("{d} Quellbelege entfernt", { d: res.done }));
@@ -805,7 +857,7 @@ function elementsCard(n) {
     const rel = h("input", { type: "checkbox", checked: true });
     const relBox = h("label", { class: "small", hidden: true }, rel, " ", h("span", {}));
     let relId = null;
-    api(`/api/search?${new URLSearchParams({ q: g, label: "Concept", limit: "20" })}`).then((hits) => {
+    api(`api/search?${new URLSearchParams({ q: g, label: "Concept", limit: "20" })}`).then((hits) => {
       const x = (hits || []).find((y) => y.id !== n.id && String(y.title || "").toLowerCase() === g.toLowerCase());
       if (x) { relId = x.id; relBox.hidden = false; relBox.lastChild.textContent = t("verwandt mit „{b}“ (Feldgruppe)", { b: x.title }); }
     }).catch(() => {});
@@ -814,7 +866,7 @@ function elementsCard(n) {
       if (!user) { toast(t("Bitte oben einen Bearbeiternamen eintragen."), true); $("user").focus(); return; }
       const items = rs.filter((r) => fsel.get(key(r)));
       let res;
-      try { res = await api("/api/concept/create", { method: "POST", body: JSON.stringify({ label: de.value.trim(), label_en: en.value.trim() || null,
+      try { res = await api("api/concept/create", { method: "POST", body: JSON.stringify({ label: de.value.trim(), label_en: en.value.trim() || null,
         broader: bro.checked ? n.id : null, related: rel.checked && relId ? relId : null, user,
         items: items.map((r) => ({ start: r.curate.start, type: r.curate.type, end: r.curate.end, start_label: r.curate.start_label || null })),
         comment: ($("comment") || {}).value || t("eigener Begriff für Feldgruppe {g}", { g }) }) }); }
@@ -852,7 +904,7 @@ function elementsCard(n) {
     const rs = chosen();
     if (action === "reject" && !window.confirm(t("{n} Zuordnungen ablehnen?", { n: rs.length }))) return;
     let res;
-    try { res = await api("/api/relation/bulk", { method: "POST", body: JSON.stringify({ action, user,
+    try { res = await api("api/relation/bulk", { method: "POST", body: JSON.stringify({ action, user,
       items: rs.map((r) => ({ start: r.curate.start, type: r.curate.type, end: r.curate.end, start_label: r.curate.start_label || null, expected_status: (r.props || {}).status ?? null })),
       comment: ($("comment") || {}).value || t("Sammelentscheidung Datenelemente → {b}", { b: ttl(n) }) }) }); }
     catch (e) { toast(e.message, true); return; }
@@ -888,7 +940,7 @@ function elementsCard(n) {
     const rs = dchosen();
     if (!window.confirm(t("{n} Entscheidungen zurücksetzen? Die Zuordnungen werden wieder Vorschläge.", { n: rs.length }))) return;
     let res;
-    try { res = await api("/api/relation/bulk", { method: "POST", body: JSON.stringify({ action: "reset", user,
+    try { res = await api("api/relation/bulk", { method: "POST", body: JSON.stringify({ action: "reset", user,
       items: rs.map((r) => ({ start: r.curate.start, type: r.curate.type, end: r.curate.end, start_label: r.curate.start_label || null, expected_status: r.props.status })),
       comment: ($("comment") || {}).value || t("Sammelentscheidung Datenelemente → {b} zurückgesetzt", { b: ttl(n) }) }) }); }
     catch (e) { toast(e.message, true); return; }
@@ -918,7 +970,7 @@ function elementsCard(n) {
     rels.length ? h("div", { class: "actions" }, btnOk, btnNo, footHint) : null);
   render(); drender();
   const ids = [...new Set([...rels, ...done].map((r) => r.other.id))];
-  api(`/api/elements/context?${new URLSearchParams(ids.map((x) => ["ids", x]))}`).then((d) => {
+  api(`api/elements/context?${new URLSearchParams(ids.map((x) => ["ids", x]))}`).then((d) => {
     for (const id of ids) ctx[id] = d[id] || null;
     render(); drender();
   }).catch(() => { for (const id of ids) ctx[id] = null; render(); drender(); });
@@ -946,7 +998,7 @@ function generalCard(n) {
     const user = $("user").value.trim();
     if (!user) { toast(t("Bitte oben einen Bearbeiternamen eintragen."), true); $("user").focus(); return; }
     let res;
-    try { res = await api("/api/relation/bulk", { method: "POST", body: JSON.stringify({ items: rs.map(item), action: "reject", user,
+    try { res = await api("api/relation/bulk", { method: "POST", body: JSON.stringify({ items: rs.map(item), action: "reject", user,
       comment: t("allgemeines Wort: {w}", { w: what }) }) }); }
     catch (e) { toast(e.message, true); return; }
     toast(t("{d} abgelehnt", { d: res.done }) + (res.failed.length ? t(", {f} nicht möglich (inzwischen geändert?)", { f: res.failed.length }) : ""), res.failed.length > 0);
@@ -971,7 +1023,7 @@ function doclingUrl(params) {
   if (window.KANONIK_STATIC && window.KANONIK_STATIC.doclingUrl) return window.KANONIK_STATIC.doclingUrl(params);   // öffentliche Demo
   const p = new URLSearchParams();
   for (const [k, v] of Object.entries(params)) if (v) p.set(k, v);
-  return `/docling/view?${p}`;
+  return `docling/view?${p}`;
 }
 // Kopfleiste „Quellen ▾“: jedes Dokument der Domäne im Document Structure Viewer (am Anfang oder an einem Kapitel)
 // und Code und Schnittstellen in der Quelltext-Ansicht – ohne Umweg über einen Beleg
@@ -987,7 +1039,7 @@ function renderQuellenMenu() {
         h("ul", { class: "quellen-kap" }, ...d.kapitel.map((k) => h("li", {}, h("a", { class: "link", href: doclingUrl({ doc: d.id, section: k.number }),
           target: "docling", rel: "noopener", text: `${k.number} ${k.title}` }))))) : null)),
     ds.length ? null : h("div", { class: "small muted", text: t("keine Dokumente mit Docling-JSON") }),
-    code ? h("div", { class: "quellen-dok" }, h("a", { class: "link", href: "/quelltext", target: "_blank", rel: "noopener",
+    code ? h("div", { class: "quellen-dok" }, h("a", { class: "link", href: "quelltext", target: "_blank", rel: "noopener",
       text: "⌨ " + t("Code und Schnittstellen vollständig ↗") })) : null].filter(Boolean));
 }
 function doclingLink(params, text) {
@@ -995,7 +1047,7 @@ function doclingLink(params, text) {
     title: t("Document Structure Viewer: Gliederung, Seite und Kontext des Belegs (eigenes Fenster)"), text: "📄 " + text });
 }
 async function loadDocling() {
-  try { const r = await fetch("/api/docling/docs"); state.docling = r.ok ? await r.json() : {}; } catch { state.docling = {}; }
+  try { const r = await fetch("api/docling/docs"); state.docling = r.ok ? await r.json() : {}; } catch { state.docling = {}; }
 }
 
 // ------------------------------------------------------------------ Beziehungen
@@ -1124,7 +1176,7 @@ function passesFilter(curate, props) {
 // Ablage „Grundlage“: Dokumentstellen (Quellbelege, Document Structure Viewer), Knoten, Webseiten/Chat, freier Text und eine
 // Begründung. Jede Entscheidung (speichern, verifizieren, bestätigen, ablehnen, verknüpfen, Beziehungsart ändern)
 // nimmt sie mit ins Protokoll; danach ist die Ablage leer (außer „behalten“).
-const DECISION_PATHS = ["/api/node/action", "/api/relation/action", "/api/relation/bulk", "/api/relation/retype", "/api/link/action", "/api/evidence/action"];
+const DECISION_PATHS = ["api/node/action", "api/relation/action", "api/relation/bulk", "api/relation/retype", "api/link/action", "api/evidence/action"];
 const BASIS_ART = () => ({ dokument: t("Dokument"), knoten: t("Knoten"), regel: t("Regel"), llm: t("Sprachmodell"), ontologie: t("Ontologie"),
   chat: t("Chat"), extern: t("Quelle"), text: t("Text") });
 function basisLabel(g) {
@@ -1457,7 +1509,7 @@ function linkForm(n) {
     let hits = [];
     const prm = new URLSearchParams({ q, scope: "link", limit: "15" });
     if (otherBox.checked) prm.set("lang", other);
-    try { hits = await api(`/api/search?${prm}`); } catch (e) { toast(e.message, true); return; }
+    try { hits = await api(`api/search?${prm}`); } catch (e) { toast(e.message, true); return; }
     list.replaceChildren(...hits.filter((x) => x.id !== n.id).map((x) => h("li", {},
       h("button", { type: "button", class: "link", onclick: () => {
         const [lt, dir] = sel.value.split(":");
@@ -1487,7 +1539,7 @@ async function doLinkAction(action, start, type, end, startLabel, endLabel, forc
   const payload = { start, type, end, action, user, comment: ($("comment") || {}).value || null,
     start_label: startLabel || null, end_label: endLabel || null, view_id: n.id, view_label: n.type ? null : n.label, force };
   try {
-    const res = await api("/api/link/action", { method: "POST", body: JSON.stringify(payload) });
+    const res = await api("api/link/action", { method: "POST", body: JSON.stringify(payload) });
     if (res.node) applyNodeUpdate(res.node);
     const lt = linkTypes()[type] || {};
     toast(`${LINK_ACTION_DE[action]}: ${lt.title || type}${res.status === "rejected" ? " (" + t("Vorschlag abgelehnt") + ")" : ""}`);
@@ -1510,7 +1562,7 @@ async function doRelAction(curate, action, currentStatus) {
     comment: ($("comment") || {}).value || null, expected_status: currentStatus === "source" ? null : (currentStatus ?? null),
     view_id: n.id, view_label: n.type ? null : n.label };
   try {
-    const res = await api("/api/relation/action", { method: "POST", body: JSON.stringify(payload) });
+    const res = await api("api/relation/action", { method: "POST", body: JSON.stringify(payload) });
     if (res.node) applyNodeUpdate(res.node);
     toast(`${REL_ACTION_DE[action]}: ${curate.type} → ${curate.end}`);
     renderDetail(); loadHistory(n.id);
@@ -1576,7 +1628,7 @@ async function loadSources() {
   const seq = listLoading("src");
   detailLoading(true);
   let res;
-  try { res = await api("/api/quellen"); } catch (e) { if (isSeq("src", seq)) { listDone("src"); detailLoading(false); toast(e.message, true); } return; }
+  try { res = await api("api/quellen"); } catch (e) { if (isSeq("src", seq)) { listDone("src"); detailLoading(false); toast(e.message, true); } return; }
   if (!isSeq("src", seq)) return;
   listDone("src"); detailLoading(false);
   if (state.tab !== "src") return;
@@ -1597,7 +1649,7 @@ function renderSourceList() {
 async function srcDecide(v, entscheidung, felder = {}) {
   const user = $("user").value.trim();
   if (!user) { toast(t("Bitte oben einen Bearbeiternamen eintragen."), true); $("user").focus(); return; }
-  try { await api("/api/quellen/entscheiden", { method: "POST", body: JSON.stringify({ url: v.url, entscheidung, user, titel: v.titel, ...felder }) }); }
+  try { await api("api/quellen/entscheiden", { method: "POST", body: JSON.stringify({ url: v.url, entscheidung, user, titel: v.titel, ...felder }) }); }
   catch (e) { toast(e.message, true); return; }
   toast(t("„{t}“: {e}", { t: v.titel, e: SRC_DEC()[entscheidung] }));
   loadSources();
@@ -1668,8 +1720,8 @@ function srcSearchCard() {
       h("span", { class: "muted", text: t("bis {n} Suchen × {p} USD zzgl. Tokens", { n: s.max_suchen, p: s.preis_je_suche }) })),
     s.themen.length ? h("div", { class: "small muted", text: t("Themen der Domäne: {t}", { t: s.themen.join(" · ") }) }) : null,
     ro ? null : [themen, doms, h("div", { class: "el-bar" },
-      h("button", { type: "button", class: "small", onclick: () => srcRun("/api/quellen/suchen", body(true), card) }, t("Anfrage ansehen (ohne Senden)")),
-      h("button", { type: "button", class: "small primary", disabled: !(s.freigegeben && s.schluessel), onclick: () => srcRun("/api/quellen/suchen", body(false), card,
+      h("button", { type: "button", class: "small", onclick: () => srcRun("api/quellen/suchen", body(true), card) }, t("Anfrage ansehen (ohne Senden)")),
+      h("button", { type: "button", class: "small primary", disabled: !(s.freigegeben && s.schluessel), onclick: () => srcRun("api/quellen/suchen", body(false), card,
         t("Suche mit der Claude API starten? Kosten bis etwa {u} USD für Suchen zzgl. Tokens.", { u: (s.max_suchen * s.preis_je_suche).toFixed(2) })) }, t("Suche starten")))]);
   return card;
 }
@@ -1679,8 +1731,8 @@ function srcAddCard() {
   const card = h("div", { class: "card" }, h("h2", { text: t("Markierte aufnehmen") }),
     h("div", { class: "small", text: t("Lädt jede Quelle mit „aufnehmen“ von genau der eingetragenen Adresse (PDF-Fassung bevorzugt), legt sie unter input/quellen/ ab, trägt sie in input/inputs.json ein und wandelt sie mit Docling um. Webseiten werden nur gemeldet.") }),
     ro ? null : h("div", { class: "el-bar" }, h("label", { class: "small" }, umw, " ", t("mit Docling umwandeln")),
-      h("button", { type: "button", class: "small", disabled: !n, onclick: () => srcRun("/api/quellen/aufnehmen", { trocken: true }, card) }, t("Vorschau")),
-      h("button", { type: "button", class: "small primary", disabled: !n, onclick: () => srcRun("/api/quellen/aufnehmen", { trocken: false, umwandeln: umw.checked }, card,
+      h("button", { type: "button", class: "small", disabled: !n, onclick: () => srcRun("api/quellen/aufnehmen", { trocken: true }, card) }, t("Vorschau")),
+      h("button", { type: "button", class: "small primary", disabled: !n, onclick: () => srcRun("api/quellen/aufnehmen", { trocken: false, umwandeln: umw.checked }, card,
         tp(n, "1 Quelle jetzt laden und aufnehmen?", "{n} Quellen jetzt laden und aufnehmen?")) }, tp(n, "1 Quelle aufnehmen", "{n} Quellen aufnehmen"))),
     state.src.letzte_aufnahme ? h("details", { class: "small" }, h("summary", { text: t("Bericht der letzten Aufnahme") }),
       h("pre", { style: "white-space:pre-wrap", tabindex: "0", text: state.src.letzte_aufnahme })) : null);
@@ -1693,7 +1745,7 @@ function renderSources(cat) {
   const s = state.src;
   const [, title, hint] = SRC_CATS().find((x) => x[0] === cat);
   const parts = [h("div", { class: "node-head" }, h("h1", { text: title }), h("div", { class: "muted small" }, hint, " · ",
-    h("a", { href: "/quelltext", target: "_blank", rel: "noopener", text: t("Code und Schnittstellen vollständig ↗") })))];
+    h("a", { href: "quelltext", target: "_blank", rel: "noopener", text: t("Code und Schnittstellen vollständig ↗") })))];
   if (cat === "vorhanden") {
     parts.push(h("div", { class: "card" }, h("div", { class: "table-wrap" }, h("table", { class: "paths review" },
       h("thead", {}, h("tr", {}, ...[t("Eingabe"), t("Art"), t("Fassung"), t("abgerufen"), t("Quelle"), t("Rechte"), t("Stand")].map((x) => h("th", { text: x })))),
@@ -1779,7 +1831,7 @@ async function loadGaps() {
   const seq = listLoading("gap");
   detailLoading(true);
   let res;
-  try { [res, state.gapSichten] = await Promise.all([api("/api/luecken"), api("/api/luecken/sichten")]); }
+  try { [res, state.gapSichten] = await Promise.all([api("api/luecken"), api("api/luecken/sichten")]); }
   catch (e) { if (isSeq("gap", seq)) { listDone("gap"); detailLoading(false); toast(e.message, true); } return; }
   if (!isSeq("gap", seq)) return;
   listDone("gap"); detailLoading(false);
@@ -1810,7 +1862,7 @@ function renderGapList() {
 async function gapDecide(x, entscheidung, kommentar, nachher) {
   const user = $("user").value.trim();
   if (!user) { toast(t("Bitte oben einen Bearbeiternamen eintragen."), true); $("user").focus(); return; }
-  try { await api("/api/luecken/entscheiden", { method: "POST", body: JSON.stringify({ schluessel: x.schluessel, entscheidung, user, kommentar, titel: x.titel }) }); }
+  try { await api("api/luecken/entscheiden", { method: "POST", body: JSON.stringify({ schluessel: x.schluessel, entscheidung, user, kommentar, titel: x.titel }) }); }
   catch (e) { toast(e.message, true); return; }
   toast(t("„{t}“: {e}", { t: x.titel, e: GAP_DEC()[entscheidung] }));
   if (nachher) {                                         // z. B. aus dem BPMN-Graph: Ansicht behalten, nur Stand nachführen
@@ -1928,7 +1980,7 @@ function gapSuche() {
   const ix = state.gapIndex;
   const f = state.gapSuche = { ...GAP_SUCHE_LEER(), ...(state.gapSuche || {}) };
   if (!ix) {
-    api("/api/luecken/suche").then((r) => { state.gapIndex = r; if (state.gapCat === "suche") renderGaps("suche"); })
+    api("api/luecken/suche").then((r) => { state.gapIndex = r; if (state.gapCat === "suche") renderGaps("suche"); })
       .catch((e) => toast(e.message, true));
     return [h("div", { class: "muted small", text: t("Suchindex wird geladen …") })];
   }
@@ -2044,7 +2096,7 @@ function gapSuche() {
     clearTimeout(gapSuche.tm);
     gapSuche.tm = setTimeout(async () => {
       let r;
-      try { r = await api(`/api/luecken/volltext?${new URLSearchParams({ q })}`); } catch (e) { return; }
+      try { r = await api(`api/luecken/volltext?${new URLSearchParams({ q })}`); } catch (e) { return; }
       if (nr !== gapSuche.seq) return;
       const w = gapNorm(q).split(/\s+/).filter(Boolean);
       const passt = (s) => { const n = gapNorm(s); return w.every((x) => n.includes(x)); };
@@ -2068,7 +2120,7 @@ function gapSuche() {
 function quellLink(par, text) {
   if (STATIC || (par.art !== "schnittstelle" && state.config.readonly && !state.config.viewer)) return null;
   const q = new URLSearchParams(Object.entries(par).filter(([, v]) => v !== undefined && v !== null && v !== "" && v !== 0));
-  return h("a", { href: `/quelltext?${q}`, target: "_blank", rel: "noopener", class: "quell-link small", title: t("ganze Datei in der Quelltext-Ansicht") },
+  return h("a", { href: `quelltext?${q}`, target: "_blank", rel: "noopener", class: "quell-link small", title: t("ganze Datei in der Quelltext-Ansicht") },
     text || t("ganze Datei ↗"));
 }
 const CODE_BELEG = /^([\w./\\-]+\.(?:java|bpmn|dmn|kt|groovy|xml|ya?ml|properties|json|ts|js|py)):\s*(.*)$/;
@@ -2094,7 +2146,7 @@ function gapCode(c) {
   const btn = h("button", { type: "button", class: "small mono", title: c.datei, onclick: async () => {
     if (box.firstChild) { box.replaceChildren(); return; }
     let r;
-    try { r = await api(`/api/luecken/code?${new URLSearchParams({ datei: c.datei, zeile: c.zeile || 0, such: c.such || "" })}`); }
+    try { r = await api(`api/luecken/code?${new URLSearchParams({ datei: c.datei, zeile: c.zeile || 0, such: c.such || "" })}`); }
     catch (e) { toast(e.message, true); return; }
     const pre = h("pre", { class: "code", tabindex: "0" }, ...r.zeilen.map((z, i) => h("div", {
       class: r.start + i === r.zeile ? "gap-code-hl" : "" }, h("span", { class: "muted", text: String(r.start + i).padStart(4) + "  " }), z)));
@@ -2185,7 +2237,7 @@ const AM_ZWECK = () => ({ "model.xml": t("für Archi und andere ArchiMate-Werkze
   "load.cypher": t("für Neo4j: in den Graphen der Domäne laden") });
 async function amHerunterladen(name) {
   try {
-    const r = await fetch(`/api/archimate/datei?${new URLSearchParams({ name })}`);
+    const r = await fetch(`api/archimate/datei?${new URLSearchParams({ name })}`);
     if (!r.ok) throw new Error(t("Datei nicht verfügbar: {f}", { f: name }));
     const a = h("a", { href: URL.createObjectURL(await r.blob()), download: name });
     document.body.append(a); a.click(); a.remove();
@@ -2255,7 +2307,7 @@ function amDiagramm(m, els) {
 }
 function gapArchitektur() {
   if (!state.archimate) {
-    api("/api/archimate").then((r) => { state.archimate = r; if (state.gapCat === "architektur") renderGaps("architektur"); })
+    api("api/archimate").then((r) => { state.archimate = r; if (state.gapCat === "architektur") renderGaps("architektur"); })
       .catch((e) => toast(e.message, true));
     return [h("div", { class: "muted small", text: t("ArchiMate-Modell wird geladen …") })];
   }
@@ -2327,7 +2379,7 @@ function trListe(xs, text, titel) {
 }
 function gapMatrix() {
   if (!state.trMatrix) {
-    api("/api/traceability").then((r) => { state.trMatrix = r; if (state.gapCat === "matrix") renderGaps("matrix"); })
+    api("api/traceability").then((r) => { state.trMatrix = r; if (state.gapCat === "matrix") renderGaps("matrix"); })
       .catch((e) => toast(e.message, true));
     return [h("div", { class: "muted small", text: t("Matrix wird geladen …") })];
   }
@@ -2407,7 +2459,7 @@ function impName(g, key) { const n = g.knoten[key] || {}; return n.name || key; 
 function zuImpact(key) { state.impStart = key; zuAnsicht("gap", "impact"); if (state.gapCat === "impact") renderGaps("impact"); }
 function gapImpact() {
   if (!state.impGraph) {
-    api("/api/impact/graph").then((r) => { state.impGraph = r; if (state.gapCat === "impact") renderGaps("impact"); })
+    api("api/impact/graph").then((r) => { state.impGraph = r; if (state.gapCat === "impact") renderGaps("impact"); })
       .catch((e) => toast(e.message, true));
     return [h("div", { class: "muted small", text: t("Wirkungsgraph wird geladen …") })];
   }
@@ -2464,7 +2516,7 @@ function gapImpact() {
 const AB_ART = () => ({ Service: t("Dienste"), Operation: t("Operationen"), Message: t("Nachrichten"), Field: t("Felder"), DataElement: t("Datenelemente") });
 function gapAbdeckung() {
   if (!state.abdeckung) {
-    api("/api/abdeckung").then((r) => { state.abdeckung = r; if (state.gapCat === "abdeckung") renderGaps("abdeckung"); })
+    api("api/abdeckung").then((r) => { state.abdeckung = r; if (state.gapCat === "abdeckung") renderGaps("abdeckung"); })
       .catch((e) => toast(e.message, true));
     return [h("div", { class: "muted small", text: t("Abdeckung wird berechnet …") })];
   }
@@ -2565,7 +2617,7 @@ function baumLuecke(n) {
 }
 function gapBaum() {
   if (!state.baum) {
-    api("/api/aufgaben").then((r) => { state.baum = r; if (state.gapCat === "baum") renderGaps("baum"); })
+    api("api/aufgaben").then((r) => { state.baum = r; if (state.gapCat === "baum") renderGaps("baum"); })
       .catch((e) => toast(e.message, true));
     return [h("div", { class: "muted small", text: t("Lückenbaum wird aufgebaut …") })];
   }
@@ -2586,7 +2638,7 @@ function gapBaum() {
 // ------------------------------------------------------------------ Steckbrief der Domäne (UC1, kanonik/steckbrief.py)
 function gapSteckbrief() {
   if (!state.steckbrief) {
-    api("/api/steckbrief").then((r) => { state.steckbrief = r; if (state.gapCat === "steckbrief") renderGaps("steckbrief"); })
+    api("api/steckbrief").then((r) => { state.steckbrief = r; if (state.gapCat === "steckbrief") renderGaps("steckbrief"); })
       .catch((e) => toast(e.message, true));
     return [h("div", { class: "muted small", text: t("Steckbrief wird geladen …") })];
   }
@@ -2635,7 +2687,7 @@ function gapSteckbrief() {
 }
 function gapZuordnungLaden(cat) {
   if (state.gapZuordnung) return true;
-  api("/api/luecken/zuordnung").then((r) => { state.gapZuordnung = r; if (state.gapCat === cat) renderGaps(cat); })
+  api("api/luecken/zuordnung").then((r) => { state.gapZuordnung = r; if (state.gapCat === cat) renderGaps(cat); })
     .catch((e) => toast(e.message, true));
   return false;
 }
@@ -2788,7 +2840,7 @@ async function loadDecisions() {
   const seq = listLoading("dec");
   detailLoading(true);
   let res;
-  try { [res, state.batches] = await Promise.all([api("/api/decisions"), api("/api/batches")]); } catch (e) { if (isSeq("dec", seq)) { listDone("dec"); detailLoading(false); toast(e.message, true); } return; }
+  try { [res, state.batches] = await Promise.all([api("api/decisions"), api("api/batches")]); } catch (e) { if (isSeq("dec", seq)) { listDone("dec"); detailLoading(false); toast(e.message, true); } return; }
   if (!isSeq("dec", seq)) return;
   listDone("dec"); detailLoading(false);
   if (state.tab !== "dec") return;
@@ -2806,7 +2858,7 @@ async function undoBatch(b) {
     : t("{n} Entscheidungen dieser Sammelentscheidung zurücksetzen? Die Zuordnungen werden wieder Vorschläge.", { n: b.n });
   if (!window.confirm(what)) return;
   let res;
-  try { res = await api("/api/batch/undo", { method: "POST", body: JSON.stringify({ batch: b.batch, user, comment: ($("comment") || {}).value || null }) }); }
+  try { res = await api("api/batch/undo", { method: "POST", body: JSON.stringify({ batch: b.batch, user, comment: ($("comment") || {}).value || null }) }); }
   catch (e) { toast(e.message, true); return; }
   toast(t("{d} zurückgenommen", { d: res.done }) + (res.failed.length ? t(", {f} nicht möglich (inzwischen geändert?)", { f: res.failed.length }) : ""), res.failed.length > 0);
   if (res.failed.length) console.warn(res.failed);
@@ -2892,7 +2944,7 @@ function renderDecisions(cat) {
           : [h("div", { class: "muted", text: t("keine – alles im grünen Bereich") })])].filter(Boolean));
       renderDecisionList();
     };
-    api("/api/agent/auswertung").then(show).catch((e) => card.replaceChildren(h("div", { class: "muted", text: e.message })));
+    api("api/agent/auswertung").then(show).catch((e) => card.replaceChildren(h("div", { class: "muted", text: e.message })));
   } else if (cat === "sammel") {
     const bs = state.batches || { n: 0, items: [] };
     parts.push(h("div", { class: "card" }, ...(bs.items.length ? bs.items.map(batchItem) : [h("div", { class: "muted", text: t("keine") }),
@@ -2925,7 +2977,7 @@ async function loadReview() {
   const seq = listLoading("review");
   detailLoading(true);
   let res;
-  try { res = await api("/api/review"); } catch (e) { if (isSeq("review", seq)) { listDone("review"); detailLoading(false); toast(e.message, true); } return; }
+  try { res = await api("api/review"); } catch (e) { if (isSeq("review", seq)) { listDone("review"); detailLoading(false); toast(e.message, true); } return; }
   if (!isSeq("review", seq)) return;
   listDone("review"); detailLoading(false);
   if (state.tab !== "review") return;
@@ -3018,7 +3070,7 @@ function chapterKindCard(docId) {
           if (!user) { toast(t("Bitte oben einen Bearbeiternamen eintragen."), true); $("user").focus(); return; }
           btn.disabled = true;
           try {
-            const res = await api("/api/node/action", { method: "POST", body: JSON.stringify({ id: r.id, action: "save", rev: r.rev, user, changes: { chapterKind: other } }) });
+            const res = await api("api/node/action", { method: "POST", body: JSON.stringify({ id: r.id, action: "save", rev: r.rev, user, changes: { chapterKind: other } }) });
             Object.assign(r, { kind: other, rev: res.node.rev, label: res.node.label, reason: "Kurator" });
             data.counts[other] += 1; data.counts[r.kind === "prozess" ? "kapitel" : "prozess"] -= 1;
             toast(t("{c}: jetzt {k}", { c: r.title, k: KIND_DE[other] }));
@@ -3034,7 +3086,7 @@ function chapterKindCard(docId) {
     body.replaceChildren(head, tbl);
   };
   filter.addEventListener("change", () => { storage("curator.kindFilter", filter.value); if (data) render(); });
-  api(`/api/chapters?${new URLSearchParams({ doc: docId })}`).then((d) => { data = d; render(); })
+  api(`api/chapters?${new URLSearchParams({ doc: docId })}`).then((d) => { data = d; render(); })
     .catch((e) => body.replaceChildren(h("div", { class: "muted", text: e.message })));
   return card;
 }
@@ -3049,7 +3101,7 @@ function replayCard() {
   const prev = h("button", { type: "button" }, t("Vorschau: was wird zusammengeführt?"));
   prev.addEventListener("click", async () => {
     let r;
-    try { r = await api("/api/replay/preview"); } catch (e) { toast(e.message, true); return; }
+    try { r = await api("api/replay/preview"); } catch (e) { toast(e.message, true); return; }
     out.replaceChildren(r.items.length
       ? h("div", {}, h("div", { class: "small", text: t("{n} Knoten gehen auf:", { n: r.items.length }) }),
         h("div", { class: "table-wrap" }, h("table", { class: "paths" },
@@ -3064,7 +3116,7 @@ function replayCard() {
     run.disabled = prev.disabled = true;
     run.textContent = t("läuft …");
     let r;
-    try { r = await api("/api/replay", { method: "POST", body: JSON.stringify({ user }) }); }
+    try { r = await api("api/replay", { method: "POST", body: JSON.stringify({ user }) }); }
     catch (e) { toast(e.message, true); run.disabled = prev.disabled = false; run.textContent = t("Jetzt einspielen"); return; }
     const n = Object.keys(r.zusammengefuehrt || {}).length;
     toast(t("Eingespielt: {n} Knoten zusammengeführt", { n }));
@@ -3074,7 +3126,7 @@ function replayCard() {
     loadStats();
     const cur = state.node && r.zusammengefuehrt && r.zusammengefuehrt[state.node.id];
     if (cur) openNode(cur, { force: true });
-    try { state.review = await api("/api/review"); renderReviewList(); } catch (e) { /* Anzeige bleibt */ }
+    try { state.review = await api("api/review"); renderReviewList(); } catch (e) { /* Anzeige bleibt */ }
   });
   box.append(h("div", { class: "actions-row" }, prev, run), out);
   return box;
@@ -3093,7 +3145,7 @@ async function initChat() {
   if (storage("curator.chatOpen") === "1") toggleChat(true);
 }
 async function chatStatus() {
-  try { CHAT.status = await api("/api/chat/status"); } catch (e) { CHAT.status = { enabled: false, grund: e.message }; }
+  try { CHAT.status = await api("api/chat/status"); } catch (e) { CHAT.status = { enabled: false, grund: e.message }; }
   const s = CHAT.status;
   $("chat-model").textContent = s.modell ? `${s.modell}${s.cloud ? " · Cloud" : ""}` : "";
   $("chat-model").title = s.ziel ? t("Fragen und Ausschnitte aus dem Graphen gehen an: {z}", { z: s.ziel }) : "";
@@ -3104,7 +3156,7 @@ async function chatStatus() {
     if (s.key_needed) {
       const k = h("input", { type: "password", placeholder: t("API-Schlüssel"), autocomplete: "off", class: "chat-key" });
       note.append(h("form", { class: "chat-keyform", onsubmit: async (e) => { e.preventDefault();
-        try { await api("/api/chat/key", { method: "POST", body: JSON.stringify({ key: k.value }) }); k.value = ""; await chatStatus(); }
+        try { await api("api/chat/key", { method: "POST", body: JSON.stringify({ key: k.value }) }); k.value = ""; await chatStatus(); }
         catch (err) { toast(err.message, true); } } }, k, h("button", { type: "submit", class: "small" }, t("übernehmen")),
         h("div", { class: "muted small", text: t("Nur am Rechner des Servers; bleibt im Speicher des Servers, bis er beendet wird.") })));
     }
@@ -3186,7 +3238,7 @@ async function chatAsk(refresh = false) {
   }
   CHAT.busy = true; renderChat();
   try {
-    const r = await api("/api/chat", { method: "POST", body: JSON.stringify({ neu: refresh,
+    const r = await api("api/chat", { method: "POST", body: JSON.stringify({ neu: refresh,
       messages: CHAT.msgs.map((m) => ({ role: m.role, content: m.content })) }) });
     CHAT.msgs.push({ role: "assistant", content: r.antwort, refs: r.refs, modell: r.modell, usage: r.usage, werkzeuge: r.werkzeuge,
       dauer_s: r.dauer_s, cached: r.cached, cached_at: r.cached_at });
@@ -3201,7 +3253,7 @@ async function loadOnto(force = false) {
   if (!state.onto || force) {
     const seq = listLoading("onto");
     let res;
-    try { res = await api("/api/onto/tree"); } catch (e) { if (isSeq("onto", seq)) { listDone("onto"); toast(e.message, true); } return; }
+    try { res = await api("api/onto/tree"); } catch (e) { if (isSeq("onto", seq)) { listDone("onto"); toast(e.message, true); } return; }
     if (!isSeq("onto", seq)) return;
     listDone("onto");
     state.onto = res;
@@ -3273,7 +3325,7 @@ async function renderOnto(id, offset = 0) {
   renderOntoList();
   detailLoading(true);
   let c;
-  try { c = await api(`/api/onto/class?${new URLSearchParams({ id, offset: String(offset) })}`); }
+  try { c = await api(`api/onto/class?${new URLSearchParams({ id, offset: String(offset) })}`); }
   catch (e) { toast(e.message, true); return; } finally { detailLoading(false); }
   if (state.ontoSel !== id || state.tab !== "onto") return;
   const row = (label, v) => v && (!Array.isArray(v) || v.length) ? h("tr", {}, h("th", { text: label }), h("td", { text: Array.isArray(v) ? v.join(" · ") : v })) : null;
@@ -3317,7 +3369,7 @@ async function loadMeta(force = false) {
   if (!state.meta || force) {
     const seq = listLoading("meta");
     let res;
-    try { res = await api("/api/metamodel"); } catch (e) { if (isSeq("meta", seq)) { listDone("meta"); toast(e.message, true); } return; }
+    try { res = await api("api/metamodel"); } catch (e) { if (isSeq("meta", seq)) { listDone("meta"); toast(e.message, true); } return; }
     if (!isSeq("meta", seq)) return;
     listDone("meta");
     state.meta = res;
@@ -3530,7 +3582,7 @@ function ruleFormsCard(n) {
   const cached = (state.ruleForms ||= {})[n.id];
   const fill = (d) => renderRuleForms(card, n, d);
   if (cached) fill(cached);
-  else api(`/api/rule_forms?${new URLSearchParams({ id: n.id })}`).then((d) => { state.ruleForms[n.id] = d; if (state.node && state.node.id === n.id) fill(d); })
+  else api(`api/rule_forms?${new URLSearchParams({ id: n.id })}`).then((d) => { state.ruleForms[n.id] = d; if (state.node && state.node.id === n.id) fill(d); })
     .catch((e) => card.replaceChildren(h("h2", { text: t("Formen und Testfälle") }), h("div", { class: "muted", text: e.message })));
   return card;
 }
@@ -3573,7 +3625,7 @@ function artifactView(a, d) {
       h("div", { class: "small muted", text: t("{n} Prüfung(en)", { n: a.checks || 0 }) }),
       d.tests.length ? h("div", { class: "small" }, h("button", { type: "button", class: "link", onclick: () => { state.ruleFormTab = "TESTS"; renderDetail(); } },
         t("{n} Testfälle ansehen", { n: d.tests.length })),
-        state.config.rules_page ? [" · ", h("a", { href: `/rules#${local}`, target: "_blank", rel: "noopener", text: t("in der Regel-Vorführung") })] : null) : null,
+        state.config.rules_page ? [" · ", h("a", { href: `rules#${local}`, target: "_blank", rel: "noopener", text: t("in der Regel-Vorführung") })] : null) : null,
       codeBlock(a.snippet || ""));
   }
   if (a.form === "ODRL") {
@@ -3588,7 +3640,7 @@ function artifactView(a, d) {
       h("button", { type: "button", class: "link", onclick: () => box._focus && box._focus(id) }, (a.elementNames || [])[i] || id),
       h("span", { class: "muted small mono", text: ` ${id} · ${(a.elementKinds || [])[i] || ""}` }))));
     const view = h("div", { class: "artifact" }, head, h("div", { class: "small", text: a.summary || "" }), list, box,
-      h("div", { class: "small" }, h("a", { href: `/api/bpmn_xml?${new URLSearchParams({ file: a.bpmnFile })}`, download: a.bpmnFile, text: t("BPMN-Datei herunterladen") }),
+      h("div", { class: "small" }, h("a", { href: `api/bpmn_xml?${new URLSearchParams({ file: a.bpmnFile })}`, download: a.bpmnFile, text: t("BPMN-Datei herunterladen") }),
         h("span", { class: "muted", text: t(" (z. B. im Camunda Modeler öffnen)") })));
     setTimeout(() => showBpmn(box, a), 0);
     return view;
@@ -3598,7 +3650,7 @@ function artifactView(a, d) {
     setTimeout(() => showDmn(box, a.decisionId), 0);
     return h("div", { class: "artifact" }, head, h("div", { class: "small", text: a.summary || "" }),
       h("div", { class: "small" }, t("Knoten") + ": ", nodeLink({ id: `${(state.node.id.split(":")[0])}:dmn:${a.decisionId}`, label: "DmnDecision", title: a.title })),
-      box, h("div", { class: "small" }, h("a", { href: `/api/dmn_xml?${new URLSearchParams({ decision: a.decisionId })}`, download: a.dmnFile || `${a.decisionId}.dmn`, text: t("DMN-Datei herunterladen") })));
+      box, h("div", { class: "small" }, h("a", { href: `api/dmn_xml?${new URLSearchParams({ decision: a.decisionId })}`, download: a.dmnFile || `${a.decisionId}.dmn`, text: t("DMN-Datei herunterladen") })));
   }
   return h("div", { class: "artifact" }, head, h("div", { text: a.summary || "" }), a.snippet ? codeBlock(a.snippet) : null);
 }
@@ -3622,7 +3674,7 @@ function readinessCard(n) {
   const card = h("details", { class: "card readiness", open: state.display.readinessOpen !== false },
     h("summary", { text: t("Umsetzbarkeit im Code") }), loadingEl());
   card.addEventListener("toggle", () => { state.display.readinessOpen = card.open; });
-  api(`/api/rule_readiness?${new URLSearchParams({ id: n.id })}`).then((r) => { if (state.node && state.node.id === n.id) renderReadiness(card, r); })
+  api(`api/rule_readiness?${new URLSearchParams({ id: n.id })}`).then((r) => { if (state.node && state.node.id === n.id) renderReadiness(card, r); })
     .catch((e) => card.replaceChildren(h("summary", { text: t("Umsetzbarkeit im Code") }), h("div", { class: "muted", text: e.message })));
   return card;
 }
@@ -3703,7 +3755,7 @@ function readinessOverviewCard(docId) {
     const pg = () => pagerEl(rows.length, page, PAGE_RR, (p) => { page = p; render(); card.scrollIntoView({ block: "start" }); });
     body.replaceChildren(...[stages, gaps, h("div", { class: "muted small", text: tp(rows.length, "1 Regel", "{n} Regeln") }), pg(), tbl, pg()].filter(Boolean));
   };
-  api(`/api/rule_readiness/overview?${new URLSearchParams({ doc: docId })}`).then((d) => { data = d; render(); })
+  api(`api/rule_readiness/overview?${new URLSearchParams({ doc: docId })}`).then((d) => { data = d; render(); })
     .catch((e) => body.replaceChildren(h("div", { class: "muted", text: e.message })));
   return card;
 }
@@ -3755,7 +3807,7 @@ function dddAlignmentCard(docId, contextId = null) {
   const load = () => {
     const q = new URLSearchParams({ doc: docId });
     if (contextId) q.set("context", contextId);
-    api(`/api/ddd_alignment?${q}`).then((d) => { data = d; render(); }).catch((e) => body.replaceChildren(h("div", { class: "muted", text: e.message })));
+    api(`api/ddd_alignment?${q}`).then((d) => { data = d; render(); }).catch((e) => body.replaceChildren(h("div", { class: "muted", text: e.message })));
   };
   if (card.open) load(); else card.addEventListener("toggle", () => { if (card.open && !data) load(); }, { once: false });
   card.addEventListener("toggle", () => { if (!contextId) state.display.dddAlignOpen = card.open; });
@@ -3770,7 +3822,7 @@ function schemaCard(n, message = null) {
   const q = new URLSearchParams({ id: n.id });
   if (!n.type) q.set("label", n.label);
   if (message) q.set("message", message);
-  api(`/api/schema?${q}`).then((d) => { if (state.node && state.node.id === n.id) renderSchema(card, n, d); })
+  api(`api/schema?${q}`).then((d) => { if (state.node && state.node.id === n.id) renderSchema(card, n, d); })
     .catch((e) => card.replaceChildren(h("summary", { text: t("Schnittstelle: Struktur und Dokument") }), h("div", { class: "muted", text: e.message })));
   return card;
 }
@@ -3851,7 +3903,7 @@ function schemaDocs(d) {
   let lines = [], cur = -1;
   const show = async () => {
     const doc = d.docs[Number(sel.value)];
-    dl.href = `/api/schema/file?${new URLSearchParams({ container: doc.container || "", file: doc.file })}`;
+    dl.href = `api/schema/file?${new URLSearchParams({ container: doc.container || "", file: doc.file })}`;
     dl.setAttribute("download", doc.file.split("/").pop());
     if (!doc.available) { pre.replaceChildren(h("div", { class: "muted small", text: t("Die Datei liegt nicht in den Eingaben (input/inputs.json, Rolle wsdl).") })); return; }
     pre.replaceChildren(loadingEl());
@@ -3896,7 +3948,7 @@ function schemaDocs(d) {
   sel.addEventListener("change", () => { cur = -1; show(); });
   const voll = h("a", { target: "_blank", rel: "noopener", class: "small", text: t("vollständig ansehen ↗"), title: t("ganze Datei in der Quelltext-Ansicht") });
   const vollSetzen = () => { const doc = d.docs[Number(sel.value)];
-    voll.href = `/quelltext?${new URLSearchParams({ art: "schnittstelle", container: doc.container || "", file: doc.file, such: ((doc.paths || [])[0] || "").split("/").pop() || (doc.texts || [])[0] || "" })}`; };
+    voll.href = `quelltext?${new URLSearchParams({ art: "schnittstelle", container: doc.container || "", file: doc.file, such: ((doc.paths || [])[0] || "").split("/").pop() || (doc.texts || [])[0] || "" })}`; };
   sel.addEventListener("change", vollSetzen); vollSetzen();
   wrap.append(h("div", { class: "doc-bar" }, sel, find, info, dl, voll), pre);
   setTimeout(show, 0);
@@ -3919,7 +3971,7 @@ function diagramCard(n) {
   card.addEventListener("toggle", () => { state.display.diagramOpen = card.open; });
   const q = new URLSearchParams({ id: n.id });
   if (!n.type) q.set("label", n.label);
-  api(`/api/bpmn_diagrams?${q}`).then((d) => { if (state.node && state.node.id === n.id) renderDiagrams(card, n, d); })
+  api(`api/bpmn_diagrams?${q}`).then((d) => { if (state.node && state.node.id === n.id) renderDiagrams(card, n, d); })
     .catch((e) => card.replaceChildren(h("summary", { text: t("BPMN-Diagramm") }), h("div", { class: "muted", text: e.message })));
   return card;
 }
@@ -3942,7 +3994,7 @@ function renderDiagrams(card, n, d) {
         h("button", { type: "button", class: "small", onclick: () => box._focus && box._focus(e.id) }, t("im Diagramm zeigen"))))) : null;
     body.replaceChildren(
       h("div", { class: "small diagram-head" }, t("Prozess") + ": ", nodeLink(g.process), " · ",
-        h("a", { href: `/api/bpmn_xml?${new URLSearchParams({ file: g.file })}`, download: g.file, text: t("BPMN-Datei herunterladen") }),
+        h("a", { href: `api/bpmn_xml?${new URLSearchParams({ file: g.file })}`, download: g.file, text: t("BPMN-Datei herunterladen") }),
         h("span", { class: "muted", text: " · " + t("Klick auf ein Element öffnet seinen Knoten (Strg/⌘: im Vergleichsfenster)") })),
       ...(els ? [els] : []), box, ...(n.labels.includes("DmnDecision") ? [] : dmnBlocks(g)));
     setTimeout(() => showBpmn(box, { bpmnFile: g.file, elementIds: g.elementIds }, { prefix: g.prefix }), 0);
@@ -3961,7 +4013,7 @@ function dmnBlocks(g) {
       h("h3", { text: t("DMN-Entscheidung {id}", { id }) }),
       h("div", { class: "muted small", text: t("aufgerufen von: {by}", { by }) }),
       box,
-      h("div", { class: "small" }, h("a", { href: `/api/dmn_xml?${new URLSearchParams({ decision: id })}`, download: `${id}.dmn`, text: t("DMN-Datei herunterladen") })));
+      h("div", { class: "small" }, h("a", { href: `api/dmn_xml?${new URLSearchParams({ decision: id })}`, download: `${id}.dmn`, text: t("DMN-Datei herunterladen") })));
   });
 }
 function dmnCard(n) {
@@ -3969,7 +4021,7 @@ function dmnCard(n) {
   setTimeout(() => showDmn(box, n.props.decisionId), 0);
   return h("details", { class: "card", open: true }, h("summary", { text: t("DMN-Entscheidungstabelle") }),
     n.props.description ? h("div", { class: "small", text: n.props.description }) : null, box,
-    h("div", { class: "small" }, h("a", { href: `/api/dmn_xml?${new URLSearchParams({ decision: n.props.decisionId })}`,
+    h("div", { class: "small" }, h("a", { href: `api/dmn_xml?${new URLSearchParams({ decision: n.props.decisionId })}`,
       download: n.props.file || `${n.props.decisionId}.dmn`, text: t("DMN-Datei herunterladen") })));
 }
 let dmnJsLoading = null;
@@ -3989,7 +4041,7 @@ function loadDmnJs() {
 async function showDmn(box, decisionId) {
   try {
     await loadDmnJs();
-    const res = await fetch(`/api/dmn_xml?${new URLSearchParams({ decision: decisionId })}`);
+    const res = await fetch(`api/dmn_xml?${new URLSearchParams({ decision: decisionId })}`);
     if (!res.ok) throw new Error(t("DMN-Entscheidung {decision} nicht gefunden", { decision: decisionId }));
     const xml = await res.text();
     box.replaceChildren();
@@ -4015,7 +4067,7 @@ function diagramNodeRef(el, prefix) {
 async function showBpmn(box, a, opts = {}) {
   try {
     await loadBpmnJs();
-    const res = await fetch(`/api/bpmn_xml?${new URLSearchParams({ file: a.bpmnFile })}`);
+    const res = await fetch(`api/bpmn_xml?${new URLSearchParams({ file: a.bpmnFile })}`);
     if (!res.ok) throw new Error(t("BPMN-Datei {file} nicht gefunden", { file: a.bpmnFile }));
     const xml = await res.text();
     box.replaceChildren();
@@ -4104,7 +4156,7 @@ async function searchProposals(more = false, { keep = false } = {}) {
   if ($("p-agent").value) p.set("agent", $("p-agent").value);
   if ($("p-same").value) p.set("same", $("p-same").value);
   let res;
-  try { res = await api(`/api/proposals?${p}`); } catch (e) { if (isSeq("props", seq)) { listDone("props"); toast(t("Suche fehlgeschlagen: {msg}", { msg: e.message }), true); } return; }
+  try { res = await api(`api/proposals?${p}`); } catch (e) { if (isSeq("props", seq)) { listDone("props"); toast(t("Suche fehlgeschlagen: {msg}", { msg: e.message }), true); } return; }
   if (!isSeq("props", seq)) return;                 // inzwischen neuere Suche
   listDone("props");
   const keepScroll = more || keep ? $("results").scrollTop : 0;
@@ -4127,7 +4179,7 @@ async function closeAllTransitiv() {
   const user = $("user").value.trim();
   if (!user) { toast(t("Bitte oben einen Bearbeiternamen eintragen."), true); $("user").focus(); return; }
   let res;
-  try { res = await api("/api/transitiv/close", { method: "POST", body: JSON.stringify({ user, comment: ($("comment") || {}).value || null }) }); }
+  try { res = await api("api/transitiv/close", { method: "POST", body: JSON.stringify({ user, comment: ($("comment") || {}).value || null }) }); }
   catch (e) { toast(e.message, true); return; }
   if (res.done || res.failed.length) showTransitiv(res); else toast(t("keine"));
 }
@@ -4205,7 +4257,7 @@ function agentBar(pr) {
     const its = shown(e);
     if (!window.confirm(t("{n} Empfehlungen „{e}“ des Agenten übernehmen? Jede mit seiner Begründung im Protokoll; zurücknehmbar im Reiter Entscheidungen.", { n: its.length, e: AGENT_DE()[e] }))) return;
     let r;
-    try { r = await api("/api/agent/uebernehmen", { method: "POST", body: JSON.stringify({ user, nur: e,
+    try { r = await api("api/agent/uebernehmen", { method: "POST", body: JSON.stringify({ user, nur: e,
       items: its.map((it) => ({ start: it.start.id, type: it.type, end: it.end.id })) }) }); }
     catch (err) { toast(err.message, true); return; }
     toast(t("{d} übernommen", { d: r.done }) + (r.veraltet ? t(", {v} inzwischen entschieden", { v: r.veraltet }) : "")
@@ -4234,7 +4286,7 @@ function filteredBulkBar(pr) {
     if (!user) { toast(t("Bitte oben einen Bearbeiternamen eintragen."), true); $("user").focus(); return; }
     if (armed !== action) { armed = action; btn.textContent = action === "confirm" ? t("Wirklich {n} bestätigen?", { n: open.length }) : t("Wirklich {n} ablehnen?", { n: open.length }); return; }
     let r;
-    try { r = await api("/api/relation/bulk", { method: "POST", body: JSON.stringify({ action, user,
+    try { r = await api("api/relation/bulk", { method: "POST", body: JSON.stringify({ action, user,
       items: open.map((it) => ({ start: it.start.id, type: it.type, end: it.end.id, start_label: it.start_label || null, expected_status: it.status ?? null })) }) }); }
     catch (e) { toast(e.message, true); return; }
     toast((action === "confirm" ? t("{d} bestätigt", { d: r.done }) : t("{d} abgelehnt", { d: r.done }))
@@ -4263,7 +4315,7 @@ function bulkBar(pr) {
     const items = open.map((it) => ({ start: it.start.id, type: it.type, end: it.end.id, start_label: it.start_label || null,
       expected_status: it.status === "implied" ? "candidate" : (it.status ?? null) }));
     let r;
-    try { r = await api("/api/relation/bulk", { method: "POST", body: JSON.stringify({ items, action: "confirm_exact", user }) }); }
+    try { r = await api("api/relation/bulk", { method: "POST", body: JSON.stringify({ items, action: "confirm_exact", user }) }); }
     catch (e) { toast(e.message, true); btn.disabled = cancel.disabled = false; return; }
     toast(t("{d} bestätigt", { d: r.done }) + (r.failed.length ? t(", {f} nicht möglich (inzwischen geändert?)", { f: r.failed.length }) : ""), r.failed.length > 0);
     searchProposals();
@@ -4279,7 +4331,7 @@ async function doProposalAction(it, action) {
   const n = state.node;
   if (n) { payload.view_id = n.id; payload.view_label = n.type ? null : n.label; }
   try {
-    const res = await api("/api/relation/action", { method: "POST", body: JSON.stringify(payload) });
+    const res = await api("api/relation/action", { method: "POST", body: JSON.stringify(payload) });
     toast(`${REL_ACTION_DE[action]}: ${ttl(it.start)} → ${ttl(it.end)}`);
     if (res.node && n && res.node.id === n.id) { applyNodeUpdate(res.node); renderDetail(); }
     // Liste behalten (Position), Eintrag aktualisieren; passt er nicht mehr zum Statusfilter, ausblenden
@@ -4317,7 +4369,7 @@ async function postRetype(payload) {
   const body = { ...payload, user, comment: ($("comment") || {}).value || null };
   if (n) { body.view_id = n.id; body.view_label = n.type ? null : n.label; }
   try {
-    const res = await api("/api/relation/retype", { method: "POST", body: JSON.stringify(body) });
+    const res = await api("api/relation/retype", { method: "POST", body: JSON.stringify(body) });
     toast(t("Beziehungsart geändert: {a} → {b}", { a: relTitle(payload.type), b: relTitle(payload.to) }));
     if (res.node && n && res.node.id === n.id) { applyNodeUpdate(res.node); renderDetail(); loadHistory(n.id); }
     return res;
@@ -4388,7 +4440,7 @@ function renderDisplay() {
 
 async function loadHistory(id) {
   let entries = [];
-  try { entries = await api(`/api/history?id=${encodeURIComponent(id)}`); } catch { return; }
+  try { entries = await api(`api/history?id=${encodeURIComponent(id)}`); } catch { return; }
   const box = $("history");
   state.histCache = { id, entries };
   if (!box || !state.node || state.node.id !== id) return;
@@ -4460,7 +4512,7 @@ async function doActionNow(action, vals = state.values) {
   if (action === "save" && !Object.keys(payload.changes).length) return true;     // schon gespeichert (doppelt ausgelöst)
   const sent = JSON.parse(JSON.stringify(vals));
   try {
-    const res = await api("/api/node/action", { method: "POST", body: JSON.stringify(payload) });
+    const res = await api("api/node/action", { method: "POST", body: JSON.stringify(payload) });
     toast(`${ttl(n).slice(0, 60)}: ${ACTION_DE[action]}${res.changed.length ? ` (${res.changed.join(", ")})` : ""}`);
     const r = state.results.find((x) => x.id === n.id);
     if (r) { r.status = res.node.status; r.title = res.node.title; r.titleEn = res.node.titleEn; r.subtitle = res.node.subtitle; r.rev = res.node.rev; }
@@ -4511,7 +4563,7 @@ function renderLangSwitch() {
 // Neo4j: Dokumente anderer Domänen im Graphen (gemeinsam genutzte Instanz) – sichtbar warnen, auf Wunsch entfernen
 async function pruefeGraphDomaene() {
   let r;
-  try { r = await api("/api/graph/domaene"); } catch (e) { return; }
+  try { r = await api("api/graph/domaene"); } catch (e) { return; }
   const alt = $("graph-fremd");
   if (alt) alt.remove();
   if (!r.pruefbar || !r.fremd.length) return;
@@ -4521,7 +4573,7 @@ async function pruefeGraphDomaene() {
     if (!user) { toast(t("Bitte oben einen Bearbeiternamen eintragen."), true); $("user").focus(); return; }
     if (!confirm(t("{n} Knoten der fremden Dokumente {d} endgültig aus Neo4j löschen? Die eigene Domäne bleibt unverändert.",
       { n, d: r.fremd.map((f) => f.dokument).join(", ") }))) return;
-    try { await api("/api/graph/fremde_entfernen", { method: "POST", body: JSON.stringify({ user }) }); }
+    try { await api("api/graph/fremde_entfernen", { method: "POST", body: JSON.stringify({ user }) }); }
     catch (e) { toast(e.message, true); return; }
     toast(t("Fremde Dokumente entfernt – Ansicht wird neu geladen"));
     setTimeout(() => location.reload(), 800);
@@ -4540,7 +4592,7 @@ async function init() {
   await loadLang();
   applyStaticTexts();
   renderLangSwitch();
-  try { state.config = localizeConfig(await api("/api/config")); } catch (e) { toast(t("Server nicht erreichbar: {msg}", { msg: e.message }), true); return; }
+  try { state.config = localizeConfig(await api("api/config")); } catch (e) { toast(t("Server nicht erreichbar: {msg}", { msg: e.message }), true); return; }
   await loadAbbr();
   $("mode").textContent = state.config.mode === "demo" ? t("Demo ohne Neo4j") + `${state.config.sources ? " · " + Object.keys(state.config.sources).map(quelleName).join(", ") : ""}` : "Neo4j";
   if (state.config.readonly) { document.body.classList.add("readonly"); $("ro-badge").hidden = false; }
@@ -4563,8 +4615,9 @@ async function init() {
   $("tab-onto").hidden = !ontoAn();
   renderBasis(); listenDocling(); initChat();
   if (state.config.mode === "neo4j") pruefeGraphDomaene();
-  if (state.config.about) $("about-link").hidden = false;
-  if (state.config.rules_page) $("rules-link").hidden = false;
+  if (state.config.about && $("about-link")) $("about-link").hidden = false;
+  if (state.config.rules_page && $("rules-link")) $("rules-link").hidden = false;
+  initSichten();
   loadDisplay();
   renderDisplay();
   $("f-herkunft").addEventListener("change", search);
@@ -4625,6 +4678,8 @@ async function init() {
   window.addEventListener("beforeunload", (e) => { if (state.node && isDirty()) { e.preventDefault(); e.returnValue = ""; } });
   // Zurück/Vor und Sprungziel aus einem anderen Fenster (Vergleichsfenster wird wiederverwendet: nur der Hash ändert sich)
   const onHash = () => {
+    const si = sichtAusHash();
+    if (si || state.sicht) { zeigeSicht(si, false); if (si) return; }
     const an = ansichtAusHash();
     if (an) { if (location.hash !== state.shownHash) zuAnsicht(an.tab, an.kat, false); return; }
     const hs = parseHash();
@@ -4679,7 +4734,7 @@ function gapGraph() {
   const box = h("div", {}, h("div", { class: "muted small" }, h("span", { class: "spinner" }), t("lädt …")));
   (async () => {
     let g;
-    try { g = state.gapGraph || (state.gapGraph = await api("/api/luecken/bpmn")); }
+    try { g = state.gapGraph || (state.gapGraph = await api("api/luecken/bpmn")); }
     catch (e) { box.replaceChildren(h("div", { class: "card warn", text: e.message })); return; }
     if (!g.prozesse.length) {                            // ohne BPMN (z. B. reine Ereignisdomäne): nur die Nachrichten mit Partnern
       const K = g.kommunikation || { nachrichten: [] };
@@ -4877,7 +4932,7 @@ function gapGraphProzess(p) {
     wahl.value = baustein; aktuell = b; zahlA.replaceChildren(...(komm() ? [] : zahl(b.zahl)));
     boxA.replaceChildren(h("div", { class: "muted", text: t("lädt …") }));
     try {
-      const r = await fetch(`/api/bpmn_xml?${new URLSearchParams({ file: b.datei })}`);
+      const r = await fetch(`api/bpmn_xml?${new URLSearchParams({ file: b.datei })}`);
       if (!r.ok) throw new Error(t("BPMN-Datei {file} nicht gefunden", { file: b.datei }));
       const info = komm() ? gkInfo(K.nachrichten, "a", b.baustein) : b;
       aw = await ggViewer(boxA, await r.text(), info, (id, name, art) => {
@@ -4894,7 +4949,7 @@ function gapGraphProzess(p) {
     zahlV.replaceChildren(...(v && !komm() ? zahl(v.zahl) : []));
     if (!v) { boxV.replaceChildren(h("div", { class: "muted", text: t("kein vorhandenes BPMN-Modell zugeordnet") })); return; }
     try {
-      const r = await fetch(`/api/luecken/bpmn_vorhanden?${new URLSearchParams({ datei: v.datei })}`);
+      const r = await fetch(`api/luecken/bpmn_vorhanden?${new URLSearchParams({ datei: v.datei })}`);
       if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || r.statusText);
       const info = komm() ? gkInfo(K.nachrichten, "v") : v;
       vw = await ggViewer(boxV, await r.text(), info, (id, name, art) => {
