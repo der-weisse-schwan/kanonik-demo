@@ -1206,5 +1206,6 @@
  "Lese-Oberfläche für Entwickler und Tester": "Read-only interface for developers and testers",
  "Lesen": "Read",
  "Schritte der Pipeline ausführen, Stand und Protokolle (Job-Steuerung)": "Run pipeline steps, status and logs (job control)",
- "Sichten": "Views"
+ "Sichten": "Views",
+ "wo im Code": "where in the code"
 }

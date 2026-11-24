@@ -1,1 +1,1 @@
-{"datei":"src/main/java/io/pillopl/library/lending/patron/model/PatronId.java","start":5,"zeile":9,"zeilen":["","import java.util.UUID;","","@Value","public class PatronId {","    @NonNull UUID patronId;","}"],"gesamt":11}
+{"datei":"src/main/java/io/pillopl/library/lending/patron/model/Patrons.java","start":1,"zeile":5,"zeilen":["package io.pillopl.library.lending.patron.model;","","import io.vavr.control.Option;","","public interface Patrons {","","    Option<Patron> findBy(PatronId patronId);","","    Patron publish(PatronEvent event);","}"],"gesamt":10}

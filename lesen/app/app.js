@@ -1894,8 +1894,11 @@ function gapHinweise(x) {
   if (!(x.hinweise || []).length) return null;
   return h("div", { class: "gap-hinweise small" }, h("strong", { text: t("Zum Urteil") }),
     ...x.hinweise.map((w) => h("div", { class: `gap-hinweis gap-hinweis-${w.art}` },
-      h("span", { class: "gap-hinweis-art", text: { dagegen: t("spricht dagegen"), dafuer: t("stützt die Lücke"), pruefen: t("zu prüfen") }[w.art] || w.art }), " ",
-      h("span", { text: w.text }), (w.belege || []).length ? h("div", { class: "mono muted", text: w.belege.join(" · ") }) : null)));
+      h("span", { class: "gap-hinweis-art", text: { dagegen: t("spricht dagegen"), dafuer: t("stützt die Lücke"), pruefen: t("zu prüfen"), wo: t("wo im Code") }[w.art] || w.art }), " ",
+      h("span", { text: w.text }),
+      // „wo“: Orte einzeln mit Sprung in die Quelltext-Ansicht; sonst Belege in einer Zeile
+      (w.belege || []).length ? (w.art === "wo" ? h("ul", { class: "mono muted gap-wo" }, ...w.belege.map((b) => h("li", {}, ...belegZeile(b))))
+        : h("div", { class: "mono muted", text: w.belege.join(" · ") })) : null)));
 }
 function gapCard(x, nachher, innen = false) {        // innen: in einer anderen Karte (ohne verschachtelte Haupt-/Folgelücken)
   const note = h("input", { type: "text", class: "small", placeholder: t("Kommentar (optional)"), value: (x.entschieden || {}).kommentar || "" });
