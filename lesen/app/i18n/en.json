@@ -1193,5 +1193,10 @@
  "ohne Kapitel": "without chapter",
  "{h} Hauptlücken mit {f} Folgelücken in {k} Kapiteln. Je Hauptlücke: was dazugehört und ein Aufgabenvorschlag, der sie samt Folgelücken schließt – aus Fachkonzept, BPMN und Code abgeleitet, ohne Sprachmodell; vor dem Übernehmen prüfen.": "{h} main gaps with {f} follow-up gaps in {k} chapters. Per main gap: what belongs to it and a proposed task that closes it including its follow-up gaps – derived from specification, BPMN and code without a language model; review before adopting.",
  "{n} Hauptlücken": "{n} main gaps",
- "→ im Lückenbaum mit Aufgabe": "→ in the gap tree with task"
+ "→ im Lückenbaum mit Aufgabe": "→ in the gap tree with task",
+ "Folgelücken genauso entscheiden": "Decide follow-up gaps the same way",
+ "Zum Urteil": "For your judgement",
+ "spricht dagegen": "speaks against it",
+ "stützt die Lücke": "supports the gap",
+ "zu prüfen": "to check"
 }

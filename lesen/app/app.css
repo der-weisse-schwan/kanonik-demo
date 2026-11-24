@@ -624,6 +624,11 @@ body.gg-voll-offen::after { content: ""; position: fixed; inset: 0; background: 
 .tr-tabelle { max-height: 70vh; overflow: auto; }
 .tr-tabelle thead th { position: sticky; top: 0; background: var(--panel); z-index: 1; }
 .tr-tabelle td { vertical-align: top; }
+.gap-hinweise { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; margin: 6px 0; display: grid; gap: 4px; }
+.gap-hinweis-art { font-weight: 600; }
+.gap-hinweis-dagegen .gap-hinweis-art { color: var(--warn, #b45309); }
+.gap-hinweis-dafuer .gap-hinweis-art { color: var(--ok, #15803d); }
+.gap-hinweis-pruefen .gap-hinweis-art { color: var(--accent); }
 .gap-folge { border-left: 3px solid var(--line); padding: 2px 8px; margin: 6px 0; }
 .tr-tabelle td.mono { white-space: nowrap; }
 .tr-tabelle td:nth-child(n+4) { min-width: 110px; }

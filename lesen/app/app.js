@@ -1837,6 +1837,14 @@ function gapReqLink(id) {
     title: `${id}: ${e.text || ""}`.slice(0, 300), text: `📄 ${id}` });
 }
 function gapVerbinde(teile, sep) { return teile.flatMap((x, i) => (i ? [sep, x] : [x])); }
+// Kasten „Zum Urteil“: Hinweise des Abgleichs, die gegen die Lücke sprechen, sie stützen oder zu prüfen sind
+function gapHinweise(x) {
+  if (!(x.hinweise || []).length) return null;
+  return h("div", { class: "gap-hinweise small" }, h("strong", { text: t("Zum Urteil") }),
+    ...x.hinweise.map((w) => h("div", { class: `gap-hinweis gap-hinweis-${w.art}` },
+      h("span", { class: "gap-hinweis-art", text: { dagegen: t("spricht dagegen"), dafuer: t("stützt die Lücke"), pruefen: t("zu prüfen") }[w.art] || w.art }), " ",
+      h("span", { text: w.text }), (w.belege || []).length ? h("div", { class: "mono muted", text: w.belege.join(" · ") }) : null)));
+}
 function gapCard(x, nachher, innen = false) {        // innen: in einer anderen Karte (ohne verschachtelte Haupt-/Folgelücken)
   const note = h("input", { type: "text", class: "small", placeholder: t("Kommentar (optional)"), value: (x.entschieden || {}).kommentar || "" });
   const pill = { fehlt: "rel-rejected", abweichend: "rel-candidate", unvollstaendig: "rel-candidate" }[x.art] || "type";
@@ -1848,6 +1856,7 @@ function gapCard(x, nachher, innen = false) {        // innen: in einer anderen 
       h("span", { class: `pill ${x.entscheidung === "bestaetigt" ? "rel-confirmed" : x.entscheidung === "falsch" ? "rel-rejected" : "type"}`, text: GAP_DEC()[x.entscheidung] || x.entscheidung }),
       x.entschieden ? h("span", { class: "muted small", text: `${x.entschieden.von || ""} ${x.entschieden.am || ""}` }) : null),
     h("p", { text: x.beschreibung }),
+    gapHinweise(x),
     (x.haengt_an || []).length ? h("div", { class: "gap-folge small" }, t("Folgelücke von {k} – sie besteht, weil die Hauptlücke besteht, und wird erst entschieden, wenn diese behoben ist.",
       { k: x.haengt_an.join(", ") }), " ", ...(innen ? [] : x.haengt_an.map((k) => gapMini(k)))) : null,
     (x.folgen || []).length ? h("details", { class: "gap-folge small" }, h("summary", { text: t("Folgelücken ({n}): {k} – werden mit dieser Lücke behoben bzw. danach geprüft", { n: x.folgen.length, k: x.folgen.join(", ") }) }),
@@ -2525,6 +2534,22 @@ function baumLuecke(n) {
     h("ul", { class: "baum-check small" }, ...a.schritte.map((s) => h("li", { class: s.startsWith("  - ") ? "baum-unter" : "", text: s.replace(/^\s+-\s/, "") }))),
     h("div", { class: "small muted", text: t("Akzeptanzkriterien") }),
     h("ul", { class: "baum-check small" }, ...a.akzeptanz.map((s) => h("li", { text: s }))));
+  // Entscheiden direkt im Baum (wie in der Lückenkarte); auf Wunsch die Folgelücken gleich mit
+  const voll = (id) => (state.gap.luecken || []).find((y) => y.id === id);
+  const x = voll(n.id);
+  const notiz = h("input", { type: "text", class: "small", placeholder: t("Kommentar (optional)"), value: ((x || {}).entschieden || {}).kommentar || "" });
+  const mit = n.folgen.length ? h("label", { class: "small am-schalter" }, h("input", { type: "checkbox" }), ` ${t("Folgelücken genauso entscheiden")}`) : null;
+  const entscheiden = async (e) => {
+    const k = notiz.value.trim() || null;
+    const danach = () => { n.entscheidung = x.entscheidung; state.baumOffen = n.id; renderGaps("baum"); };
+    if (mit && mit.querySelector("input").checked)
+      for (const f of n.folgen) { const y = voll(f.id); if (y) await gapDecide(y, e, k, () => { f.entscheidung = e; }); }
+    await gapDecide(x, e, k, danach);
+  };
+  const leiste = !x || state.config.readonly ? null : h("div", { class: "el-bar baum-entscheiden" }, notiz, mit,
+    h("button", { type: "button", class: "small", onclick: () => entscheiden("bestaetigt") }, t("Bestätigen")),
+    h("button", { type: "button", class: "small", onclick: () => entscheiden("falsch") }, t("Fehlalarm")),
+    h("button", { type: "button", class: "small", onclick: () => entscheiden("offen") }, t("Zurückstellen")));
   return h("details", { class: "card baum-luecke", id: `baum-${n.id}`, open: state.baumOffen === n.id },
     h("summary", {}, h("span", { class: `pill ${pill}`, text: art[n.art] || n.art }), " ", ...gapTypPills(n).flatMap((p) => [p, " "]),
       h("strong", { text: `${n.id} · ${n.titel}` }), " ",
@@ -2532,6 +2557,8 @@ function baumLuecke(n) {
       h("span", { class: `pill ${n.entscheidung === "bestaetigt" ? "rel-confirmed" : n.entscheidung === "falsch" ? "rel-rejected" : "type"}`,
         text: GAP_DEC()[n.entscheidung] || n.entscheidung || "" })),
     h("p", { class: "small", text: n.beschreibung }),
+    gapHinweise(x || n),
+    leiste,
     n.folgen.length ? h("div", { class: "baum-folgen" }, h("strong", { class: "small", text: t("Folgelücken") }), ...n.folgen.map((f) => gapMini(f.id))) : null,
     h("details", { class: "small", open: true }, h("summary", { text: t("Gehört dazu") }), dazu),
     aufgabe);
