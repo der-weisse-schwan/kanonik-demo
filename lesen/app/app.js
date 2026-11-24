@@ -1719,9 +1719,13 @@ function renderSources(cat) {
 // ------------------------------------------------------------------ Lücken (FR4, common/luecken.py, abgleich/drei_sichten.py)
 const GAP_CATS = () => [["steckbrief", t("Steckbrief der Domäne"), t("Systeme und Rollen, Prozesse, Schnittstellen, Dienste im Code, Kennzahlen und Lücken auf einer Seite")],
   ["architektur", t("Architektur (ArchiMate)"), t("Enterprise-Architektur aus Fachkonzept und Schnittstellen: Elemente je Schicht als Diagramm, Fachdomänen, Modell zum Laden in Archi")],
+  ["baum", t("Lückenbaum und Aufgaben"), t("Hauptlücken je Kapitel mit ihren Folgelücken, was alles dazugehört, und je Hauptlücke ein Aufgabenvorschlag zum Schließen (Markdown für Tickets)")],
   ["suche", t("Suchen"), t("Lücken nach Anforderung, Regel, System/Microservice, Package, Klasse/Methode, BPMN-Prozess/Aktivität")],
   ["oben", t("Von oben: Fachkonzept → Code"), t("Kapitel, Anforderungen und Regeln mit ihren Lücken und Codestellen")],
   ["unten", t("Von unten: Code → Fachkonzept"), t("Dienste, Dateien und Methoden mit ihren Lücken, Anforderungen und Abschnitten")],
+  ["matrix", t("Traceability-Matrix"), t("Je Anforderung und Regel die Kette Belegstelle → Regel → Prozess → Nachricht → Klasse → Test, mit Lücken; Export als CSV für Excel")],
+  ["impact", t("Auswirkungen (Impact Analysis)"), t("Was ist betroffen, wenn sich eine Anforderung, Regel, ein Begriff, eine Nachricht oder Klasse ändert – mit Weg und Grund")],
+  ["abdeckung", t("Abdeckung: nicht Verknüpftes"), t("Welche Abschnitte der Dokumente und welche Nachrichten und Felder der Schnittstelle mit keinem Begriff, keiner Regel und keinem anderen Wissensknoten verknüpft sind")],
   ["zuordnung", t("Anforderungen je System/Package/Klasse"), t("Anforderungen und Regeln je Microservice, Package und Klasse – zugeordnet über Begriffe, Domänenmodell, Tätigkeiten, Nachrichten und Lücken (heuristisch)")],
   ["rollen", t("Rollen je System"), t("Rollen bzw. Akteure je System des Fachkonzepts mit ihren Anforderungen")],
   ["typen", t("Nach Lückentyp"), t("Lücken gruppiert nach Typ (Regel des Abgleichs) mit Zahl je Typ und Entscheidung")],
@@ -1755,7 +1759,9 @@ const gapTypen = (x) => x.regeln && x.regeln.length ? x.regeln : x.regel ? [x.re
 const gapTypPills = (x) => gapTypen(x).map((r) => h("span", { class: "pill gap-typ", title: `${t("Lückentyp")} · ${t("Kennung")}: ${r}`, text: gapTypName(r) }));
 function gapItems(cat) {
   const l = (state.gap || { luecken: [] }).luecken;
-  if (["neu", "bestaetigt", "falsch", "offen"].includes(cat)) return l.filter((x) => x.entscheidung === cat);
+  // Folgelücken (haengt_an) erst entscheiden, wenn die Hauptlücke behoben ist – nicht unter „Neu“
+  if (cat === "neu") return l.filter((x) => x.entscheidung === "neu" && !(x.haengt_an || []).length);
+  if (["bestaetigt", "falsch", "offen"].includes(cat)) return l.filter((x) => x.entscheidung === cat);
   if (["bpmn", "code", "beide", "schnittstelle"].includes(cat)) return l.filter((x) => x.sicht === cat && x.entscheidung !== "falsch");
   return [];
 }
@@ -1764,7 +1770,8 @@ function gapCount(c) {
   if (c === "oben") return s ? s.oben.reduce((n, k) => n + k.mit_luecke, 0) : 0;
   if (c === "unten") return s ? s.unten.reduce((n, d) => n + d.dateien.reduce((m, f) => m + f.stellen.length, 0), 0) : 0;
   if (c === "suche") return (state.gap.luecken || []).length;
-  if (c === "zuordnung" || c === "rollen" || c === "steckbrief" || c === "architektur") return null;   // eigene Ansicht, keine Zahl von Lücken
+  if (c === "zuordnung" || c === "rollen" || c === "steckbrief" || c === "architektur" || c === "matrix" || c === "impact" || c === "abdeckung") return null;
+  if (c === "baum") return (state.gap.luecken || []).filter((x) => !(x.haengt_an || []).length).length;   // eigene Ansicht, keine Zahl von Lücken
   if (c === "typen") return new Set((state.gap.luecken || []).flatMap(gapTypen)).size;
   return c === "abgleich" || c === "graph" ? Object.keys(state.gap.bpmn || {}).length : gapItems(c).length;
 }
@@ -1783,6 +1790,10 @@ async function loadGaps() {
   state.gapZuordnung = null;                             // Anforderungen je System/Package/Klasse neu laden
   state.steckbrief = null;                               // Steckbrief neu laden
   state.archimate = null;                                // ArchiMate-Modell neu laden (Filter bleiben)
+  state.trMatrix = null;                                 // Traceability-Matrix neu laden
+  state.impGraph = null;                                 // Wirkungsgraph neu laden (Ausgangspunkt bleibt)
+  state.abdeckung = null;                                // Abdeckung neu berechnen
+  state.baum = null;                                     // Lückenbaum neu aufbauen
   renderGaps(state.gapCat || "oben");
 }
 function renderGapList() {
@@ -1826,7 +1837,7 @@ function gapReqLink(id) {
     title: `${id}: ${e.text || ""}`.slice(0, 300), text: `📄 ${id}` });
 }
 function gapVerbinde(teile, sep) { return teile.flatMap((x, i) => (i ? [sep, x] : [x])); }
-function gapCard(x, nachher) {
+function gapCard(x, nachher, innen = false) {        // innen: in einer anderen Karte (ohne verschachtelte Haupt-/Folgelücken)
   const note = h("input", { type: "text", class: "small", placeholder: t("Kommentar (optional)"), value: (x.entschieden || {}).kommentar || "" });
   const pill = { fehlt: "rel-rejected", abweichend: "rel-candidate", unvollstaendig: "rel-candidate" }[x.art] || "type";
   return h("div", { class: "card" },
@@ -1837,9 +1848,15 @@ function gapCard(x, nachher) {
       h("span", { class: `pill ${x.entscheidung === "bestaetigt" ? "rel-confirmed" : x.entscheidung === "falsch" ? "rel-rejected" : "type"}`, text: GAP_DEC()[x.entscheidung] || x.entscheidung }),
       x.entschieden ? h("span", { class: "muted small", text: `${x.entschieden.von || ""} ${x.entschieden.am || ""}` }) : null),
     h("p", { text: x.beschreibung }),
+    (x.haengt_an || []).length ? h("div", { class: "gap-folge small" }, t("Folgelücke von {k} – sie besteht, weil die Hauptlücke besteht, und wird erst entschieden, wenn diese behoben ist.",
+      { k: x.haengt_an.join(", ") }), " ", ...(innen ? [] : x.haengt_an.map((k) => gapMini(k)))) : null,
+    (x.folgen || []).length ? h("details", { class: "gap-folge small" }, h("summary", { text: t("Folgelücken ({n}): {k} – werden mit dieser Lücke behoben bzw. danach geprüft", { n: x.folgen.length, k: x.folgen.join(", ") }) }),
+      ...(innen ? [] : x.folgen.map((k) => gapMini(k)))) : null,
     x.anforderungen.length ? h("div", { class: "small" }, h("strong", { text: t("Anforderungen: ") }), gapVerbinde(x.anforderungen.map(gapReqLink), ", ")) : null,
     x.belege.length ? h("details", { class: "small" }, h("summary", { text: t("Belege ({n})", { n: x.belege.length }) }),
       h("ul", {}, ...x.belege.map((b) => h("li", { class: "mono" }, ...belegZeile(b))))) : null,
+    innen ? null : h("div", { class: "small" }, h("a", { href: "#", text: t("→ im Lückenbaum mit Aufgabe"), onclick: (e) => {
+      e.preventDefault(); const k = (x.haengt_an || [])[0] || x.id; state.baumOffen = k; zuAnsicht("gap", "baum"); } })),
     h("div", { class: "muted small", title: gapTypen(x).join(", "),          // Kennung (Regel des Abgleichs) nur im Tooltip
       text: t("Lückentyp: {r}", { r: gapTypen(x).map(gapTypName).join(", ") }) }),
     state.config.readonly ? null : h("div", { class: "el-bar" }, note,
@@ -2092,9 +2109,10 @@ function gapMini(id) {
       h("span", { class: "pill type", text: x.sicht === "beide" ? t("BPMN und Code") : x.sicht === "schnittstelle" ? t("Schnittstelle") : x.sicht.toUpperCase() }), " ",
       ...gapTypPills(full).flatMap((p) => [p, " "]),
       h("strong", { text: `${x.id} · ${x.titel}` }), " ",
+      (full.haengt_an || []).length ? h("span", { class: "pill type", title: t("Folgelücke von {k}", { k: full.haengt_an.join(", ") }), text: `↳ ${full.haengt_an.join(", ")}` }) : null, " ",
       h("span", { class: `pill ${full.entscheidung === "bestaetigt" ? "rel-confirmed" : full.entscheidung === "falsch" ? "rel-rejected" : "type"}`,
         text: GAP_DEC()[full.entscheidung] || full.entscheidung || "" })),
-    gapCard(full));
+    gapCard(full, undefined, true));
 }
 function gapReqLine(e, mitLuecken) {
   return h("div", { class: "gap-req" },
@@ -2279,6 +2297,265 @@ function gapArchitektur() {
         h("td", { text: e.domaenen.map((d) => dn[d] || d).join(", ") || "–" }), h("td", { text: e.kapitel.join(", ") || "–" })))))));
   return [h("div", { class: "muted small", text: t("Stand {s}", { s: m.stand }) }), zahlen, diag, laden, liste];
 }
+// ------------------------------------------------------------------ Traceability-Matrix (UC13, kanonik/traceability.py)
+const TR_STUFE = () => ({ beleg: t("Belegstelle"), regel: t("Regel"), prozess: t("Prozess"), schnittstelle: t("Nachricht"), code: t("Klasse"), test: t("Test") });
+function trCsv(m, zeilen) {
+  const kopf = [t("Kennung"), t("Art"), t("Kapitel"), t("Text"), t("Belegstelle"), t("Regeln"), t("Prozess"), t("vorhandenes BPMN"),
+    t("Nachricht"), t("Klasse"), t("Test"), t("Lücken"), t("Kette")];
+  const feld = (s) => { s = String(s ?? ""); return /[;"\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+  const reihe = (z) => [z.id, z.art === "regel" ? t("Regel") : t("Anforderung"), z.kapitel, z.text, z.belege.map((b) => b.block).join(", "),
+    z.regeln.concat(z.lokale_regeln).join(", "), z.prozesse.map((p) => (p.element ? `${p.prozess} › ${p.element}` : `${p.prozess} (${t("Kapitel")})`)).join(", "),
+    z.prozesse.filter((p) => p.vorhanden).map((p) => p.vorhanden).join(", "), z.nachrichten.map((n) => n.name).join(", "),
+    z.klassen.map((k) => `${k.dienst}: ${k.klasse}`).join(", "), z.tests.map((x) => x.klasse).join(", "), z.luecken.map((x) => x.id).join(", "),
+    m.stufen.map((s) => (z.stufen[s] ? "✓" : "·")).join("")];
+  return "﻿" + [kopf, ...zeilen.map(reihe)].map((r) => r.map(feld).join(";")).join("\r\n") + "\r\n";
+}
+function trListe(xs, text, titel) {
+  if (!xs.length) return h("span", { class: "muted", text: "–" });
+  const zeig = xs.slice(0, 3);
+  return h("div", { class: "tr-liste" }, ...zeig.map((x) => h("div", { title: titel ? titel(x) : null }, text(x))),
+    xs.length > 3 ? h("div", { class: "muted", title: xs.slice(3).map(text).join("\n"), text: t("+{n} weitere", { n: xs.length - 3 }) }) : null);
+}
+function gapMatrix() {
+  if (!state.trMatrix) {
+    api("/api/traceability").then((r) => { state.trMatrix = r; if (state.gapCat === "matrix") renderGaps("matrix"); })
+      .catch((e) => toast(e.message, true));
+    return [h("div", { class: "muted small", text: t("Matrix wird geladen …") })];
+  }
+  const m = state.trMatrix, f = (state.trFilter ||= { text: "", art: "", kapitel: "", luecke: "" }), neu = () => renderGaps("matrix");
+  const st = TR_STUFE(), n = m.zahlen.zeilen || 0;
+  const zahl = (wert, text) => h("div", { class: "sb-zahl" }, h("strong", { text: String(wert) }), h("span", { class: "muted small", text }));
+  const zahlen = h("div", { class: "sb-zahlen" }, zahl(m.zahlen.anforderungen, t("Anforderungen")), zahl(m.zahlen.regeln, t("Regeln")),
+    ...m.stufen.map((s) => zahl(`${m.zahlen[s]}/${n}`, t("mit {s}", { s: st[s] }))), zahl(m.zahlen.mit_luecke, t("mit Lücke")));
+  const kapitel = [...new Set(m.zeilen.map((z) => z.kapitel.split(".")[0]).filter(Boolean))].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+  const q = f.text.trim().toLowerCase();
+  const genutzt = m.stufen.filter((s) => m.zahlen[s] > 0);   // Stufen ohne jeden Eintrag (z. B. keine Tests) zählen nicht als Lücke
+  const zeilen = m.zeilen.filter((z) => (!f.art || z.art === f.art) && (!f.kapitel || z.kapitel === f.kapitel || z.kapitel.startsWith(f.kapitel + "."))
+    && (!f.luecke || (f.luecke === "kette" ? genutzt.some((s) => !z.stufen[s]) : f.luecke === "ohne_code" ? !z.stufen.code : z.luecken.length))
+    && (!q || [z.id, z.text, ...z.klassen.map((k) => k.klasse), ...z.nachrichten.map((x) => x.name), ...z.prozesse.map((p) => p.prozess)].join(" ").toLowerCase().includes(q)));
+  const wahl = (wert, setzen, label, ...opts) => { const s = h("select", { "aria-label": label, onchange: (e) => { setzen(e.target.value); neu(); } },
+    ...opts.map(([v, x]) => h("option", { value: v, text: x }))); s.value = wert; return s; };
+  const filter = h("div", { class: "am-filter" },
+    h("input", { type: "search", value: f.text, placeholder: t("Kennung, Text, Klasse, Nachricht …"), "aria-label": t("Matrix filtern"), onchange: (e) => { f.text = e.target.value; neu(); } }),
+    wahl(f.art, (v) => { f.art = v; }, t("Art"), ["", t("Anforderungen und Regeln")], ["anforderung", t("nur Anforderungen")], ["regel", t("nur Regeln")]),
+    wahl(f.kapitel, (v) => { f.kapitel = v; }, t("Kapitel"), ["", t("alle Kapitel")], ...kapitel.map((k) => [k, t("Kapitel {k}", { k })])),
+    wahl(f.luecke, (v) => { f.luecke = v; }, t("Auswahl"), ["", t("alle Einträge")], ["kette", t("Kette unvollständig")], ["ohne_code", t("ohne Klasse")], ["luecke", t("mit Lücke")]),
+    h("button", { type: "button", onclick: () => {
+      const a = h("a", { href: URL.createObjectURL(new Blob([trCsv(m, zeilen)], { type: "text/csv;charset=utf-8" })), download: "traceability.csv" });
+      document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 30000);
+    }, text: t("Als CSV herunterladen (Excel)") }));
+  const kette = (z) => h("span", { class: "tr-kette", "aria-label": m.stufen.map((s) => `${st[s]}: ${z.stufen[s] ? t("ja") : t("nein")}`).join(", ") },
+    ...m.stufen.map((s) => h("span", { class: z.stufen[s] ? "tr-ja" : "tr-nein", title: `${st[s]}: ${z.stufen[s] ? t("ja") : t("nein")}`, text: z.stufen[s] ? "●" : "○" })));
+  const viaText = { anforderung: t("nennt die Anforderung"), aktivitaet: t("setzt die Aktivität um"), regel: t("prüft eine Regel des Kapitels"), kapitel: t("Prozess des Kapitels") };
+  const tab = h("div", { class: "tabelle tr-tabelle" }, h("table", { class: "small" },
+    h("thead", {}, h("tr", {}, ...[t("Kennung"), t("Kette"), t("Text"), t("Regeln"), t("Prozess"), t("Nachricht"), t("Klasse"), t("Test"), t("Lücken")]
+      .map((x) => h("th", { scope: "col", text: x })))),
+    h("tbody", {}, ...zeilen.map((z) => h("tr", {},
+      h("td", { class: "mono" }, gapReqLink(z.id), " ", h("button", { type: "button", class: "imp-start", title: t("Auswirkungen einer Änderung"),
+        "aria-label": t("Auswirkungen einer Änderung von {x}", { x: z.id }), onclick: () => zuImpact((z.art === "regel" ? "regel:" : "anf:") + z.id), text: "⇢" })),
+      h("td", {}, kette(z)),
+      h("td", { class: "tr-text", title: z.text, text: z.text.length > 140 ? z.text.slice(0, 139) + "…" : z.text }),
+      h("td", {}, trListe(z.regeln.concat(z.lokale_regeln), (x) => x)),
+      h("td", {}, trListe(z.prozesse, (p) => (p.element ? `${p.prozess} › ${p.element}` : `${p.prozess} (${t("Kapitel")})`),
+        (p) => `${viaText[p.via] || p.via}${p.vorhanden ? "\n" + t("vorhanden: {v}", { v: p.vorhanden }) : ""}`)),
+      h("td", {}, trListe(z.nachrichten, (x) => x.name, (x) => `${x.titel || ""} (${x.absender || "?"} → ${(x.empfaenger || []).join(", ")})${x.code ? "\n" + t("im Code gesendet") : ""}`)),
+      h("td", {}, trListe(z.klassen, (k) => k.klasse, (k) => `${k.dienst} · ${k.paket || ""}\n${(k.gruende || []).join("; ")}`)),
+      h("td", {}, trListe(z.tests, (x) => x.klasse, (x) => `${t("{n} Testfälle", { n: x.testfaelle })}\n${(x.beispiele || []).join("\n")}`)),
+      h("td", {}, z.luecken.length ? h("div", { class: "tr-liste" }, ...z.luecken.map((x) => h("a", { href: "#", title: x.titel, text: x.id,
+        onclick: (e) => { e.preventDefault(); zuAnsicht("gap", "suche"); } }))) : h("span", { class: "muted", text: "–" })))))));
+  return [zahlen, h("section", { class: "card sb-karte" }, filter,
+    h("div", { class: "muted small", text: t("{n} von {g} Einträgen · Zuordnung zu Klassen und Tests heuristisch (Begriffe, Domänenmodell, Nachrichten); Zeiger auf eine Zelle zeigt Grund und Rest.", { n: zeilen.length, g: n }) }),
+    tab)];
+}
+// ------------------------------------------------------------------ Impact Analysis (UC6, kanonik/impact.py; Suche im Browser)
+const IMP_ART = () => ({ anforderung: t("Anforderungen"), regel: t("Regeln"), begriff: t("Begriffe"), nachricht: t("Nachrichten"),
+  prozess: t("Prozesselemente"), klasse: t("Klassen"), test: t("Tests"), luecke: t("Lücken") });
+const IMP_BLATT = new Set(["test", "luecke"]);          // Endpunkte: nicht weiter verfolgen
+function impNachbarn(g) {
+  if (state.impAdj && state.impAdj.g === g) return state.impAdj.m;
+  const m = {};
+  const add = (x, y, k) => (m[x] ||= []).push({ n: y, k });
+  for (const k of g.kanten) { add(k.b, k.a, k); if (!k.gerichtet) add(k.a, k.b, k); }   // gerichtet: ändert sich b, ist a betroffen
+  state.impAdj = { g, m };
+  return m;
+}
+function impSuchen(g, start, tiefe) {
+  const nb = impNachbarn(g), seen = { [start]: { d: 0 } }, q = [start];
+  while (q.length) {
+    const x = q.shift(), s = seen[x], art = (g.knoten[x] || {}).art;
+    if (s.d >= tiefe || (x !== start && (art === "begriff" || IMP_BLATT.has(art)))) continue;   // Begriffe nur vom Start aus
+    for (const { n, k } of nb[x] || []) if (!seen[n]) { seen[n] = { d: s.d + 1, vor: x, k }; q.push(n); }
+  }
+  delete seen[start];
+  return seen;
+}
+function impWeg(g, seen, key) {
+  const schritte = [];
+  for (let x = key; seen[x] && seen[x].vor !== undefined; x = seen[x].vor) schritte.unshift({ von: seen[x].vor, nach: x, grund: seen[x].k.grund });
+  return schritte;
+}
+function impName(g, key) { const n = g.knoten[key] || {}; return n.name || key; }
+function zuImpact(key) { state.impStart = key; zuAnsicht("gap", "impact"); if (state.gapCat === "impact") renderGaps("impact"); }
+function gapImpact() {
+  if (!state.impGraph) {
+    api("/api/impact/graph").then((r) => { state.impGraph = r; if (state.gapCat === "impact") renderGaps("impact"); })
+      .catch((e) => toast(e.message, true));
+    return [h("div", { class: "muted small", text: t("Wirkungsgraph wird geladen …") })];
+  }
+  const g = state.impGraph, arten = IMP_ART(), tiefe = state.impTiefe || 2;
+  const startbar = Object.entries(g.knoten).filter(([, n]) => ["anforderung", "regel", "begriff", "nachricht", "klasse", "prozess"].includes(n.art));
+  const label = (k, n) => `${n.name}${n.text && n.art !== "nachricht" ? " – " + n.text.slice(0, 80) : n.text ? " – " + n.text : ""} (${arten[n.art] || n.art})`;
+  const je = Object.fromEntries(startbar.map(([k, n]) => [label(k, n), k]));
+  const liste = h("datalist", { id: "imp-liste" }, ...startbar.slice(0, 3000).map(([k, n]) => h("option", { value: label(k, n) })));
+  const feld = h("input", { type: "search", list: "imp-liste", class: "imp-feld", placeholder: t("Anforderung, Regel, Begriff, Nachricht oder Klasse …"),
+    "aria-label": t("Ausgangspunkt der Änderung"), value: state.impStart && g.knoten[state.impStart] ? label(state.impStart, g.knoten[state.impStart]) : "",
+    onchange: (e) => { const k = je[e.target.value]; if (k) { state.impStart = k; renderGaps("impact"); } } });
+  const tf = h("select", { "aria-label": t("Tiefe"), onchange: (e) => { state.impTiefe = Number(e.target.value); renderGaps("impact"); } },
+    ...[1, 2, 3].map((d) => h("option", { value: String(d), text: t("Tiefe {d}", { d }) })));
+  tf.value = String(tiefe);
+  const kopf = h("section", { class: "card sb-karte" }, h("div", { class: "am-filter" }, feld, liste, tf),
+    h("div", { class: "muted small", text: t("Wirkungen über Zuordnungen des Fachkonzepts, des abgeleiteten BPMN und des Codes (Nachrichten, Aufrufe, Tests); Klassen und Tests heuristisch zugeordnet. Begriffe wirken nur als Ausgangspunkt.") }));
+  const s = state.impStart;
+  if (!s || !g.knoten[s]) return [kopf, h("div", { class: "card muted", text: t("Ausgangspunkt wählen – oder in der Traceability-Matrix bei einer Kennung auf ⇢ klicken.") })];
+  const n0 = g.knoten[s], seen = impSuchen(g, s, tiefe);
+  const treffer = Object.keys(seen);
+  const zahl = (wert, text) => h("div", { class: "sb-zahl" }, h("strong", { text: String(wert) }), h("span", { class: "muted small", text }));
+  const zahlen = h("div", { class: "sb-zahlen" }, ...g.arten.map((a) => [a, treffer.filter((k) => g.knoten[k].art === a).length])
+    .filter(([, c]) => c).map(([a, c]) => zahl(c, arten[a])));
+  const startKarte = h("section", { class: "card sb-karte" }, h("h2", { text: t("Wenn sich {x} ändert …", { x: n0.name }) }),
+    n0.text ? h("p", { class: "small", text: n0.text }) : null,
+    h("div", { class: "muted small", text: t("{n} betroffene Einträge bis Tiefe {d}", { n: treffer.length, d: tiefe }) }));
+  const name = (k) => {
+    const n = g.knoten[k];
+    if (n.art === "anforderung" || n.art === "regel") return gapReqLink(n.name);
+    if (n.art === "luecke") return h("a", { href: "#", text: n.name, onclick: (e) => { e.preventDefault(); zuAnsicht("gap", "suche"); } });
+    return h("span", { class: n.art === "klasse" || n.art === "test" || n.art === "nachricht" ? "mono" : "", text: n.name });
+  };
+  const gruppen = g.arten.map((a) => [a, treffer.filter((k) => g.knoten[k].art === a).sort((x, y) => seen[x].d - seen[y].d || impName(g, x).localeCompare(impName(g, y)))])
+    .filter(([, xs]) => xs.length).map(([a, xs]) => h("details", { class: "card sb-karte", open: xs.length <= 25 },
+      h("summary", {}, h("strong", { text: arten[a] }), ` (${xs.length})`),
+      h("div", { class: "tabelle" }, h("table", { class: "small" },
+        h("thead", {}, h("tr", {}, ...[t("Eintrag"), t("Stufe"), t("Weg und Grund"), ""].map((x) => h("th", { scope: "col", text: x })))),
+        h("tbody", {}, ...xs.map((k) => {
+          const n = g.knoten[k], weg = impWeg(g, seen, k);
+          return h("tr", {},
+            h("td", {}, name(k), n.text && n.art !== "anforderung" && n.art !== "regel" ? h("div", { class: "muted", text: n.text.slice(0, 120) }) : null,
+              n.dienst ? h("div", { class: "muted", text: n.dienst }) : null),
+            h("td", { text: String(seen[k].d) }),
+            h("td", {}, h("div", { class: "imp-weg" }, ...weg.map((w, i) => h("div", {},
+              h("span", { class: "muted", text: i === 0 ? "" : "→ " }), h("span", { text: impName(g, w.nach) }),
+              h("span", { class: "muted", text: ` · ${w.grund}` }))))),
+            h("td", {}, ["anforderung", "regel", "begriff", "nachricht", "klasse", "prozess"].includes(n.art)
+              ? h("button", { type: "button", class: "imp-start", title: t("Als Ausgangspunkt nehmen"), "aria-label": t("{x} als Ausgangspunkt nehmen", { x: n.name }),
+                onclick: () => zuImpact(k), text: "⇢" }) : null));
+        }))))));
+  return [kopf, startKarte, zahlen, ...gruppen];
+}
+// ------------------------------------------------------------------ Abdeckung (F11, kanonik/abdeckung.py)
+const AB_ART = () => ({ Service: t("Dienste"), Operation: t("Operationen"), Message: t("Nachrichten"), Field: t("Felder"), DataElement: t("Datenelemente") });
+function gapAbdeckung() {
+  if (!state.abdeckung) {
+    api("/api/abdeckung").then((r) => { state.abdeckung = r; if (state.gapCat === "abdeckung") renderGaps("abdeckung"); })
+      .catch((e) => toast(e.message, true));
+    return [h("div", { class: "muted small", text: t("Abdeckung wird berechnet …") })];
+  }
+  const m = state.abdeckung, z = m.zahlen, arten = AB_ART();
+  const pz = (a, b) => (b ? `${Math.round((100 * a) / b)} %` : "–");
+  const zahl = (wert, text) => h("div", { class: "sb-zahl" }, h("strong", { text: String(wert) }), h("span", { class: "muted small", text }));
+  const zahlen = h("div", { class: "sb-zahlen" },
+    zahl(`${z.bloecke_verknuepft}/${z.bloecke}`, t("Textblöcke verknüpft ({p})", { p: pz(z.bloecke_verknuepft, z.bloecke) })),
+    ...Object.entries(m.schnittstelle.arten).map(([a, x]) => zahl(`${x.verknuepft}/${x.gesamt}`, t("{a} verknüpft", { a: arten[a] || a }))));
+  const blockLink = (doc, b) => (hasDocling(doc) ? h("a", { class: "link docling-link", href: doclingUrl({ el: b.block, q: b.text.slice(0, 120) }),
+    target: "docling", rel: "noopener", text: "📄" }) : null);
+  const offenZelle = (d, k) => {
+    if (!k.offen.length) return h("span", { class: "muted", text: "–" });
+    const zeilen = k.offen.slice(0, 6).map((b) => h("div", { title: b.text }, blockLink(d.doc, b), " ",
+      h("span", { class: "muted", text: `${b.art || ""}: ` }), b.text.length > 110 ? b.text.slice(0, 109) + "…" : b.text));
+    if (k.offen.length > 6) zeilen.push(h("div", { class: "muted", text: t("+{n} weitere", { n: k.offen.length - 6 }) }));
+    return h("div", { class: "tr-liste" }, ...zeilen);
+  };
+  const kapZeile = (d, k) => h("tr", {}, h("td", { text: `${k.nummer} ${k.titel || ""}` }), h("td", { text: String(k.bloecke) }),
+    h("td", { class: k.verknuepft < k.bloecke ? "tr-nein" : "tr-ja", text: `${k.verknuepft} (${pz(k.verknuepft, k.bloecke)})` }),
+    h("td", {}, offenZelle(d, k)));
+  const kopfAb = h("thead", {}, h("tr", {}, ...[t("Kapitel"), t("Blöcke"), t("verknüpft"), t("nicht verknüpft")].map((x) => h("th", { scope: "col", text: x }))));
+  const doks = m.dokumente.map((d) => h("section", { class: "card sb-karte" }, h("h2", { text: `${d.titel} – ${pz(d.verknuepft, d.bloecke)}` }),
+    h("div", { class: "tabelle" }, h("table", { class: "small" }, kopfAb.cloneNode(true), h("tbody", {}, ...d.kapitel.map((k) => kapZeile(d, k)))))));
+  const s = m.schnittstelle;
+  const nachr = h("section", { class: "card sb-karte" }, h("h2", { text: t("Schnittstelle: Nachrichten und Felder") }),
+    h("div", { class: "muted small", text: t("Verknüpft heißt: eine Kante zu einem Begriff, einer Regel oder einem anderen Wissensknoten (z. B. MEANS); ein Feld auch über sein Datenelement.") }),
+    s.nachrichten.length ? h("div", { class: "tabelle" }, h("table", { class: "small" },
+      h("thead", {}, h("tr", {}, ...[t("Nachricht"), t("verknüpft"), t("Felder verknüpft"), t("nicht verknüpfte Felder")].map((x) => h("th", { scope: "col", text: x })))),
+      h("tbody", {}, ...s.nachrichten.map((n) => h("tr", {},
+        h("td", { class: "mono" }, h("a", { href: nodeHash(n.id), text: n.name, onclick: (e) => { e.preventDefault(); openNode(n.id); } })),
+        h("td", { class: n.verknuepft ? "tr-ja" : "tr-nein", text: n.verknuepft ? "●" : "○" }),
+        h("td", { text: `${n.felder_verknuepft}/${n.felder}` }),
+        h("td", { class: "small", title: n.offen.join(", "), text: n.offen.slice(0, 8).join(", ") + (n.offen.length > 8 ? " …" : "") }))))))
+      : h("div", { class: "muted small", text: t("keine") }),
+    s.offen.length ? h("details", {}, h("summary", { text: t("Dienste und Operationen ohne Verknüpfung ({n})", { n: s.offen.length }) }),
+      h("div", { class: "small mono" }, s.offen.map((x) => `${arten[x.art] || x.art}: ${x.name}`).join(" · "))) : null);
+  return [zahlen, ...doks, nachr];
+}
+// ------------------------------------------------------------------ Lückenbaum und Aufgaben (kanonik/aufgaben.py)
+function mdDatei(name, text) {
+  const a = h("a", { href: URL.createObjectURL(new Blob([text], { type: "text/markdown;charset=utf-8" })), download: name });
+  document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 30000);
+}
+async function mdKopieren(text) {
+  try { await navigator.clipboard.writeText(text); toast(t("Aufgabe kopiert")); }
+  catch { mdDatei("aufgabe.md", text); }
+}
+function baumLuecke(n) {
+  const d = n.dazu, a = n.aufgabe, art = GAP_ART();
+  const pill = { fehlt: "rel-rejected", abweichend: "rel-candidate", unvollstaendig: "rel-candidate" }[n.art] || "type";
+  const liste = (titel, xs, f) => (xs.length ? h("div", { class: "baum-teil" }, h("strong", { text: `${titel} (${xs.length})` }),
+    h("ul", { class: "small" }, ...xs.map((x) => h("li", {}, f(x))))) : null);
+  const dazu = h("div", { class: "baum-dazu" },
+    liste(t("Anforderungen und Regeln"), d.anforderungen, (x) => [gapReqLink(x.id), " ", h("span", { class: x.kern ? "" : "muted", text: x.text || "" })]),
+    liste(t("Nachrichten"), d.nachrichten, (x) => [h("span", { class: "mono", text: x.name }), ` „${x.titel || ""}“ · ${x.absender || "?"} → ${(x.empfaenger || []).join(", ")}`,
+      x.daten ? h("div", { class: "muted", text: t("Daten: {d}", { d: x.daten }) }) : null]),
+    liste(t("Prozesselemente"), d.prozesse, (x) => x),
+    liste(t("Klassen"), d.klassen, (x) => h("span", { class: "mono", text: x })),
+    liste(t("Tests"), d.tests, (x) => [h("span", { class: "mono", text: x.klasse }), h("span", { class: "muted", text: ` · ${t("{n} Testfälle", { n: x.testfaelle })}` })]),
+    liste(t("Codestellen und Modelle"), d.codestellen, (x) => h("span", { class: "mono", text: x })));
+  const aufgabe = h("div", { class: "baum-aufgabe" },
+    h("div", { class: "baum-kopf" }, h("strong", { text: t("Aufgabe: {t}", { t: a.titel }) }),
+      h("button", { type: "button", class: "small", onclick: () => mdKopieren(a.markdown), text: t("Als Markdown kopieren") }),
+      h("button", { type: "button", class: "small", onclick: () => mdDatei(`aufgabe-${n.id}.md`, a.markdown), text: t("Als .md") })),
+    h("div", { class: "small muted", text: t("Schritte") }),
+    h("ul", { class: "baum-check small" }, ...a.schritte.map((s) => h("li", { class: s.startsWith("  - ") ? "baum-unter" : "", text: s.replace(/^\s+-\s/, "") }))),
+    h("div", { class: "small muted", text: t("Akzeptanzkriterien") }),
+    h("ul", { class: "baum-check small" }, ...a.akzeptanz.map((s) => h("li", { text: s }))));
+  return h("details", { class: "card baum-luecke", id: `baum-${n.id}`, open: state.baumOffen === n.id },
+    h("summary", {}, h("span", { class: `pill ${pill}`, text: art[n.art] || n.art }), " ", ...gapTypPills(n).flatMap((p) => [p, " "]),
+      h("strong", { text: `${n.id} · ${n.titel}` }), " ",
+      n.folgen.length ? h("span", { class: "pill type", text: t("+{n} Folgelücken", { n: n.folgen.length }) }) : null, " ",
+      h("span", { class: `pill ${n.entscheidung === "bestaetigt" ? "rel-confirmed" : n.entscheidung === "falsch" ? "rel-rejected" : "type"}`,
+        text: GAP_DEC()[n.entscheidung] || n.entscheidung || "" })),
+    h("p", { class: "small", text: n.beschreibung }),
+    n.folgen.length ? h("div", { class: "baum-folgen" }, h("strong", { class: "small", text: t("Folgelücken") }), ...n.folgen.map((f) => gapMini(f.id))) : null,
+    h("details", { class: "small", open: true }, h("summary", { text: t("Gehört dazu") }), dazu),
+    aufgabe);
+}
+function gapBaum() {
+  if (!state.baum) {
+    api("/api/aufgaben").then((r) => { state.baum = r; if (state.gapCat === "baum") renderGaps("baum"); })
+      .catch((e) => toast(e.message, true));
+    return [h("div", { class: "muted small", text: t("Lückenbaum wird aufgebaut …") })];
+  }
+  const m = state.baum, z = m.zahlen;
+  const alle = () => m.kapitel.map((k) => `# ${k.nummer} ${k.titel || ""}\n\n` + k.luecken.map((n) => n.aufgabe.markdown).join("\n")).join("\n");
+  const kopf = h("div", { class: "card small" },
+    h("div", { text: t("{h} Hauptlücken mit {f} Folgelücken in {k} Kapiteln. Je Hauptlücke: was dazugehört und ein Aufgabenvorschlag, der sie samt Folgelücken schließt – aus Fachkonzept, BPMN und Code abgeleitet, ohne Sprachmodell; vor dem Übernehmen prüfen.",
+      { h: z.hauptluecken, f: z.folgeluecken, k: z.kapitel }) }),
+    h("div", { class: "el-bar" }, h("button", { type: "button", onclick: () => mdDatei("aufgaben.md", alle()), text: t("Alle Aufgaben als Markdown herunterladen") }),
+      h("button", { type: "button", onclick: () => document.querySelectorAll("#detail .baum-luecke").forEach((d) => { d.open = true; }), text: t("Alle aufklappen") })));
+  const teile = m.kapitel.map((k) => h("details", { class: "baum-kapitel", open: true },
+    h("summary", {}, h("strong", { text: `${k.nummer} ${k.titel || ""}`.trim() || t("ohne Kapitel") }),
+      h("span", { class: "muted small", text: `  ${t("{n} Hauptlücken", { n: k.luecken.length })}` })),
+    ...k.luecken.map(baumLuecke)));
+  if (state.baumOffen) setTimeout(() => { const e = document.getElementById(`baum-${state.baumOffen}`); if (e) e.scrollIntoView({ block: "start" }); state.baumOffen = null; }, 50);
+  return [kopf, ...teile];
+}
 // ------------------------------------------------------------------ Steckbrief der Domäne (UC1, kanonik/steckbrief.py)
 function gapSteckbrief() {
   if (!state.steckbrief) {
@@ -2451,6 +2728,10 @@ function renderGaps(cat) {
   const parts = [h("div", { class: "node-head" }, h("h1", { text: title }), h("div", { class: "muted small", text: hint }))];
   if (cat === "steckbrief") parts.push(...gapSteckbrief());
   else if (cat === "architektur") parts.push(...gapArchitektur());
+  else if (cat === "matrix") parts.push(...gapMatrix());
+  else if (cat === "impact") parts.push(...gapImpact());
+  else if (cat === "abdeckung") parts.push(...gapAbdeckung());
+  else if (cat === "baum") parts.push(...gapBaum());
   else if (!state.gap.luecken.length && !Object.keys(state.gap.bpmn || {}).length)
     parts.push(h("div", { class: "card muted", text: t("Noch kein Abgleich – python make_out.py --only code abgleich") }));
   else if (cat === "abgleich") parts.push(...gapAbgleich());
@@ -4531,7 +4812,8 @@ function gapGraphProzess(p) {
   const zahlA = h("span", {}), zahlV = h("span", {});
   const liste = h("div", { class: "gk-liste" });
   const body = h("div", { class: "gg-body" });
-  let vw = null, aw = null, aktuell = null, modus = "ablauf";
+  // Ansicht Kommunikation auch per Adresse (#v=gap&k=graph&m=kommunikation – Tour der Demo)
+  let vw = null, aw = null, aktuell = null, modus = new URLSearchParams(location.hash.slice(1)).get("m") === "kommunikation" ? "kommunikation" : "ablauf";
   const komm = () => modus === "kommunikation";
   const lueckenListe = (ks) => ks.map((k) => gapInfo(k)).filter(Boolean);
   const zeigeLuecken = (ks) => { gkSetze(detail, ...lueckenListe(ks)); detail.scrollIntoView({ block: "nearest", behavior: "smooth" }); };
@@ -4613,7 +4895,9 @@ function gapGraphProzess(p) {
        h("span", { class: "muted", text: t("übrige Elemente abgeblendet") })]
     : [];
   const legende = h("div", { class: "gg-legende small" });
-  liste.hidden = true;
+  liste.hidden = !komm();
+  body.classList.toggle("komm", komm());
+  legende.replaceChildren(...legendeTeile());
   listeZeigen();
   (async () => { await ladeV(); const erst = ab.find((b) => b.baustein === p.prozess) || ab[0]; if (erst) ladeA(erst.baustein); })();
   body.append(h("div", { class: "gg-diagramme" },
