@@ -1,0 +1,10 @@
+asyncapi: 3.0.0
+info:
+  title: cinema – Ereignisse (aus dem Code)
+  version: 239becf79f3a
+  description: Erzeugt von Kanonik aus dem Quelltext (Code First); x-kanonik-code verweist je Element auf die Code-Stelle.
+channels: {}
+operations: {}
+components:
+  messages: {}
+  schemas: {}

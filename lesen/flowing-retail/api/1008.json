@@ -1,1 +1,1 @@
-{"id":"fr_fachkonzept:bpmn:fr-waren-versenden/Start","diagrams":[{"process":{"id":"fr_fachkonzept:bpmn:fr-waren-versenden","labels":["BpmnProcess"],"label":"BpmnProcess","type":null,"title":"Waren versenden","titleEn":null,"editable":false,"doc":"fr_fachkonzept","lang":"de"},"processId":"fr-waren-versenden","file":"fr-waren-versenden.bpmn","prefix":"fr_fachkonzept:bpmn:","elementIds":["Start"],"elements":[{"id":"Start","name":"Start","decision":null}]}]}
+{"id":"fr_fachkonzept:bpmn:fr-waren-kommissionieren/E_kommissioniert","artifacts":[],"tests":[]}

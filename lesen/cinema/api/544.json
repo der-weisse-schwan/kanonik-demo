@@ -1,1 +1,1 @@
-{"id":"ci_fachkonzept:bpmn:ci-anfrage-annehmen/G_start","artifacts":[],"tests":[]}
+{"id":"ci_fachkonzept:bpmn:ci-anfrage-annehmen/G_start","diagrams":[{"process":{"id":"ci_fachkonzept:bpmn:ci-anfrage-annehmen","labels":["BpmnProcess"],"label":"BpmnProcess","type":null,"title":"Reservierung anfragen","titleEn":null,"editable":false,"doc":"ci_fachkonzept","lang":"de"},"processId":"ci-anfrage-annehmen","file":"ci-anfrage-annehmen.bpmn","prefix":"ci_fachkonzept:bpmn:","elementIds":["G_start"],"elements":[{"id":"G_start","name":"Start: Ergebnis?","decision":null}]}]}

@@ -1,1 +1,1 @@
-{"id":"ci_fachkonzept:req:4.1:A4:T1","diagrams":[{"process":{"id":"ci_fachkonzept:bpmn:ci-anfrage-annehmen","labels":["BpmnProcess"],"label":"BpmnProcess","type":null,"title":"Reservierung anfragen","titleEn":null,"editable":false,"doc":"ci_fachkonzept","lang":"de"},"processId":"ci-anfrage-annehmen","file":"ci-anfrage-annehmen.bpmn","prefix":"ci_fachkonzept:bpmn:","elementIds":["A4"],"elements":[{"id":"A4","name":"Eingang der Reservierungsanfrage bestätigen","decision":null}]}]}
+{"id":"ci_fachkonzept:req:4.1:A4:Z1","artifacts":[],"tests":[]}

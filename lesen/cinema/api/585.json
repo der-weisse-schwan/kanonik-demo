@@ -1,1 +1,1 @@
-{"id":"ci_fachkonzept:bpmn:ci-plaetze-reservieren/Start","diagrams":[{"process":{"id":"ci_fachkonzept:bpmn:ci-plaetze-reservieren","labels":["BpmnProcess"],"label":"BpmnProcess","type":null,"title":"Sitzplätze reservieren","titleEn":null,"editable":false,"doc":"ci_fachkonzept","lang":"de"},"processId":"ci-plaetze-reservieren","file":"ci-plaetze-reservieren.bpmn","prefix":"ci_fachkonzept:bpmn:","elementIds":["Start"],"elements":[{"id":"Start","name":"Start","decision":null}]}]}
+{"id":"ci_fachkonzept:bpmn:ci-ersatzplaetze-anbieten/S_storniert_join","artifacts":[],"tests":[]}

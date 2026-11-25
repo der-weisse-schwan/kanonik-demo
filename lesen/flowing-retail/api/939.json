@@ -1,1 +1,1 @@
-{"id":"fr_fachkonzept:bpmn:fr-kreditkarte-aktualisieren","artifacts":[],"tests":[]}
+{"id":"fr_fachkonzept:bpmn:fr-kreditkarte-aktualisieren","diagrams":[{"process":{"id":"fr_fachkonzept:bpmn:fr-kreditkarte-aktualisieren","labels":["BpmnProcess"],"label":"BpmnProcess","type":null,"title":"Kreditkartendaten aktualisieren lassen","titleEn":null,"editable":false,"doc":"fr_fachkonzept","lang":"de"},"processId":"fr-kreditkarte-aktualisieren","file":"fr-kreditkarte-aktualisieren.bpmn","prefix":"fr_fachkonzept:bpmn:","elementIds":[],"elements":[]}]}

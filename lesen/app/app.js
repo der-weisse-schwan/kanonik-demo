@@ -1780,6 +1780,7 @@ const GAP_CATS = () => [["steckbrief", t("Steckbrief der Domäne"), t("Systeme u
   ["abdeckung", t("Abdeckung: nicht Verknüpftes"), t("Welche Abschnitte der Dokumente und welche Nachrichten und Felder der Schnittstelle mit keinem Begriff, keiner Regel und keinem anderen Wissensknoten verknüpft sind")],
   ["zuordnung", t("Anforderungen je System/Package/Klasse"), t("Anforderungen und Regeln je Microservice, Package und Klasse – zugeordnet über Begriffe, Domänenmodell, Tätigkeiten, Nachrichten und Lücken (heuristisch)")],
   ["rollen", t("Rollen je System"), t("Rollen bzw. Akteure je System des Fachkonzepts mit ihren Anforderungen")],
+  ["annahmen", t("Annahmen"), t("Was Kanonik bei BPMN-Ableitung, Abgleich und Code-Generierung annimmt: Vorgabe, gültiger Wert, Quelle, Ort im Code – je Domäne steuerbar in configuration/annahmen.yaml")],
   ["typen", t("Nach Lückentyp"), t("Lücken gruppiert nach Typ (Regel des Abgleichs) mit Zahl je Typ und Entscheidung")],
   ["neu", t("Neu"), t("Noch nicht entschieden")],
   ["bpmn", t("Sicht BPMN"), t("Im vorhandenen BPMN fehlt oder weicht ab, was das Fachkonzept verlangt")],
@@ -1805,7 +1806,9 @@ const GAP_TYP = () => ({
   prozess_fehlt_bpmn: t("Prozess fehlt im BPMN"),
   nachricht_fehlt_schnittstelle: t("Nachricht fehlt in der Schnittstelle"), daten_fehlen_schnittstelle: t("Nutzdaten fehlen in der Schnittstelle"),
   partner_abweichend_schnittstelle: t("Absender in der Schnittstelle abweichend"), baustein_fehlt_bpmn: t("Baustein fehlt im BPMN"),
-  nachricht_fehlt_bpmn: t("Nachricht fehlt im BPMN"), frist_fehlt_bpmn: t("Frist fehlt im BPMN"), benennung_abweichend: t("Benennung abweichend") });
+  nachricht_fehlt_bpmn: t("Nachricht fehlt im BPMN"), frist_fehlt_bpmn: t("Frist fehlt im BPMN"), benennung_abweichend: t("Benennung abweichend"),
+  struktur_abweichend: t("Struktur abweichend"), reihenfolge_abweichend: t("Reihenfolge abweichend"),
+  job_ohne_worker: t("Job ohne Worker"), worker_ohne_job: t("Worker ohne Job im Modell") });
 const gapTypName = (r) => GAP_TYP()[r] || r;
 const gapTypen = (x) => x.regeln && x.regeln.length ? x.regeln : x.regel ? [x.regel] : [];
 const gapTypPills = (x) => gapTypen(x).map((r) => h("span", { class: "pill gap-typ", title: `${t("Lückentyp")} · ${t("Kennung")}: ${r}`, text: gapTypName(r) }));
@@ -1822,7 +1825,7 @@ function gapCount(c) {
   if (c === "oben") return s ? s.oben.reduce((n, k) => n + k.mit_luecke, 0) : 0;
   if (c === "unten") return s ? s.unten.reduce((n, d) => n + d.dateien.reduce((m, f) => m + f.stellen.length, 0), 0) : 0;
   if (c === "suche") return (state.gap.luecken || []).length;
-  if (c === "zuordnung" || c === "rollen" || c === "steckbrief" || c === "architektur" || c === "matrix" || c === "impact" || c === "abdeckung") return null;
+  if (c === "zuordnung" || c === "annahmen" || c === "rollen" || c === "steckbrief" || c === "architektur" || c === "matrix" || c === "impact" || c === "abdeckung") return null;
   if (c === "baum") return (state.gap.luecken || []).filter((x) => !(x.haengt_an || []).length).length;   // eigene Ansicht, keine Zahl von Lücken
   if (c === "typen") return new Set((state.gap.luecken || []).flatMap(gapTypen)).size;
   return c === "abgleich" || c === "graph" ? Object.keys(state.gap.bpmn || {}).length : gapItems(c).length;
@@ -1846,6 +1849,7 @@ async function loadGaps() {
   state.impGraph = null;                                 // Wirkungsgraph neu laden (Ausgangspunkt bleibt)
   state.abdeckung = null;                                // Abdeckung neu berechnen
   state.baum = null;                                     // Lückenbaum neu aufbauen
+  state.annahmen = null;                                 // Annahmen neu lesen
   renderGaps(state.gapCat || "oben");
 }
 function renderGapList() {
@@ -2822,6 +2826,7 @@ function renderGaps(cat) {
   else if (cat === "oben") parts.push(...gapOben());
   else if (cat === "unten") parts.push(...gapUnten());
   else if (cat === "zuordnung") parts.push(...gapZuordnung());
+  else if (cat === "annahmen") parts.push(...gapAnnahmen());
   else if (cat === "typen") parts.push(...gapNachTyp());
   else if (cat === "rollen") parts.push(...gapRollen());
   else {
@@ -4726,10 +4731,58 @@ async function init() {
 }
 init();
 
+// Zuordnungstabelle abgeleitetes ↔ vorhandenes BPMN als CSV (wie luecken.zuordnung_csv; auch in der statischen Demo)
+function zuordnungCsv() {
+  const q = (x) => { const v = String(x ?? ""); return /[;"\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v; };
+  const zeilen = [["Prozess", "Baustein", "Element", "Name", "Art", "Datei (vorhanden)", "Prozess (vorhanden)", "Element (vorhanden)",
+    "Name (vorhanden)", "Unterprozess", "Verfahren", "Grund", "Sicherheit", "Entscheidung", "von", "am"]];
+  for (const [pid, a] of Object.entries(state.gap.bpmn || {})) {
+    const vo = a.vorhanden || {};
+    for (const z of a.elemente || []) {
+      const zu = z.zuordnung || {}, v = z.vorhanden;
+      zeilen.push([pid, z.baustein, z.element, z.name, z.art, v ? z.vorhanden_datei || vo.datei : "", v ? z.vorhanden_prozess || vo.prozess : "",
+        v || "", z.vorhanden_name, z.vorhanden_in, zu.verfahren, zu.grund, zu.sicherheit, zu.entscheidung, zu.von, zu.am]);
+    }
+  }
+  return "\ufeff" + zeilen.map((r) => r.map(q).join(";")).join("\r\n") + "\r\n";
+}
+// ------------------------------------------------------------------ Lücken: Annahmen (kanonik.annahmen)
+// Je Bereich (BPMN-Ableitung, Abgleich, Code-Generierung) jede Annahme mit Vorgabe, gültigem Wert, Quelle und Ort im Code
+const AN_QUELLE = () => ({ vorgabe: t("Vorgabe"), domaene: t("Domäne"), fest: t("fest"), anderswo: t("steuerbar in") });
+function gapAnnahmen() {
+  const box = h("div", {}, h("div", { class: "muted small" }, h("span", { class: "spinner" }), t("lädt …")));
+  const zeige = (v) => typeof v === "string" ? v : JSON.stringify(v);
+  (async () => {
+    let u;
+    try { u = state.annahmen || (state.annahmen = await api("api/annahmen")); }
+    catch (e) { box.replaceChildren(h("div", { class: "card warn", text: e.message })); return; }
+    const geaendert = u.annahmen.filter((x) => x.quelle === "domaene").length;
+    box.replaceChildren(h("div", { class: "card" },
+      h("h2", { text: t("Annahmen") }),
+      h("p", { class: "muted small", text: t("Wo Kanonik ohne Beleg im Fachkonzept etwas annimmt – eine Vorgabe, eine Schwelle, eine Wortliste. Steuerbare Annahmen setzt die Domäne in configuration/annahmen.yaml; danach den Schritt neu laufen lassen (Abgleich bzw. BPMN, Java).") }),
+      h("div", { class: "small" }, u.datei ? t("Datei: {d}", { d: u.datei }) : t("keine configuration/annahmen.yaml – alle Vorgaben"),
+        geaendert ? ` · ${t("{n} von der Vorgabe abweichend", { n: geaendert })}` : ""),
+      ...(u.fehler || []).map((x) => h("div", { class: "card warn small", text: x })),
+      ...Object.entries(u.bereiche).map(([b, titel]) => h("div", {},
+        h("h3", { text: titel }),
+        h("table", { class: "paths review an-tab" },
+          h("thead", {}, h("tr", {}, ...[t("Annahme"), t("Wert"), t("Vorgabe"), t("Quelle"), t("Schlüssel · Ort")].map((x) => h("th", { text: x })))),
+          h("tbody", {}, ...u.annahmen.filter((x) => x.bereich === b).map((x) => h("tr", { class: x.quelle === "domaene" ? "an-geaendert" : "" },
+            h("td", { text: x.text }), h("td", { class: "mono", text: zeige(x.wert) }), h("td", { class: "mono muted", text: zeige(x.vorgabe) }),
+            h("td", {}, AN_QUELLE()[x.quelle] || x.quelle, x.quelle === "anderswo" ? h("div", { class: "mono small", text: x.steuerbar }) : null,
+              x.grund ? h("div", { class: "muted small", text: x.grund }) : null, x.fehler ? h("div", { class: "warn small", text: x.fehler }) : null),
+            h("td", { class: "mono small" }, x.schluessel, h("div", { class: "muted", text: x.wo }))))))))));
+  })();
+  return [box];
+}
 // ------------------------------------------------------------------ Lücken: BPMN als Graph (luecken.bpmn_graph)
 // Vorhandenes Modell (Code-Repository) und abgeleitete Modelle (aus dem Fachkonzept, out/bpmn/) als Diagramm; je Element
 // gefärbt: passt (grün), fehlt im BPMN (rot, nur abgeleitete Seite), nur im BPMN (orange, nur vorhandene Seite),
 // teilweise (gelb, Aufruf eines Bausteins im Hauptprozess); Kennungen der Lücken als Marke am Element.
+const GG_SICHER = () => ({ hoch: t("sicher"), mittel: t("wahrscheinlich"), niedrig: t("unsicher – bitte prüfen"), bestaetigt: t("bestätigt") });
+const GG_VERFAHREN = () => ({ nachricht: t("gleiche Nachricht"), timer: t("gleiche Frist"), nachricht_wortteile: t("Nachricht mit gleichen Wortteilen"),
+  aufgabe: t("Aufgabe mit gleichen Wörtern"), mitteilung_als_aufgabe: t("Mitteilung als Aufgabe umgesetzt"), code_vor_start: t("im Code vor dem Prozessstart"),
+  manuell: t("von Fachleuten festgelegt"), keins: t("kein Vorschlag") });
 const GG_STATUS = () => ({ passt: t("passt – hat ein Gegenstück"),
   anders: t("umgesetzt, anders modelliert (Verzweigung ohne eigenes Gateway)"), fehlt: t("fehlt im BPMN – im Fachkonzept beschrieben, nicht umgesetzt"),
   nur: t("nur im BPMN – im Fachkonzept nicht beschrieben"), teilweise: t("teilweise umgesetzt (Baustein)"), offen: t("nicht verglichen") });
@@ -4797,6 +4850,12 @@ async function ggViewer(container, xml, info, onClick, opts = {}) {
   container.replaceChildren();
   const viewer = new window.BpmnJS({ container });
   await viewer.importXML(xml);
+  if (opts.prozess) {                                    // Datei mit mehreren Diagrammen: das des gewünschten Prozesses öffnen
+    const defs = viewer.getDefinitions && viewer.getDefinitions();
+    const dia = ((defs && defs.diagrams) || []).find((d) => { const be = d.plane && d.plane.bpmnElement;
+      return be && (be.id === opts.prozess || (be.participants || []).some((p) => p.processRef && p.processRef.id === opts.prozess)); });
+    if (dia && defs.diagrams[0] !== dia && viewer.open) await viewer.open(dia);
+  }
   const canvas = viewer.get("canvas"), reg = viewer.get("elementRegistry"), ov = viewer.get("overlays");
   for (const [id, st] of Object.entries(info.status || {})) if (st !== "offen" && st !== "–" && reg.get(id)) canvas.addMarker(id, opts.komm ? `gk-${st}` : `gg-${st}`);
   if (opts.komm)                                         // Kommunikation: alles ohne Nachrichtenbezug abblenden
@@ -4822,11 +4881,12 @@ async function ggViewer(container, xml, info, onClick, opts = {}) {
   container.classList.add("clickable");
   let fokus = null;
   return {
-    fokus(id) {
-      const el = reg.get(id);
-      if (!el) return;
+    fokus(id, nurMarkieren = false) {                     // nurMarkieren: angeklicktes Element, Ausschnitt bleibt
+      const el = id ? reg.get(id) : null;
+      if (!el) { if (fokus) { canvas.removeMarker(fokus, "gg-fokus"); fokus = null; } return; }     // kein Gegenstück: Markierung weg
       if (fokus) canvas.removeMarker(fokus, "gg-fokus");
       canvas.addMarker(id, "gg-fokus"); fokus = id;
+      if (nurMarkieren) return;
       const vb = canvas.viewbox(), z = Math.min(1, vb.outer.width / 900), w = vb.outer.width / z, hh = vb.outer.height / z;
       canvas.viewbox({ x: el.x + (el.width || 0) / 2 - w / 2, y: el.y + (el.height || 0) / 2 - hh / 2, width: w, height: hh });
     },
@@ -4887,6 +4947,14 @@ function gapInfo(id) {
 function gkSetze(el, ...xs) { el.replaceChildren(...xs.flat().filter((x) => x !== null && x !== undefined && x !== false)); }
 function gapGraphProzess(p) {
   const v = p.vorhanden, ab = p.abgeleitet, K = (state.gapGraph.kommunikation || { nachrichten: [] });
+  const vModelle = v ? (v.modelle && v.modelle.length ? v.modelle : [{ ...v, key: v.key || `${v.datei}#${v.prozess}`, name: v.prozess }]) : [];
+  let vAkt = vModelle[0] || null;                        // vorhandenes Modell im Diagramm: Prozess oder ein aufgerufener
+  const wahlV = h("select", { "aria-label": t("Vorhandenes Modell"), hidden: vModelle.length < 2 },
+    ...vModelle.map((m, i) => h("option", { value: m.key, text: `${m.name || m.prozess}${i === 0 ? " – " + t("Prozess") : " – " + t("aufgerufen")}`
+      + ` (${m.datei})` })));
+  const vDatei = h("span", { class: "muted small mono", text: vAkt ? vAkt.datei : "" });
+  const offenHinweis = v && (v.aufrufe_offen || []).length ? h("div", { class: "muted small", text: t("Aufrufe ohne Modell im Repository: {x}",
+    { x: v.aufrufe_offen.map((x) => `${x.name || x.aufruf} → ${x.ziel}`).join("; ") }) }) : null;
   const zahl = (z) => [["passt", t("passt")], ["anders", t("anders modelliert")], ["fehlt", t("fehlt")], ["nur", t("nur im BPMN")], ["teilweise", t("teilweise")]]
     .filter(([k]) => z[k]).map(([k, txt]) => h("span", { class: `pill gg-pill-${k}`, text: `${z[k]} ${txt}` }));
   const boxV = h("div", { class: "bpmn-box gg-canvas", "data-seite": "v" }), boxA = h("div", { class: "bpmn-box gg-canvas", "data-seite": "a" });
@@ -4902,11 +4970,58 @@ function gapGraphProzess(p) {
   const komm = () => modus === "kommunikation";
   const lueckenListe = (ks) => ks.map((k) => gapInfo(k)).filter(Boolean);
   const zeigeLuecken = (ks) => { gkSetze(detail, ...lueckenListe(ks)); detail.scrollIntoView({ block: "nearest", behavior: "smooth" }); };
-  const zeigen = (id, name, art, st, ks, gegen) => gkSetze(detail, 
+  const zeigen = (id, name, art, st, ks, gegen, zu) => gkSetze(detail, 
     h("div", {}, h("strong", { text: name }), " ", h("span", { class: "muted", text: `${art} · ${id}` })),
     h("div", {}, h("span", { class: `gg-dot gg-dot-${st}` }), GG_STATUS()[st] || st),
+    ...(Array.isArray(zu) ? zu : [zu]),
     gegen ? h("div", {}, h("button", { type: "button", class: "small", onclick: gegen.los }, gegen.text)) : null,
     ...(ks && ks.length ? lueckenListe(ks) : []));
+  // Herkunft eines abgeleiteten Elements: Kapitel, Aktivität, Anforderungen, Regeln, Ableitungsregel (Annahme hervorgehoben)
+  const herkunftBox = (hk) => {
+    if (!hk) return null;
+    const ab_ = hk.ableitung || {};
+    return h("div", { class: "gg-herkunft" },
+      h("div", {}, h("strong", { text: t("Herkunft") + ": " }),
+        hk.kapitel ? [t("Kapitel {k}", { k: hk.kapitel }), " ", gapSectionLink(hk.kapitel)] : t("ohne Kapitel"),
+        (hk.aktivitaeten || []).length ? ` · ${t("Aktivität")} ${hk.aktivitaeten.join(", ")}` : ""),
+      (hk.anforderungen || []).length ? h("div", {}, `${t("Anforderungen")}: `, ...gapVerbinde(hk.anforderungen.map(gapReqLink), ", ")) : null,
+      (hk.regeln || []).length ? h("div", { text: `${t("Regeln")}: ${hk.regeln.join(", ")}` }) : null,
+      ab_.regel ? h("div", { class: ab_.annahme ? "gg-annahme" : "muted" }, `${t("abgeleitet nach")}: ${ab_.text || ab_.regel}`,
+        ab_.quelle ? ` (${ab_.quelle})` : "", ab_.annahme ? h("span", { class: "pill gg-sicher-niedrig", text: t("Annahme – prüfen") }) : null) : null);
+  };
+  // Zuordnung eines abgeleiteten Elements: Gegenstück, Verfahren, Grund, Sicherheit; bestätigen, anderes wählen, keins
+  const vName = (k, id) => { const m = vModelle.find((x) => x.key === k); const e = m && (m.elemente || []).find((x) => x.id === id); return e && e.name ? e.name : id; };
+  const zuordnungBox = (b, id) => {
+    const z = (b.zuordnung || {})[id], g = b.gegen[id], st = b.status[id];
+    if (!z && !g && st !== "fehlt") return null;
+    const gk = (b.gegen_modell || {})[id] || (vModelle[0] && vModelle[0].key);
+    const sicher = z && z.sicherheit ? h("span", { class: `pill gg-sicher gg-sicher-${z.sicherheit}`, text: GG_SICHER()[z.sicherheit] || z.sicherheit }) : null;
+    const box = h("div", { class: "gg-zuordnung" },
+      h("div", {}, h("strong", { text: t("Zuordnung") + ": " }), g === "@code" ? t("im Code vor dem Prozessstart")
+        : g ? `→ ${vName(gk, g)} (${g}${gk && vModelle[0] && gk !== vModelle[0].key ? ", " + gk : ""})` : t("kein Gegenstück"), " ", sicher),
+      z ? h("div", { class: "muted", text: `${GG_VERFAHREN()[z.verfahren] || z.verfahren}: ${z.grund}` }) : null,
+      z && z.entscheidung ? h("div", { class: "muted", text: t("entschieden von {v} am {a}", { v: z.von || "–", a: z.am || "–" }) + (z.kommentar ? ` – ${z.kommentar}` : "") }) : null,
+      z && z.warnung ? h("div", { class: "card warn small", text: z.warnung }) : null);
+    if (state.config.readonly || !v) return box;
+    const senden = async (entscheidung, vorhanden) => {
+      const user = $("user").value.trim();
+      if (!user) { toast(t("Bitte oben einen Bearbeiternamen eintragen."), true); $("user").focus(); return; }
+      try { await api("api/luecken/zuordnen", { method: "POST", body: JSON.stringify({ abgeleitet: `${b.baustein}/${id}`, entscheidung, vorhanden, user }) }); }
+      catch (e) { toast(e.message, true); return; }
+      toast(t("Zuordnung gespeichert, Abgleich neu gerechnet"));
+      loadGaps();
+    };
+    const datei = (k) => (vModelle.find((m) => m.key === k) || {}).datei;
+    const wahl = h("select", { "aria-label": t("anderes Gegenstück") }, h("option", { value: "", text: t("anderes Gegenstück …") }),
+      ...vModelle.flatMap((m) => (m.elemente || []).map((e) => h("option", { value: `${m.datei}#${e.id}`, text: `${e.name || e.id} · ${e.art}${vModelle.length > 1 ? " · " + (m.name || m.prozess) : ""}` }))));
+    wahl.addEventListener("change", () => { if (wahl.value) senden("zugeordnet", wahl.value); });
+    box.append(h("div", { class: "el-bar" },
+      g && g !== "@code" && !(z && z.sicherheit === "bestaetigt") ? h("button", { type: "button", class: "small", onclick: () => senden("bestaetigt", `${datei(gk)}#${g}`) }, t("Zuordnung bestätigen")) : null,
+      wahl,
+      g ? h("button", { type: "button", class: "small", onclick: () => senden("kein_gegenstueck") }, t("kein Gegenstück")) : null,
+      z && z.entscheidung ? h("button", { type: "button", class: "small", onclick: () => senden("offen") }, t("Entscheidung zurücknehmen")) : null));
+    return box;
+  };
   const nachricht = (n) => {
     for (const r of liste.querySelectorAll("tr[data-n]")) r.classList.toggle("an", r.dataset.n === n.name);
     const a0 = n.abgeleitet[0], v0 = n.vorhanden[0];
@@ -4941,26 +5056,51 @@ function gapGraphProzess(p) {
       aw = await ggViewer(boxA, await r.text(), info, (id, name, art) => {
         if (b.aufrufe[id]) { ladeA(b.aufrufe[id]); return; }
         if (komm()) return elementKomm(id, name, art, info);
-        const g = b.gegen[id];
+        const g = b.gegen[id], gm = (b.gegen_modell || {})[id];
+        const los = g && v && g !== "@code" ? () => fokusV(gm || vModelle[0].key, g) : null;
         zeigen(id, name, art, b.status[id] || "offen", b.luecken[id],
-          g && vw ? { text: t("im vorhandenen BPMN zeigen"), los: () => vw.fokus(g) } : null);
+          los ? { text: gm ? t("im aufgerufenen Prozess zeigen") : t("im vorhandenen BPMN zeigen"), los } : null,
+          [herkunftBox((b.herkunft || {})[id]), zuordnungBox(b, id)]);
+        if (syncAn()) (los ? los() : vw && vw.fokus(null));              // Gegenstück mitführen
+        aw.fokus(id, true);
       }, { komm: komm(), marke: zeigeLuecken });
       if (fokus) aw.fokus(fokus);
     } catch (e) { boxA.replaceChildren(h("div", { class: "muted", text: e.message })); }
   };
-  const ladeV = async () => {
-    zahlV.replaceChildren(...(v && !komm() ? zahl(v.zahl) : []));
-    if (!v) { boxV.replaceChildren(h("div", { class: "muted", text: t("kein vorhandenes BPMN-Modell zugeordnet") })); return; }
+  const fokusV = (k, id) => (vAkt && vAkt.key === k && vw ? vw.fokus(id) : ladeV(k, id));
+  // Gegenstück mitführen: Klick auf ein Element zeigt sein Gegenstück im anderen Diagramm (Baustein bzw. aufgerufenen
+  // Prozess laden, hervorheben); aus: nur über den Knopf. Wahl im Browser gemerkt.
+  let syncWert = true;
+  try { syncWert = localStorage.getItem("luecken.graph.sync") !== "0"; } catch { /* nur Komfort */ }
+  const syncAn = () => syncWert && !komm();
+  const syncSchalter = h("label", { class: "small gg-sync", title: t("Beim Klick auf ein Element sein Gegenstück im anderen Diagramm zeigen") },
+    h("input", { type: "checkbox", checked: syncWert, onchange: (e) => { syncWert = e.target.checked;
+      try { localStorage.setItem("luecken.graph.sync", syncWert ? "1" : "0"); } catch { /* nur Komfort */ } } }), " ", t("Gegenstück mitführen"));
+  const ladeV = async (k, fokus) => {
+    if (k) vAkt = vModelle.find((m) => m.key === k) || vAkt;
+    const m = vAkt;
+    if (m) { wahlV.value = m.key; vDatei.textContent = m.datei; }
+    zahlV.replaceChildren(...(m && !komm() ? zahl(m.zahl) : []));
+    if (!m) { boxV.replaceChildren(h("div", { class: "muted", text: t("kein vorhandenes BPMN-Modell zugeordnet") })); return; }
     try {
-      const r = await fetch(`api/luecken/bpmn_vorhanden?${new URLSearchParams({ datei: v.datei })}`);
+      const r = await fetch(`api/luecken/bpmn_vorhanden?${new URLSearchParams({ datei: m.datei })}`);
       if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || r.statusText);
-      const info = komm() ? gkInfo(K.nachrichten, "v") : v;
+      const info = komm() ? gkInfo(K.nachrichten, "v") : m;
       vw = await ggViewer(boxV, await r.text(), info, (id, name, art) => {
+        if ((m.aufrufe || {})[id] && !komm()) { ladeV(m.aufrufe[id]); return; }      // Call Activity: aufgerufenen Prozess zeigen
         if (komm()) return elementKomm(id, name, art, info);
-        const g = v.gegen[id];
-        zeigen(id, name, art, v.status[id] || "offen", v.luecken[id],
-          g ? { text: t("im abgeleiteten Modell zeigen"), los: () => (aktuell && aktuell.baustein === g.baustein ? aw && aw.fokus(g.element) : ladeA(g.baustein, g.element)) } : null);
-      }, { komm: komm(), marke: zeigeLuecken });
+        const g = m.gegen[id], gb = g && ab.find((x) => x.baustein === g.baustein);
+        const zg = gb && (gb.zuordnung || {})[g.element];
+        const los = g ? () => (aktuell && aktuell.baustein === g.baustein ? aw && aw.fokus(g.element) : ladeA(g.baustein, g.element)) : null;
+        if (syncAn()) (los ? los() : aw && aw.fokus(null));              // Gegenstück mitführen
+        vw.fokus(id, true);
+        zeigen(id, name, art, m.status[id] || "offen", m.luecken[id],
+          los ? { text: t("im abgeleiteten Modell zeigen"), los } : null,
+          zg ? h("div", { class: "gg-zuordnung" }, h("div", {}, h("strong", { text: t("Zuordnung") + ": " }), `← ${g.element} (${g.baustein}) `,
+            zg.sicherheit ? h("span", { class: `pill gg-sicher gg-sicher-${zg.sicherheit}`, text: GG_SICHER()[zg.sicherheit] || zg.sicherheit }) : null),
+            h("div", { class: "muted", text: `${GG_VERFAHREN()[zg.verfahren] || zg.verfahren}: ${zg.grund}` })) : null);
+      }, { komm: komm(), marke: zeigeLuecken, prozess: m.prozess, seite: "v" });
+      if (fokus) vw.fokus(fokus);
     } catch (e) { boxV.replaceChildren(h("div", { class: "muted", text: e.message })); }
   };
   const listeZeigen = () => liste.replaceChildren(...gkTabelle(K, nachricht));
@@ -4986,13 +5126,31 @@ function gapGraphProzess(p) {
   listeZeigen();
   (async () => { await ladeV(); const erst = ab.find((b) => b.baustein === p.prozess) || ab[0]; if (erst) ladeA(erst.baustein); })();
   body.append(h("div", { class: "gg-diagramme" },
-    h("div", { class: "gg-kopf" }, h("strong", { text: t("Vorhandenes BPMN (Code)") }), v ? h("span", { class: "muted small mono", text: v.datei }) : null,
+    h("div", { class: "gg-kopf" }, h("strong", { text: t("Vorhandenes BPMN (Code)") }), wahlV, v ? vDatei : null,
       v ? quellLink({ art: "code", datei: v.datei }, t("XML ansehen ↗")) : null, zahlV),
-    boxV,
+    offenHinweis, boxV,
     h("div", { class: "gg-kopf" }, h("strong", { text: t("Aus dem Fachkonzept abgeleitet") }), wahl, zahlA),
     boxA, detail), liste);
   wahl.addEventListener("change", () => ladeA(wahl.value));
+  wahlV.addEventListener("change", () => ladeV(wahlV.value));
+  // Struktur je Baustein: Einbindung im abgeleiteten und im vorhandenen Modell, Hinweise und Lücken
+  const struktur = (p.struktur || []).length ? h("details", { class: "gg-struktur small" },
+    h("summary", {}, t("Struktur: wie die Bausteine eingebunden sind"), " ",
+      ...["≠", "?"].map((z) => { const n = p.struktur.filter((x) => (z === "≠" ? x.gleich === false : x.hinweis && x.gleich !== false)).length;
+        return n ? h("span", { class: `pill gg-pill-${z === "≠" ? "fehlt" : "teilweise"}`, text: `${n} ${z === "≠" ? t("abweichend") : t("Hinweis")}` }) : null; })),
+    h("table", { class: "paths review" },
+      h("thead", {}, h("tr", {}, ...[t("Baustein"), t("Aus dem Fachkonzept abgeleitet"), t("Vorhandenes BPMN (Code)"), "", t("Hinweis")].map((x) => h("th", { text: x })))),
+      h("tbody", {}, ...p.struktur.map((x) => h("tr", { class: "clickable", onclick: () => ladeA(x.baustein) },
+        h("td", { text: x.name }), h("td", { text: x.abgeleitet_text }), h("td", { text: x.vorhanden_text }),
+        h("td", { class: "gk-z", title: x.gleich === false ? t("abweichend") : x.gleich ? t("gleich eingebunden") : t("nicht vergleichbar"),
+          text: x.gleich === false ? "≠" : x.gleich ? "✓" : "–" }),
+        h("td", { class: "muted", text: x.hinweis || "" }))))),
+    (p.reihenfolge || []).length ? h("div", {}, h("strong", { text: t("Reihenfolge abweichend") + ": " }),
+      p.reihenfolge.map((r) => `${r.name} (${r.paare.length})`).join(", ")) : null) : null;
   return h("div", { class: "card gg-prozess" },
-    h("div", { class: "gg-kopf" }, h("h2", { text: `${p.name || p.prozess} ↔ ${v ? v.prozess || "–" : "–"}` }), schalter),
-    legende, body);
+    h("div", { class: "gg-kopf" }, h("h2", { text: `${p.name || p.prozess} ↔ ${v ? v.prozess || "–" : "–"}` }), schalter, syncSchalter,
+      h("button", { type: "button", class: "link small", title: t("Zuordnungstabelle mit Verfahren, Grund und Sicherheit (für Excel)"),
+        onclick: () => { const a = h("a", { href: URL.createObjectURL(new Blob([zuordnungCsv()], { type: "text/csv;charset=utf-8" })), download: "bpmn_zuordnung.csv" });
+          a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000); } }, t("Zuordnungen als CSV"))),
+    struktur, legende, body);
 }

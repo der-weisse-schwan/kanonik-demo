@@ -1,1 +1,1 @@
-{"id":"ci_fachkonzept:req:4.1:A3:Z1","diagrams":[{"process":{"id":"ci_fachkonzept:bpmn:ci-anfrage-annehmen","labels":["BpmnProcess"],"label":"BpmnProcess","type":null,"title":"Reservierung anfragen","titleEn":null,"editable":false,"doc":"ci_fachkonzept","lang":"de"},"processId":"ci-anfrage-annehmen","file":"ci-anfrage-annehmen.bpmn","prefix":"ci_fachkonzept:bpmn:","elementIds":["A3"],"elements":[{"id":"A3","name":"Reservierungsnummer vergeben","decision":null}]}]}
+{"id":"ci_fachkonzept:req:4.1:A2:Z1","artifacts":[],"tests":[]}

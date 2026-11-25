@@ -1,1 +1,1 @@
-{"id":"fr_fachkonzept:bpmn:fr-kreditkarte-belasten/Start","diagrams":[{"process":{"id":"fr_fachkonzept:bpmn:fr-kreditkarte-belasten","labels":["BpmnProcess"],"label":"BpmnProcess","type":null,"title":"Kreditkarte belasten","titleEn":null,"editable":false,"doc":"fr_fachkonzept","lang":"de"},"processId":"fr-kreditkarte-belasten","file":"fr-kreditkarte-belasten.bpmn","prefix":"fr_fachkonzept:bpmn:","elementIds":["Start"],"elements":[{"id":"Start","name":"Start","decision":null}]}]}
+{"id":"fr_fachkonzept:bpmn:fr-guthaben-verrechnen/A2_join","artifacts":[],"tests":[]}

@@ -1,0 +1,2971 @@
+@prefix archimate: <https://purl.org/archimate#> .
+@prefix archimate-skos: <https://purl.org/archimate/skos#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix va: <urn:kanonik:cinema:> .
+
+<urn:kanonik:cinema:archimate-modell> a archimate:Model ; archimate:name "Kino – Enterprise-Architektur"@de .
+
+<urn:kanonik:cinema:am:ex:4:akteur:kunde> a archimate:BusinessActor ;
+  archimate:name "Kunde"@de ;
+  rdfs:label "Kunde"@de ;
+  dct:type archimate-skos:BusinessActor ;
+  archimate:identifier "ci_fachkonzept:am:ex:4:akteur:kunde" ;
+  va:layer "Business" ;
+  va:aspect "ActiveStructure" ;
+  va:origin "extraktion" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.3:E1> a archimate:BusinessEvent ;
+  archimate:name "Bestätigungsfrist abgelaufen"@de ;
+  rdfs:label "Bestätigungsfrist abgelaufen"@de ;
+  dct:type archimate-skos:BusinessEvent ;
+  archimate:identifier "ci_fachkonzept:process:4.3:E1" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.1:E3> a archimate:BusinessEvent ;
+  archimate:name "Eingang der Reservierungsanfrage bestätigt"@de ;
+  rdfs:label "Eingang der Reservierungsanfrage bestätigt"@de ;
+  dct:type archimate-skos:BusinessEvent ;
+  archimate:identifier "ci_fachkonzept:process:4.1:E3" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.3:E2> a archimate:BusinessEvent ;
+  archimate:name "Ersatzplätze reserviert"@de ;
+  rdfs:label "Ersatzplätze reserviert"@de ;
+  dct:type archimate-skos:BusinessEvent ;
+  archimate:identifier "ci_fachkonzept:process:4.3:E2" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.3:E4> a archimate:BusinessEvent ;
+  archimate:name "Nicht genügend freie Plätze festgestellt"@de ;
+  rdfs:label "Nicht genügend freie Plätze festgestellt"@de ;
+  dct:type archimate-skos:BusinessEvent ;
+  archimate:identifier "ci_fachkonzept:process:4.3:E4" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.7:E1> a archimate:BusinessEvent ;
+  archimate:name "Reservierung erfolgreich abgeschlossen"@de ;
+  rdfs:label "Reservierung erfolgreich abgeschlossen"@de ;
+  dct:type archimate-skos:BusinessEvent ;
+  archimate:identifier "ci_fachkonzept:process:4.7:E1" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4:E2> a archimate:BusinessEvent ;
+  archimate:name "Reservierung erfolgreich abgeschlossen"@de ;
+  rdfs:label "Reservierung erfolgreich abgeschlossen"@de ;
+  dct:type archimate-skos:BusinessEvent ;
+  archimate:identifier "ci_fachkonzept:process:4:E2" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4:E3> a archimate:BusinessEvent ;
+  archimate:name "Reservierung gescheitert"@de ;
+  rdfs:label "Reservierung gescheitert"@de ;
+  dct:type archimate-skos:BusinessEvent ;
+  archimate:identifier "ci_fachkonzept:process:4:E3" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.3:E3> a archimate:BusinessEvent ;
+  archimate:name "Reservierung storniert"@de ;
+  rdfs:label "Reservierung storniert"@de ;
+  dct:type archimate-skos:BusinessEvent ;
+  archimate:identifier "ci_fachkonzept:process:4.3:E3" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.5:E2> a archimate:BusinessEvent ;
+  archimate:name "Reservierung storniert"@de ;
+  rdfs:label "Reservierung storniert"@de ;
+  dct:type archimate-skos:BusinessEvent ;
+  archimate:identifier "ci_fachkonzept:process:4.5:E2" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.8:E1> a archimate:BusinessEvent ;
+  archimate:name "Reservierung storniert"@de ;
+  rdfs:label "Reservierung storniert"@de ;
+  dct:type archimate-skos:BusinessEvent ;
+  archimate:identifier "ci_fachkonzept:process:4.8:E1" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.1:E2> a archimate:BusinessEvent ;
+  archimate:name "Reservierungsanfrage abgelehnt"@de ;
+  rdfs:label "Reservierungsanfrage abgelehnt"@de ;
+  dct:type archimate-skos:BusinessEvent ;
+  archimate:identifier "ci_fachkonzept:process:4.1:E2" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.1:E1> a archimate:BusinessEvent ;
+  archimate:name "Reservierungsanfrage eingegangen"@de ;
+  rdfs:label "Reservierungsanfrage eingegangen"@de ;
+  dct:type archimate-skos:BusinessEvent ;
+  archimate:identifier "ci_fachkonzept:process:4.1:E1" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4:E1> a archimate:BusinessEvent ;
+  archimate:name "Reservierungsanfrage eingegangen"@de ;
+  rdfs:label "Reservierungsanfrage eingegangen"@de ;
+  dct:type archimate-skos:BusinessEvent ;
+  archimate:identifier "ci_fachkonzept:process:4:E1" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.7:E2> a archimate:BusinessEvent ;
+  archimate:name "Sitzplatz verkauft"@de ;
+  rdfs:label "Sitzplatz verkauft"@de ;
+  dct:type archimate-skos:BusinessEvent ;
+  archimate:identifier "ci_fachkonzept:process:4.7:E2" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.4:E1> a archimate:BusinessEvent ;
+  archimate:name "Sitzplatz zwischen Prüfung und Reservierung vergeben"@de ;
+  rdfs:label "Sitzplatz zwischen Prüfung und Reservierung vergeben"@de ;
+  dct:type archimate-skos:BusinessEvent ;
+  archimate:identifier "ci_fachkonzept:process:4.4:E1" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.6:E1> a archimate:BusinessEvent ;
+  archimate:name "Zahlung erfolgreich durchgeführt"@de ;
+  rdfs:label "Zahlung erfolgreich durchgeführt"@de ;
+  dct:type archimate-skos:BusinessEvent ;
+  archimate:identifier "ci_fachkonzept:process:4.6:E1" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.5:E1> a archimate:BusinessEvent ;
+  archimate:name "Zahlungsfehler aufgetreten"@de ;
+  rdfs:label "Zahlungsfehler aufgetreten"@de ;
+  dct:type archimate-skos:BusinessEvent ;
+  archimate:identifier "ci_fachkonzept:process:4.5:E1" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:am:ex:4-5:funktion:bezahlen-von-kartenreservierungen> a archimate:BusinessFunction ;
+  archimate:name "Bezahlen von Kartenreservierungen"@de ;
+  rdfs:label "Bezahlen von Kartenreservierungen"@de ;
+  dct:type archimate-skos:BusinessFunction ;
+  archimate:identifier "ci_fachkonzept:am:ex:4-5:funktion:bezahlen-von-kartenreservierungen" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "extraktion" ;
+  va:status "extracted" ;
+  archimate:documentation "Abbuchung der Summe der Kartenpreise aller reservierten Sitzplätze vom Kundenkonto, höchstens einmal je Reservierung"@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:am:ex:4-3:funktion:ersatzplatze-anbieten> a archimate:BusinessFunction ;
+  archimate:name "Ersatzplätze anbieten"@de ;
+  rdfs:label "Ersatzplätze anbieten"@de ;
+  dct:type archimate-skos:BusinessFunction ;
+  archimate:identifier "ci_fachkonzept:am:ex:4-3:funktion:ersatzplatze-anbieten" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "extraktion" ;
+  va:status "extracted" ;
+  archimate:documentation "Dem Kunden werden Ersatzplätze mit Bestätigungsfrist angeboten."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:am:ex:4-8:funktion:stornierung-von-reservierungen> a archimate:BusinessFunction ;
+  archimate:name "Stornierung von Reservierungen"@de ;
+  rdfs:label "Stornierung von Reservierungen"@de ;
+  dct:type archimate-skos:BusinessFunction ;
+  archimate:identifier "ci_fachkonzept:am:ex:4-8:funktion:stornierung-von-reservierungen" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "extraktion" ;
+  va:status "extracted" ;
+  archimate:documentation "Freigabe der Sitzplätze, Information des Kunden über Stornierung und Grund sowie Gutschrift bereits abgebuchter Beträge auf das Kundenkonto."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:am:ex:4-6:funktion:ticketerzeugung> a archimate:BusinessFunction ;
+  archimate:name "Ticketerzeugung"@de ;
+  rdfs:label "Ticketerzeugung"@de ;
+  dct:type archimate-skos:BusinessFunction ;
+  archimate:identifier "ci_fachkonzept:am:ex:4-6:funktion:ticketerzeugung" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "extraktion" ;
+  va:status "extracted" ;
+  archimate:documentation "Nach erfolgreicher Zahlung wird ein Ticket mit Reservierungsnummer, Vorstellung, Sitzplätzen, Kunde und QR-Code erzeugt; je Sitzplatz wird ein eigener QR-Code erzeugt."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:abbuchung> a archimate:BusinessObject ;
+  archimate:name "Abbuchung"@de ;
+  rdfs:label "Abbuchung"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:abbuchung" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:angebot-mit-ersatzplatzen> a archimate:BusinessObject ;
+  archimate:name "Angebot mit Ersatzplätzen"@de ;
+  rdfs:label "Angebot mit Ersatzplätzen"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:angebot-mit-ersatzplatzen" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:bestatigungsfrist> a archimate:BusinessObject ;
+  archimate:name "Bestätigungsfrist"@de ;
+  rdfs:label "Bestätigungsfrist"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:bestatigungsfrist" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Zeit, in der der Kunde die Ersatzplätze bestätigen muss."@de ;
+  va:alias "Confirmation Period"@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:betrag> a archimate:BusinessObject ;
+  archimate:name "Betrag"@de ;
+  rdfs:label "Betrag"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:betrag" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:e-mail-adresse-des-kunden> a archimate:BusinessObject ;
+  archimate:name "E-Mail-Adresse des Kunden"@de ;
+  rdfs:label "E-Mail-Adresse des Kunden"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:e-mail-adresse-des-kunden" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:ersatzplatze> a archimate:BusinessObject ;
+  archimate:name "Ersatzplätze"@de ;
+  rdfs:label "Ersatzplätze"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:ersatzplatze" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Vom Kino vorgeschlagene freie Sitzplätze, wenn die gewünschten Plätze nicht frei sind."@de ;
+  va:alias "Alternative Seats"@de ;
+  va:alias "Ersatzplatz"@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:guthaben> a archimate:BusinessObject ;
+  archimate:name "Guthaben"@de ;
+  rdfs:label "Guthaben"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:guthaben" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Betrag in Euro (Cent-genau) auf dem Kundenkonto."@de ;
+  va:alias "Balance"@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:gutschrift> a archimate:BusinessObject ;
+  archimate:name "Gutschrift"@de ;
+  rdfs:label "Gutschrift"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:gutschrift" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:kartenpreis> a archimate:BusinessObject ;
+  archimate:name "Kartenpreis"@de ;
+  rdfs:label "Kartenpreis"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:kartenpreis" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Preis je Sitzplatz; hängt von der Platzkategorie ab."@de ;
+  va:alias "Ticket Price"@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:kundenkonto> a archimate:BusinessObject ;
+  archimate:name "Kundenkonto"@de ;
+  rdfs:label "Kundenkonto"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:kundenkonto" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Konto des Kunden beim Kino mit einem Guthaben, von dem Karten bezahlt werden."@de ;
+  va:alias "User Account"@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:qr-code> a archimate:BusinessObject ;
+  archimate:name "QR-Code"@de ;
+  rdfs:label "QR-Code"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:qr-code" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Maschinenlesbarer Code auf dem Ticket für die Einlasskontrolle."@de ;
+  va:alias "QR Code"@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:reservierter-sitzplatz> a archimate:BusinessObject ;
+  archimate:name "Reservierter Sitzplatz"@de ;
+  rdfs:label "Reservierter Sitzplatz"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:reservierter-sitzplatz" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:reservierung> a archimate:BusinessObject ;
+  archimate:name "Reservierung"@de ;
+  rdfs:label "Reservierung"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:reservierung" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Für eine Reservierungsanfrage vorgemerkte Sitzplätze; hat eine Reservierungsnummer."@de ;
+  va:alias "Reservation"@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:reservierung-erfolgreich> a archimate:BusinessObject ;
+  archimate:name "Reservierung erfolgreich"@de ;
+  rdfs:label "Reservierung erfolgreich"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:reservierung-erfolgreich" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Endzustand des Hauptprozesses, wenn die Tickets versandt sind."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:reservierung-erfolgreich-abgeschlossen> a archimate:BusinessObject ;
+  archimate:name "Reservierung erfolgreich abgeschlossen"@de ;
+  rdfs:label "Reservierung erfolgreich abgeschlossen"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:reservierung-erfolgreich-abgeschlossen" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:reservierung-gescheitert> a archimate:BusinessObject ;
+  archimate:name "Reservierung gescheitert"@de ;
+  rdfs:label "Reservierung gescheitert"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:reservierung-gescheitert" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Endzustand des Hauptprozesses, wenn die Reservierung storniert wurde."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:reservierungsanfrage> a archimate:BusinessObject ;
+  archimate:name "Reservierungsanfrage"@de ;
+  rdfs:label "Reservierungsanfrage"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:reservierungsanfrage" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Wunsch des Kunden, bestimmte Sitzplätze für eine Vorstellung zu reservieren."@de ;
+  va:alias "Reservation Request"@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:reservierungsnummer> a archimate:BusinessObject ;
+  archimate:name "Reservierungsnummer"@de ;
+  rdfs:label "Reservierungsnummer"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:reservierungsnummer" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Eindeutige Kennung einer Reservierung; verbindet alle Schritte und Nachrichten der Reservierung."@de ;
+  va:alias "Reservation ID"@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:sitzplatz> a archimate:BusinessObject ;
+  archimate:name "Sitzplatz"@de ;
+  rdfs:label "Sitzplatz"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:sitzplatz" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Platz im Saal, bezeichnet durch Reihe (Buchstabe) und Nummer, z. B. „A1“."@de ;
+  va:alias "Seat"@de ;
+  va:alias "Platz"@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:sitzplatz-verkauft> a archimate:BusinessObject ;
+  archimate:name "Sitzplatz verkauft"@de ;
+  rdfs:label "Sitzplatz verkauft"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:sitzplatz-verkauft" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:stornierung> a archimate:BusinessObject ;
+  archimate:name "Stornierung"@de ;
+  rdfs:label "Stornierung"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:stornierung" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:stornierung-der-reservierung> a archimate:BusinessObject ;
+  archimate:name "Stornierung der Reservierung"@de ;
+  rdfs:label "Stornierung der Reservierung"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:stornierung-der-reservierung" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:stornierungsgrund> a archimate:BusinessObject ;
+  archimate:name "Stornierungsgrund"@de ;
+  rdfs:label "Stornierungsgrund"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:stornierungsgrund" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:ticket> a archimate:BusinessObject ;
+  archimate:name "Ticket"@de ;
+  rdfs:label "Ticket"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:ticket" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Nachweis über die bezahlte Reservierung mit Vorstellung, Sitzplätzen und QR-Code."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:verfugbarkeitsprufung> a archimate:BusinessObject ;
+  archimate:name "Verfügbarkeitsprüfung"@de ;
+  rdfs:label "Verfügbarkeitsprüfung"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:verfugbarkeitsprufung" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:vorstellung> a archimate:BusinessObject ;
+  archimate:name "Vorstellung"@de ;
+  rdfs:label "Vorstellung"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:vorstellung" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Aufführung eines Films in einem Saal zu einem Zeitpunkt."@de ;
+  va:alias "Screening"@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:zahlung> a archimate:BusinessObject ;
+  archimate:name "Zahlung"@de ;
+  rdfs:label "Zahlung"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:zahlung" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "bucht den Kartenpreis vom Kundenkonto ab"@de ;
+  va:alias "Payment Service"@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:zahlungsfehler> a archimate:BusinessObject ;
+  archimate:name "Zahlungsfehler"@de ;
+  rdfs:label "Zahlungsfehler"@de ;
+  dct:type archimate-skos:BusinessObject ;
+  archimate:identifier "ci_fachkonzept:concept:zahlungsfehler" ;
+  va:layer "Business" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Abbuchung vom Kundenkonto ist nicht möglich (z. B. Guthaben reicht nicht)."@de ;
+  va:alias "Transaction Error"@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4> a archimate:BusinessProcess ;
+  archimate:name "4 Hauptprozess Kartenreservierung"@de ;
+  rdfs:label "4 Hauptprozess Kartenreservierung"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Das Kapitel beschreibt den Hauptprozess der Kartenreservierung. Er beginnt mit der Reservierungsanfrage des Kunden. Er endet entweder mit dem Versand der Tickets (Reservierung erfolgreich) oder mit der Stornierung der Reservierung (Reservierung gescheitert)."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.1> a archimate:BusinessProcess ;
+  archimate:name "4.1 Reservierung anfragen"@de ;
+  rdfs:label "4.1 Reservierung anfragen"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.1" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Das Kapitel beschreibt, wie der Kunde eine Reservierungsanfrage für eine Vorstellung und gewünschte Sitzplätze sendet. Die Kartenreservierung vergibt eine Reservierungsnummer und bestätigt den Eingang der Anfrage. Anfragen für unbekannte Kunden oder bereits begonnene Vorstellungen werden abgelehnt."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.2> a archimate:BusinessProcess ;
+  archimate:name "4.2 Verfügbarkeit prüfen"@de ;
+  rdfs:label "4.2 Verfügbarkeit prüfen"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.2" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Das Kapitel beschreibt die Verfügbarkeitsprüfung im Hauptprozess Kartenreservierung: Der Saalplan prüft, ob alle gewünschten Sitzplätze einer Vorstellung frei sind. Sind alle Plätze frei, werden sie reserviert (4.4), andernfalls werden Ersatzplätze angeboten (4.3)."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.3> a archimate:BusinessProcess ;
+  archimate:name "4.3 Ersatzplätze anbieten"@de ;
+  rdfs:label "4.3 Ersatzplätze anbieten"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.3" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Das Kapitel beschreibt, wie dem Kunden Ersatzplätze angeboten werden. Der Saalplan sucht freie Sitzplätze in derselben Vorstellung, und der Kunde erhält ein Angebot mit Bestätigungsfrist. Je nach Reaktion des Kunden oder Fristablauf werden die Ersatzplätze reserviert oder die Reservierung storniert."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.4> a archimate:BusinessProcess ;
+  archimate:name "4.4 Sitzplätze reservieren"@de ;
+  rdfs:label "4.4 Sitzplätze reservieren"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.4" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Das Kapitel beschreibt, dass der Saalplan die Sitzplätze für eine Reservierungsnummer reserviert. Ein Sitzplatz kann je Vorstellung nur einmal reserviert sein; ist er zwischen Prüfung und Reservierung bereits vergeben worden, wird wie in Kapitel 4.3 verfahren."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.5> a archimate:BusinessProcess ;
+  archimate:name "4.5 Bezahlen"@de ;
+  rdfs:label "4.5 Bezahlen"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.5" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Das Kapitel beschreibt die Zahlung im Hauptprozess Kartenreservierung: Die Summe der Kartenpreise aller reservierten Sitzplätze wird vom Kundenkonto abgebucht. Bei zu geringem Guthaben oder fehlgeschlagener Abbuchung (Zahlungsfehler) wird die Reservierung storniert. Eine Abbuchung wird je Reservierung höchstens einmal ausgeführt."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.6> a archimate:BusinessProcess ;
+  archimate:name "4.6 Ticket erzeugen"@de ;
+  rdfs:label "4.6 Ticket erzeugen"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.6" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Das Kapitel beschreibt die Erzeugung eines Tickets durch den Ticketdienst nach erfolgreicher Zahlung. Das Ticket enthält Reservierungsnummer, Vorstellung, Sitzplätze, Kunde und QR-Code. Je Sitzplatz soll ein eigener QR-Code erzeugt werden, damit Begleiter getrennt eingelassen werden können."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.7> a archimate:BusinessProcess ;
+  archimate:name "4.7 Ticket versenden"@de ;
+  rdfs:label "4.7 Ticket versenden"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.7" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Das Kapitel beschreibt den Versand des Tickets durch die Benachrichtigung an die E-Mail-Adresse des Kunden. Mit dem Versand gilt die Reservierung als erfolgreich abgeschlossen und die Sitzplätze als verkauft."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.8> a archimate:BusinessProcess ;
+  archimate:name "4.8 Reservierung stornieren"@de ;
+  rdfs:label "4.8 Reservierung stornieren"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.8" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Das Kapitel beschreibt die Folgen der Stornierung einer Reservierung. Der Saalplan gibt die reservierten Sitzplätze wieder frei, der Kunde wird über Stornierung und Grund informiert, und bereits abgebuchte Beträge werden dem Kundenkonto gutgeschrieben."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.3:A3> a archimate:BusinessProcess ;
+  archimate:name "Angebot mit Ersatzplätzen bestätigen"@de ;
+  rdfs:label "Angebot mit Ersatzplätzen bestätigen"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.3:A3" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Der Kunde bestätigt das Angebot mit den Ersatzplätzen innerhalb der Bestätigungsfrist."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.3:A2> a archimate:BusinessProcess ;
+  archimate:name "Angebot mit Ersatzplätzen erhalten"@de ;
+  rdfs:label "Angebot mit Ersatzplätzen erhalten"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.3:A2" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Der Kunde erhält das Angebot mit den Ersatzplätzen und der Bestätigungsfrist."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.8:A3> a archimate:BusinessProcess ;
+  archimate:name "Betrag dem Kundenkonto gutschreiben"@de ;
+  rdfs:label "Betrag dem Kundenkonto gutschreiben"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.8:A3" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Kino schreibt dem Kundenkonto den Betrag wieder gut, wenn bereits abgebucht wurde."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.1:A4> a archimate:BusinessProcess ;
+  archimate:name "Eingang der Reservierungsanfrage bestätigen"@de ;
+  rdfs:label "Eingang der Reservierungsanfrage bestätigen"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.1:A4" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Die Kartenreservierung bestätigt dem Kunden den Eingang der Reservierungsanfrage mit der Reservierungsnummer."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.2:A3> a archimate:BusinessProcess ;
+  archimate:name "Ersatzplätze anbieten"@de ;
+  rdfs:label "Ersatzplätze anbieten"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.2:A3" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Der Saalplan bietet Ersatzplätze an, wenn nicht alle gewünschten Plätze frei sind."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.3:A1> a archimate:BusinessProcess ;
+  archimate:name "Ersatzplätze suchen"@de ;
+  rdfs:label "Ersatzplätze suchen"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.3:A1" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Der Saalplan sucht dieselbe Anzahl freier Sitzplätze in derselben Vorstellung, nach Möglichkeit nebeneinander in einer Reihe."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.8:A2> a archimate:BusinessProcess ;
+  archimate:name "Kunde über Stornierung und Stornierungsgrund informieren"@de ;
+  rdfs:label "Kunde über Stornierung und Stornierungsgrund informieren"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.8:A2" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Kino informiert den Kunden über die Stornierung und ihren Grund."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.6:A2> a archimate:BusinessProcess ;
+  archimate:name "QR-Code je Sitzplatz erzeugen"@de ;
+  rdfs:label "QR-Code je Sitzplatz erzeugen"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.6:A2" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Der Ticketdienst erzeugt je Sitzplatz einen eigenen QR-Code, damit Begleiter getrennt eingelassen werden können."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.8:A1> a archimate:BusinessProcess ;
+  archimate:name "Reservierte Sitzplätze freigeben"@de ;
+  rdfs:label "Reservierte Sitzplätze freigeben"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.8:A1" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Der Saalplan gibt bei Stornierung alle für die Reservierung reservierten Sitzplätze wieder frei."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.5:A2> a archimate:BusinessProcess ;
+  archimate:name "Reservierung stornieren"@de ;
+  rdfs:label "Reservierung stornieren"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.5:A2" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Kino storniert die Reservierung, wenn das Guthaben nicht reicht oder die Abbuchung fehlschlägt."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.1:A5> a archimate:BusinessProcess ;
+  archimate:name "Reservierungsanfrage ablehnen"@de ;
+  rdfs:label "Reservierungsanfrage ablehnen"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.1:A5" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Die Kartenreservierung lehnt Reservierungsanfragen für unbekannte Kunden oder für bereits begonnene Vorstellungen ab."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.1:A2> a archimate:BusinessProcess ;
+  archimate:name "Reservierungsanfrage senden"@de ;
+  rdfs:label "Reservierungsanfrage senden"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.1:A2" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Der Kunde sendet die Reservierungsanfrage an die Kartenreservierung."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.1:A3> a archimate:BusinessProcess ;
+  archimate:name "Reservierungsnummer vergeben"@de ;
+  rdfs:label "Reservierungsnummer vergeben"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.1:A3" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Die Kartenreservierung vergibt eine Reservierungsnummer für die Reservierungsanfrage."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.4:A1> a archimate:BusinessProcess ;
+  archimate:name "Sitzplätze für Reservierungsnummer reservieren"@de ;
+  rdfs:label "Sitzplätze für Reservierungsnummer reservieren"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.4:A1" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Der Saalplan reserviert die Sitzplätze für die Reservierungsnummer."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.2:A2> a archimate:BusinessProcess ;
+  archimate:name "Sitzplätze reservieren"@de ;
+  rdfs:label "Sitzplätze reservieren"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.2:A2" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Der Saalplan reserviert die gewünschten Sitzplätze, wenn alle Plätze frei sind."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.5:A1> a archimate:BusinessProcess ;
+  archimate:name "Summe der Kartenpreise vom Kundenkonto abbuchen"@de ;
+  rdfs:label "Summe der Kartenpreise vom Kundenkonto abbuchen"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.5:A1" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Kino bucht die Summe der Kartenpreise aller reservierten Sitzplätze vom Kundenkonto ab und führt die Abbuchung für dieselbe Reservierung höchstens einmal aus."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.6:A1> a archimate:BusinessProcess ;
+  archimate:name "Ticket erzeugen"@de ;
+  rdfs:label "Ticket erzeugen"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.6:A1" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Der Ticketdienst erzeugt nach erfolgreicher Zahlung ein Ticket mit Reservierungsnummer, Vorstellung, Sitzplätzen, Kunde und QR-Code."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.7:A1> a archimate:BusinessProcess ;
+  archimate:name "Ticket versenden"@de ;
+  rdfs:label "Ticket versenden"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.7:A1" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Die Benachrichtigung sendet das Ticket an die E-Mail-Adresse des Kunden."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.2:A1> a archimate:BusinessProcess ;
+  archimate:name "Verfügbarkeit der Sitzplätze prüfen"@de ;
+  rdfs:label "Verfügbarkeit der Sitzplätze prüfen"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.2:A1" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Der Saalplan prüft, ob alle gewünschten Sitzplätze der Vorstellung frei sind."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.1:A1> a archimate:BusinessProcess ;
+  archimate:name "Vorstellung und Sitzplätze wählen"@de ;
+  rdfs:label "Vorstellung und Sitzplätze wählen"@de ;
+  dct:type archimate-skos:BusinessProcess ;
+  archimate:identifier "ci_fachkonzept:process:4.1:A1" ;
+  va:layer "Business" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Der Kunde wählt in der Kundenoberfläche eine Vorstellung und die gewünschten Sitzplätze."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:role:begleiter> a archimate:BusinessRole ;
+  archimate:name "Begleiter"@de ;
+  rdfs:label "Begleiter"@de ;
+  dct:type archimate-skos:BusinessRole ;
+  archimate:identifier "ci_fachkonzept:role:begleiter" ;
+  va:layer "Business" ;
+  va:aspect "ActiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:role:kunde> a archimate:BusinessRole ;
+  archimate:name "Kunde"@de ;
+  rdfs:label "Kunde"@de ;
+  dct:type archimate-skos:BusinessRole ;
+  archimate:identifier "ci_fachkonzept:role:kunde" ;
+  va:layer "Business" ;
+  va:aspect "ActiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:benachrichtigung> a archimate:ApplicationComponent ;
+  archimate:name "Benachrichtigung"@de ;
+  rdfs:label "Benachrichtigung"@de ;
+  dct:type archimate-skos:ApplicationComponent ;
+  archimate:identifier "ci_fachkonzept:concept:benachrichtigung" ;
+  va:layer "Application" ;
+  va:aspect "ActiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "sendet Ersatzplatz-Angebote und Tickets an den Kunden (E-Mail)"@de ;
+  va:alias "Notification"@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:kartenreservierung> a archimate:ApplicationComponent ;
+  archimate:name "Kartenreservierung"@de ;
+  rdfs:label "Kartenreservierung"@de ;
+  dct:type archimate-skos:ApplicationComponent ;
+  archimate:identifier "ci_fachkonzept:concept:kartenreservierung" ;
+  va:layer "Application" ;
+  va:aspect "ActiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "steuert jede Reservierung von der Anfrage bis zum Versand der Tickets (Hauptprozess)"@de ;
+  va:alias "Ticket Reservation"@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:saalplan> a archimate:ApplicationComponent ;
+  archimate:name "Saalplan"@de ;
+  rdfs:label "Saalplan"@de ;
+  dct:type archimate-skos:ApplicationComponent ;
+  archimate:identifier "ci_fachkonzept:concept:saalplan" ;
+  va:layer "Application" ;
+  va:aspect "ActiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Belegung aller Sitzplätze eines Saals für eine Vorstellung (frei, reserviert, verkauft)."@de ;
+  va:alias "Seat Plan"@de ;
+  va:alias "Seat Service"@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:concept:ticketdienst> a archimate:ApplicationComponent ;
+  archimate:name "Ticketdienst"@de ;
+  rdfs:label "Ticketdienst"@de ;
+  dct:type archimate-skos:ApplicationComponent ;
+  archimate:identifier "ci_fachkonzept:concept:ticketdienst" ;
+  va:layer "Application" ;
+  va:aspect "ActiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "erzeugt Tickets mit QR-Code"@de ;
+  va:alias "Ticket Service"@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:REST_reservation> a archimate:ApplicationInterface ;
+  archimate:name "REST_reservation"@de ;
+  rdfs:label "REST_reservation"@de ;
+  dct:type archimate-skos:ApplicationInterface ;
+  archimate:identifier "REST_reservation" ;
+  va:layer "Application" ;
+  va:aspect "ActiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "REST-Endpunkte reservation (openapi.yaml)"@de .
+
+<urn:kanonik:cinema:am:ex:4-1:dienst:ablehnung-unzulassiger-reservierungsanfragen> a archimate:ApplicationService ;
+  archimate:name "Ablehnung unzulässiger Reservierungsanfragen"@de ;
+  rdfs:label "Ablehnung unzulässiger Reservierungsanfragen"@de ;
+  dct:type archimate-skos:ApplicationService ;
+  archimate:identifier "ci_fachkonzept:am:ex:4-1:dienst:ablehnung-unzulassiger-reservierungsanfragen" ;
+  va:layer "Application" ;
+  va:aspect "Behavior" ;
+  va:origin "extraktion" ;
+  va:status "extracted" ;
+  archimate:documentation "Anfragen für unbekannte Kunden oder bereits begonnene Vorstellungen werden abgelehnt."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:am:ex:4-1:dienst:bestatigung-des-eingangs-mit-reservierungsnummer> a archimate:ApplicationService ;
+  archimate:name "Bestätigung des Eingangs mit Reservierungsnummer"@de ;
+  rdfs:label "Bestätigung des Eingangs mit Reservierungsnummer"@de ;
+  dct:type archimate-skos:ApplicationService ;
+  archimate:identifier "ci_fachkonzept:am:ex:4-1:dienst:bestatigung-des-eingangs-mit-reservierungsnummer" ;
+  va:layer "Application" ;
+  va:aspect "Behavior" ;
+  va:origin "extraktion" ;
+  va:status "extracted" ;
+  archimate:documentation "Die Kartenreservierung vergibt eine Reservierungsnummer und bestätigt dem Kunden den Eingang der Anfrage damit."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:REST_reservation_CinemaController.acceptOffer> a archimate:ApplicationService ;
+  archimate:name "CinemaController.acceptOffer"@de ;
+  rdfs:label "CinemaController.acceptOffer"@de ;
+  dct:type archimate-skos:ApplicationService ;
+  archimate:identifier "REST_reservation#CinemaController.acceptOffer" ;
+  va:layer "Application" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" .
+
+<urn:kanonik:cinema:REST_reservation_CinemaController.reserveSeat> a archimate:ApplicationService ;
+  archimate:name "CinemaController.reserveSeat"@de ;
+  rdfs:label "CinemaController.reserveSeat"@de ;
+  dct:type archimate-skos:ApplicationService ;
+  archimate:identifier "REST_reservation#CinemaController.reserveSeat" ;
+  va:layer "Application" ;
+  va:aspect "Behavior" ;
+  va:origin "graph" ;
+  va:status "extracted" .
+
+<urn:kanonik:cinema:am:ex:4-1:dienst:entgegennahme-von-reservierungsanfragen> a archimate:ApplicationService ;
+  archimate:name "Entgegennahme von Reservierungsanfragen"@de ;
+  rdfs:label "Entgegennahme von Reservierungsanfragen"@de ;
+  dct:type archimate-skos:ApplicationService ;
+  archimate:identifier "ci_fachkonzept:am:ex:4-1:dienst:entgegennahme-von-reservierungsanfragen" ;
+  va:layer "Application" ;
+  va:aspect "Behavior" ;
+  va:origin "extraktion" ;
+  va:status "extracted" ;
+  archimate:documentation "Der Kunde sendet die Reservierungsanfrage mit Vorstellung und Sitzplätzen."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:am:ex:4-8:dienst:freigabe-reservierter-sitzplatze-bei-stornierung> a archimate:ApplicationService ;
+  archimate:name "Freigabe reservierter Sitzplätze bei Stornierung"@de ;
+  rdfs:label "Freigabe reservierter Sitzplätze bei Stornierung"@de ;
+  dct:type archimate-skos:ApplicationService ;
+  archimate:identifier "ci_fachkonzept:am:ex:4-8:dienst:freigabe-reservierter-sitzplatze-bei-stornierung" ;
+  va:layer "Application" ;
+  va:aspect "Behavior" ;
+  va:origin "extraktion" ;
+  va:status "extracted" ;
+  archimate:documentation "Alle für die stornierte Reservierung reservierten Sitzplätze werden wieder freigegeben."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:am:ex:4-2:dienst:prufung-der-verfugbarkeit-gewunschter-sitzplatze> a archimate:ApplicationService ;
+  archimate:name "Prüfung der Verfügbarkeit gewünschter Sitzplätze"@de ;
+  rdfs:label "Prüfung der Verfügbarkeit gewünschter Sitzplätze"@de ;
+  dct:type archimate-skos:ApplicationService ;
+  archimate:identifier "ci_fachkonzept:am:ex:4-2:dienst:prufung-der-verfugbarkeit-gewunschter-sitzplatze" ;
+  va:layer "Application" ;
+  va:aspect "Behavior" ;
+  va:origin "extraktion" ;
+  va:status "extracted" ;
+  archimate:documentation "Prüft, ob alle gewünschten Sitzplätze der Vorstellung frei sind."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:am:ex:4-4:dienst:reservierung-von-sitzplatzen-fur-die-reservierungsnummer> a archimate:ApplicationService ;
+  archimate:name "Reservierung von Sitzplätzen für die Reservierungsnummer"@de ;
+  rdfs:label "Reservierung von Sitzplätzen für die Reservierungsnummer"@de ;
+  dct:type archimate-skos:ApplicationService ;
+  archimate:identifier "ci_fachkonzept:am:ex:4-4:dienst:reservierung-von-sitzplatzen-fur-die-reservierungsnummer" ;
+  va:layer "Application" ;
+  va:aspect "Behavior" ;
+  va:origin "extraktion" ;
+  va:status "extracted" ;
+  archimate:documentation "Der Saalplan reserviert die Sitzplätze für die Reservierungsnummer."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:am:ex:4-3:dienst:suche-nach-ersatzplatzen> a archimate:ApplicationService ;
+  archimate:name "Suche nach Ersatzplätzen"@de ;
+  rdfs:label "Suche nach Ersatzplätzen"@de ;
+  dct:type archimate-skos:ApplicationService ;
+  archimate:identifier "ci_fachkonzept:am:ex:4-3:dienst:suche-nach-ersatzplatzen" ;
+  va:layer "Application" ;
+  va:aspect "Behavior" ;
+  va:origin "extraktion" ;
+  va:status "extracted" ;
+  archimate:documentation "Sucht dieselbe Anzahl freier Sitzplätze in derselben Vorstellung, nach Möglichkeit nebeneinander in einer Reihe."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:CinemaController.acceptOffer.request> a archimate:DataObject ;
+  archimate:name "CinemaController.acceptOffer.request accept offer"@de ;
+  rdfs:label "CinemaController.acceptOffer.request accept offer"@de ;
+  dct:type archimate-skos:DataObject ;
+  archimate:identifier "CinemaController.acceptOffer.request" ;
+  va:layer "Application" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" .
+
+<urn:kanonik:cinema:CinemaController.acceptOffer.response> a archimate:DataObject ;
+  archimate:name "CinemaController.acceptOffer.response accept offer (Antwort)"@de ;
+  rdfs:label "CinemaController.acceptOffer.response accept offer (Antwort)"@de ;
+  dct:type archimate-skos:DataObject ;
+  archimate:identifier "CinemaController.acceptOffer.response" ;
+  va:layer "Application" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" .
+
+<urn:kanonik:cinema:CinemaController.reserveSeat.request> a archimate:DataObject ;
+  archimate:name "CinemaController.reserveSeat.request reserve seat"@de ;
+  rdfs:label "CinemaController.reserveSeat.request reserve seat"@de ;
+  dct:type archimate-skos:DataObject ;
+  archimate:identifier "CinemaController.reserveSeat.request" ;
+  va:layer "Application" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" .
+
+<urn:kanonik:cinema:CinemaController.reserveSeat.response> a archimate:DataObject ;
+  archimate:name "CinemaController.reserveSeat.response reserve seat (Antwort)"@de ;
+  rdfs:label "CinemaController.reserveSeat.response reserve seat (Antwort)"@de ;
+  dct:type archimate-skos:DataObject ;
+  archimate:identifier "CinemaController.reserveSeat.response" ;
+  va:layer "Application" ;
+  va:aspect "PassiveStructure" ;
+  va:origin "graph" ;
+  va:status "extracted" .
+
+<urn:kanonik:cinema:process:4:R3> a archimate:Constraint ;
+  archimate:name "Es ist festgelegt, dass der Hauptprozess Kartenreservierung endet, wenn die Reservierung storniert wurde (Reservierung g"@de ;
+  rdfs:label "Es ist festgelegt, dass der Hauptprozess Kartenreservierung endet, wenn die Reservierung storniert wurde (Reservierung g"@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4:R3" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist festgelegt, dass der Hauptprozess Kartenreservierung endet, wenn die Reservierung storniert wurde (Reservierung gescheitert)."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4:R2> a archimate:Constraint ;
+  archimate:name "Es ist festgelegt, dass der Hauptprozess Kartenreservierung endet, wenn die Tickets versandt sind (Reservierung erfolgre"@de ;
+  rdfs:label "Es ist festgelegt, dass der Hauptprozess Kartenreservierung endet, wenn die Tickets versandt sind (Reservierung erfolgre"@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4:R2" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist festgelegt, dass der Hauptprozess Kartenreservierung endet, wenn die Tickets versandt sind (Reservierung erfolgreich)."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4:R1> a archimate:Constraint ;
+  archimate:name "Es ist festgelegt, dass der Hauptprozess Kartenreservierung mit der Reservierungsanfrage des Kunden beginnt."@de ;
+  rdfs:label "Es ist festgelegt, dass der Hauptprozess Kartenreservierung mit der Reservierungsanfrage des Kunden beginnt."@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4:R1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist festgelegt, dass der Hauptprozess Kartenreservierung mit der Reservierungsanfrage des Kunden beginnt."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.1:R4> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass Anfragen für unbekannte Kunden abgelehnt werden."@de ;
+  rdfs:label "Es ist verpflichtend, dass Anfragen für unbekannte Kunden abgelehnt werden."@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.1:R4" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass Anfragen für unbekannte Kunden abgelehnt werden."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.1:R5> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass Anfragen für Vorstellungen, die bereits begonnen haben, abgelehnt werden."@de ;
+  rdfs:label "Es ist verpflichtend, dass Anfragen für Vorstellungen, die bereits begonnen haben, abgelehnt werden."@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.1:R5" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass Anfragen für Vorstellungen, die bereits begonnen haben, abgelehnt werden."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.8:R3> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass der Betrag dem Kundenkonto wieder gutgeschrieben wird, wenn bereits abgebucht wurde."@de ;
+  rdfs:label "Es ist verpflichtend, dass der Betrag dem Kundenkonto wieder gutgeschrieben wird, wenn bereits abgebucht wurde."@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.8:R3" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass der Betrag dem Kundenkonto wieder gutgeschrieben wird, wenn bereits abgebucht wurde."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.3:R2> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass der Kunde das Angebot mit den Ersatzplätzen und der Bestätigungsfrist erhält."@de ;
+  rdfs:label "Es ist verpflichtend, dass der Kunde das Angebot mit den Ersatzplätzen und der Bestätigungsfrist erhält."@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.3:R2" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass der Kunde das Angebot mit den Ersatzplätzen und der Bestätigungsfrist erhält."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.8:R2> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass der Kunde über die Stornierung und ihren Grund informiert wird."@de ;
+  rdfs:label "Es ist verpflichtend, dass der Kunde über die Stornierung und ihren Grund informiert wird."@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.8:R2" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass der Kunde über die Stornierung und ihren Grund informiert wird."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.8:R1> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass der Saalplan bei Stornierung alle für die Reservierung reservierten Sitzplätze wieder freigib"@de ;
+  rdfs:label "Es ist verpflichtend, dass der Saalplan bei Stornierung alle für die Reservierung reservierten Sitzplätze wieder freigib"@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.8:R1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass der Saalplan bei Stornierung alle für die Reservierung reservierten Sitzplätze wieder freigibt."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.4:R1> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass der Saalplan die Sitzplätze für die Reservierungsnummer reserviert."@de ;
+  rdfs:label "Es ist verpflichtend, dass der Saalplan die Sitzplätze für die Reservierungsnummer reserviert."@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.4:R1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass der Saalplan die Sitzplätze für die Reservierungsnummer reserviert."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.3:R1> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass der Saalplan dieselbe Anzahl freier Sitzplätze in derselben Vorstellung sucht, nach Möglichke"@de ;
+  rdfs:label "Es ist verpflichtend, dass der Saalplan dieselbe Anzahl freier Sitzplätze in derselben Vorstellung sucht, nach Möglichke"@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.3:R1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass der Saalplan dieselbe Anzahl freier Sitzplätze in derselben Vorstellung sucht, nach Möglichkeit nebeneinander in einer Reihe."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.2:R1> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass der Saalplan prüft, ob alle gewünschten Sitzplätze der Vorstellung frei sind."@de ;
+  rdfs:label "Es ist verpflichtend, dass der Saalplan prüft, ob alle gewünschten Sitzplätze der Vorstellung frei sind."@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.2:R1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass der Saalplan prüft, ob alle gewünschten Sitzplätze der Vorstellung frei sind."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.6:R1> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass der Ticketdienst nach erfolgreicher Zahlung ein Ticket mit Reservierungsnummer, Vorstellung, "@de ;
+  rdfs:label "Es ist verpflichtend, dass der Ticketdienst nach erfolgreicher Zahlung ein Ticket mit Reservierungsnummer, Vorstellung, "@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.6:R1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass der Ticketdienst nach erfolgreicher Zahlung ein Ticket mit Reservierungsnummer, Vorstellung, Sitzplätzen, Kunde und QR-Code erzeugt."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.7:R1> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass die Benachrichtigung das Ticket an die E-Mail-Adresse des Kunden sendet."@de ;
+  rdfs:label "Es ist verpflichtend, dass die Benachrichtigung das Ticket an die E-Mail-Adresse des Kunden sendet."@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.7:R1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass die Benachrichtigung das Ticket an die E-Mail-Adresse des Kunden sendet."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.3:R3> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass die Ersatzplätze reserviert werden, wenn der Kunde innerhalb der Bestätigungsfrist bestätigt."@de ;
+  rdfs:label "Es ist verpflichtend, dass die Ersatzplätze reserviert werden, wenn der Kunde innerhalb der Bestätigungsfrist bestätigt."@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.3:R3" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass die Ersatzplätze reserviert werden, wenn der Kunde innerhalb der Bestätigungsfrist bestätigt."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.2:R2> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass die gewünschten Plätze reserviert werden, wenn alle Plätze frei sind."@de ;
+  rdfs:label "Es ist verpflichtend, dass die gewünschten Plätze reserviert werden, wenn alle Plätze frei sind."@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.2:R2" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass die gewünschten Plätze reserviert werden, wenn alle Plätze frei sind."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.1:R3> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass die Kartenreservierung dem Kunden den Eingang der Anfrage mit der Reservierungsnummer bestäti"@de ;
+  rdfs:label "Es ist verpflichtend, dass die Kartenreservierung dem Kunden den Eingang der Anfrage mit der Reservierungsnummer bestäti"@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.1:R3" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass die Kartenreservierung dem Kunden den Eingang der Anfrage mit der Reservierungsnummer bestätigt."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.1:R2> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass die Kartenreservierung eine Reservierungsnummer vergibt."@de ;
+  rdfs:label "Es ist verpflichtend, dass die Kartenreservierung eine Reservierungsnummer vergibt."@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.1:R2" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass die Kartenreservierung eine Reservierungsnummer vergibt."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.3:R5> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass die Reservierung sofort storniert und der Kunde informiert wird, wenn es nicht genügend freie"@de ;
+  rdfs:label "Es ist verpflichtend, dass die Reservierung sofort storniert und der Kunde informiert wird, wenn es nicht genügend freie"@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.3:R5" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass die Reservierung sofort storniert und der Kunde informiert wird, wenn es nicht genügend freie Plätze gibt."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.5:R2> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass die Reservierung storniert wird, wenn das Guthaben nicht reicht oder die Abbuchung fehlschläg"@de ;
+  rdfs:label "Es ist verpflichtend, dass die Reservierung storniert wird, wenn das Guthaben nicht reicht oder die Abbuchung fehlschläg"@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.5:R2" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass die Reservierung storniert wird, wenn das Guthaben nicht reicht oder die Abbuchung fehlschlägt (Zahlungsfehler)."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.3:R4> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass die Reservierung storniert wird, wenn der Kunde ablehnt oder die Bestätigungsfrist abläuft."@de ;
+  rdfs:label "Es ist verpflichtend, dass die Reservierung storniert wird, wenn der Kunde ablehnt oder die Bestätigungsfrist abläuft."@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.3:R4" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass die Reservierung storniert wird, wenn der Kunde ablehnt oder die Bestätigungsfrist abläuft."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.1:R1> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass die Reservierungsanfrage den Kunden, die Vorstellung und mindestens einen Sitzplatz enthält."@de ;
+  rdfs:label "Es ist verpflichtend, dass die Reservierungsanfrage den Kunden, die Vorstellung und mindestens einen Sitzplatz enthält."@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.1:R1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass die Reservierungsanfrage den Kunden, die Vorstellung und mindestens einen Sitzplatz enthält."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.5:R1> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass die Zahlung die Summe der Kartenpreise aller reservierten Sitzplätze vom Kundenkonto abbucht."@de ;
+  rdfs:label "Es ist verpflichtend, dass die Zahlung die Summe der Kartenpreise aller reservierten Sitzplätze vom Kundenkonto abbucht."@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.5:R1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass die Zahlung die Summe der Kartenpreise aller reservierten Sitzplätze vom Kundenkonto abbucht."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.4:R2> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass ein Sitzplatz für eine Vorstellung nur einmal reserviert sein kann."@de ;
+  rdfs:label "Es ist verpflichtend, dass ein Sitzplatz für eine Vorstellung nur einmal reserviert sein kann."@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.4:R2" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass ein Sitzplatz für eine Vorstellung nur einmal reserviert sein kann."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.5:R3> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass eine Abbuchung für dieselbe Reservierung höchstens einmal ausgeführt wird."@de ;
+  rdfs:label "Es ist verpflichtend, dass eine Abbuchung für dieselbe Reservierung höchstens einmal ausgeführt wird."@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.5:R3" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass eine Abbuchung für dieselbe Reservierung höchstens einmal ausgeführt wird."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.2:R3> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass Ersatzplätze angeboten werden, wenn nicht alle gewünschten Plätze frei sind."@de ;
+  rdfs:label "Es ist verpflichtend, dass Ersatzplätze angeboten werden, wenn nicht alle gewünschten Plätze frei sind."@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.2:R3" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass Ersatzplätze angeboten werden, wenn nicht alle gewünschten Plätze frei sind."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.7:R2> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass mit dem Versand des Tickets die Reservierung erfolgreich abgeschlossen ist."@de ;
+  rdfs:label "Es ist verpflichtend, dass mit dem Versand des Tickets die Reservierung erfolgreich abgeschlossen ist."@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.7:R2" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass mit dem Versand des Tickets die Reservierung erfolgreich abgeschlossen ist."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.7:R3> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass mit dem Versand die Sitzplätze als verkauft gelten."@de ;
+  rdfs:label "Es ist verpflichtend, dass mit dem Versand die Sitzplätze als verkauft gelten."@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.7:R3" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass mit dem Versand die Sitzplätze als verkauft gelten."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.4:R3> a archimate:Constraint ;
+  archimate:name "Es ist verpflichtend, dass wie in 4.3 verfahren wird, wenn ein Sitzplatz zwischen Prüfung und Reservierung vergeben word"@de ;
+  rdfs:label "Es ist verpflichtend, dass wie in 4.3 verfahren wird, wenn ein Sitzplatz zwischen Prüfung und Reservierung vergeben word"@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.4:R3" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist verpflichtend, dass wie in 4.3 verfahren wird, wenn ein Sitzplatz zwischen Prüfung und Reservierung vergeben worden ist."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:process:4.6:R2> a archimate:Constraint ;
+  archimate:name "Es ist wünschenswert (SOLL), dass je Sitzplatz ein eigener QR-Code erzeugt wird, damit Begleiter getrennt eingelassen we"@de ;
+  rdfs:label "Es ist wünschenswert (SOLL), dass je Sitzplatz ein eigener QR-Code erzeugt wird, damit Begleiter getrennt eingelassen we"@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:process:4.6:R2" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Es ist wünschenswert (SOLL), dass je Sitzplatz ein eigener QR-Code erzeugt wird, damit Begleiter getrennt eingelassen werden können."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:rule:R-1> a archimate:Constraint ;
+  archimate:name "R-1"@de ;
+  rdfs:label "R-1"@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:rule:R-1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Eine Reservierung umfasst mindestens einen und höchstens zehn Sitzplätze."@de .
+
+<urn:kanonik:cinema:rule:R-2> a archimate:Constraint ;
+  archimate:name "R-2"@de ;
+  rdfs:label "R-2"@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:rule:R-2" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Ein Sitzplatz wird durch Reihe (Buchstabe A–Z) und Platznummer (ab 1) bezeichnet, z. B. „A1“."@de .
+
+<urn:kanonik:cinema:rule:R-3> a archimate:Constraint ;
+  archimate:name "R-3"@de ;
+  rdfs:label "R-3"@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:rule:R-3" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Ein Sitzplatz ist je Vorstellung höchstens einer Reservierung zugeordnet."@de .
+
+<urn:kanonik:cinema:rule:R-4> a archimate:Constraint ;
+  archimate:name "R-4"@de ;
+  rdfs:label "R-4"@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:rule:R-4" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Die Bestätigungsfrist für Ersatzplätze beträgt 2 Minuten."@de .
+
+<urn:kanonik:cinema:rule:R-5> a archimate:Constraint ;
+  archimate:name "R-5"@de ;
+  rdfs:label "R-5"@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:rule:R-5" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Der zu zahlende Betrag ist die Summe der Kartenpreise der Sitzplätze nach Platzkategorie."@de .
+
+<urn:kanonik:cinema:rule:R-6> a archimate:Constraint ;
+  archimate:name "R-6"@de ;
+  rdfs:label "R-6"@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:rule:R-6" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Das Guthaben eines Kundenkontos wird nie negativ."@de .
+
+<urn:kanonik:cinema:rule:R-7> a archimate:Constraint ;
+  archimate:name "R-7"@de ;
+  rdfs:label "R-7"@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:rule:R-7" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Tickets werden erst nach vollständiger Zahlung erzeugt."@de .
+
+<urn:kanonik:cinema:rule:R-8> a archimate:Constraint ;
+  archimate:name "R-8"@de ;
+  rdfs:label "R-8"@de ;
+  dct:type archimate-skos:Constraint ;
+  archimate:identifier "ci_fachkonzept:rule:R-8" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Reservierungen sind nur bis zum Beginn der Vorstellung möglich."@de .
+
+<urn:kanonik:cinema:am:ex:4-6:motivation:getrennter-einlass-von-begleitern> a archimate:Goal ;
+  archimate:name "Getrennter Einlass von Begleitern"@de ;
+  rdfs:label "Getrennter Einlass von Begleitern"@de ;
+  dct:type archimate-skos:Goal ;
+  archimate:identifier "ci_fachkonzept:am:ex:4-6:motivation:getrennter-einlass-von-begleitern" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "extraktion" ;
+  va:status "extracted" ;
+  archimate:documentation "Je Sitzplatz ein eigener QR-Code, damit Begleiter getrennt eingelassen werden können."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:A-4.1-1> a archimate:Requirement ;
+  archimate:name "A-4.1-1"@de ;
+  rdfs:label "A-4.1-1"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-4.1-1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Die Reservierungsanfrage enthält den Kunden, die Vorstellung und mindestens einen Sitzplatz."@de .
+
+<urn:kanonik:cinema:req:A-4.1-2> a archimate:Requirement ;
+  archimate:name "A-4.1-2"@de ;
+  rdfs:label "A-4.1-2"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-4.1-2" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Die Kartenreservierung vergibt eine Reservierungsnummer und bestätigt dem Kunden den Eingang der Anfrage mit dieser Nummer."@de .
+
+<urn:kanonik:cinema:req:A-4.1-3> a archimate:Requirement ;
+  archimate:name "A-4.1-3"@de ;
+  rdfs:label "A-4.1-3"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-4.1-3" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Anfragen für unbekannte Kunden oder Vorstellungen, die bereits begonnen haben, werden abgelehnt."@de .
+
+<urn:kanonik:cinema:req:A-4.2-1> a archimate:Requirement ;
+  archimate:name "A-4.2-1"@de ;
+  rdfs:label "A-4.2-1"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-4.2-1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Der Saalplan prüft, ob alle gewünschten Sitzplätze der Vorstellung frei sind."@de .
+
+<urn:kanonik:cinema:req:A-4.2-2> a archimate:Requirement ;
+  archimate:name "A-4.2-2"@de ;
+  rdfs:label "A-4.2-2"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-4.2-2" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Sind alle Plätze frei, werden sie reserviert (4.4); sonst werden Ersatzplätze angeboten (4.3)."@de .
+
+<urn:kanonik:cinema:req:A-4.3-1> a archimate:Requirement ;
+  archimate:name "A-4.3-1"@de ;
+  rdfs:label "A-4.3-1"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-4.3-1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Der Saalplan sucht dieselbe Anzahl freier Sitzplätze in derselben Vorstellung, nach Möglichkeit nebeneinander in einer Reihe."@de .
+
+<urn:kanonik:cinema:req:A-4.3-2> a archimate:Requirement ;
+  archimate:name "A-4.3-2"@de ;
+  rdfs:label "A-4.3-2"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-4.3-2" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Der Kunde erhält das Angebot mit den Ersatzplätzen und der Bestätigungsfrist."@de .
+
+<urn:kanonik:cinema:req:A-4.3-3> a archimate:Requirement ;
+  archimate:name "A-4.3-3"@de ;
+  rdfs:label "A-4.3-3"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-4.3-3" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Bestätigt der Kunde innerhalb der Bestätigungsfrist, werden die Ersatzplätze reserviert (4.4)."@de .
+
+<urn:kanonik:cinema:req:A-4.3-4> a archimate:Requirement ;
+  archimate:name "A-4.3-4"@de ;
+  rdfs:label "A-4.3-4"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-4.3-4" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Lehnt der Kunde ab oder läuft die Bestätigungsfrist ab, wird die Reservierung storniert (4.8)."@de .
+
+<urn:kanonik:cinema:req:A-4.3-5> a archimate:Requirement ;
+  archimate:name "A-4.3-5"@de ;
+  rdfs:label "A-4.3-5"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-4.3-5" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Gibt es nicht genügend freie Plätze, wird die Reservierung sofort storniert und der Kunde informiert."@de .
+
+<urn:kanonik:cinema:req:A-4.4-1> a archimate:Requirement ;
+  archimate:name "A-4.4-1"@de ;
+  rdfs:label "A-4.4-1"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-4.4-1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Der Saalplan reserviert die Sitzplätze für die Reservierungsnummer."@de .
+
+<urn:kanonik:cinema:req:A-4.4-2> a archimate:Requirement ;
+  archimate:name "A-4.4-2"@de ;
+  rdfs:label "A-4.4-2"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-4.4-2" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Ein Sitzplatz kann für eine Vorstellung nur einmal reserviert sein; ist er zwischen Prüfung und Reservierung vergeben worden, wird wie in 4.3 verfahren."@de .
+
+<urn:kanonik:cinema:req:A-4.5-1> a archimate:Requirement ;
+  archimate:name "A-4.5-1"@de ;
+  rdfs:label "A-4.5-1"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-4.5-1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Die Zahlung bucht die Summe der Kartenpreise aller reservierten Sitzplätze vom Kundenkonto ab."@de .
+
+<urn:kanonik:cinema:req:A-4.5-2> a archimate:Requirement ;
+  archimate:name "A-4.5-2"@de ;
+  rdfs:label "A-4.5-2"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-4.5-2" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Reicht das Guthaben nicht oder schlägt die Abbuchung fehl (Zahlungsfehler), wird die Reservierung storniert (4.8)."@de .
+
+<urn:kanonik:cinema:req:A-4.5-3> a archimate:Requirement ;
+  archimate:name "A-4.5-3"@de ;
+  rdfs:label "A-4.5-3"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-4.5-3" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Eine Abbuchung wird für dieselbe Reservierung höchstens einmal ausgeführt."@de .
+
+<urn:kanonik:cinema:req:A-4.6-1> a archimate:Requirement ;
+  archimate:name "A-4.6-1"@de ;
+  rdfs:label "A-4.6-1"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-4.6-1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Der Ticketdienst erzeugt nach erfolgreicher Zahlung ein Ticket mit Reservierungsnummer, Vorstellung, Sitzplätzen, Kunde und QR-Code."@de .
+
+<urn:kanonik:cinema:req:A-4.6-2> a archimate:Requirement ;
+  archimate:name "A-4.6-2"@de ;
+  rdfs:label "A-4.6-2"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-4.6-2" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Je Sitzplatz wird ein eigener QR-Code erzeugt, damit Begleiter getrennt eingelassen werden können."@de .
+
+<urn:kanonik:cinema:req:A-4.7-1> a archimate:Requirement ;
+  archimate:name "A-4.7-1"@de ;
+  rdfs:label "A-4.7-1"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-4.7-1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Die Benachrichtigung sendet das Ticket an die E-Mail-Adresse des Kunden."@de .
+
+<urn:kanonik:cinema:req:A-4.7-2> a archimate:Requirement ;
+  archimate:name "A-4.7-2"@de ;
+  rdfs:label "A-4.7-2"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-4.7-2" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Mit dem Versand ist die Reservierung erfolgreich abgeschlossen; die Sitzplätze gelten als verkauft."@de .
+
+<urn:kanonik:cinema:req:A-4.8-1> a archimate:Requirement ;
+  archimate:name "A-4.8-1"@de ;
+  rdfs:label "A-4.8-1"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-4.8-1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Bei Stornierung gibt der Saalplan alle für die Reservierung reservierten Sitzplätze wieder frei."@de .
+
+<urn:kanonik:cinema:req:A-4.8-2> a archimate:Requirement ;
+  archimate:name "A-4.8-2"@de ;
+  rdfs:label "A-4.8-2"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-4.8-2" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Der Kunde wird über die Stornierung und ihren Grund informiert."@de .
+
+<urn:kanonik:cinema:req:A-4.8-3> a archimate:Requirement ;
+  archimate:name "A-4.8-3"@de ;
+  rdfs:label "A-4.8-3"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-4.8-3" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Wurde bereits abgebucht, wird der Betrag dem Kundenkonto wieder gutgeschrieben."@de .
+
+<urn:kanonik:cinema:req:A-6-1> a archimate:Requirement ;
+  archimate:name "A-6-1"@de ;
+  rdfs:label "A-6-1"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-6-1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Eine Bestätigung von Ersatzplätzen wird über die Reservierungsnummer der richtigen Reservierung zugeordnet; Bestätigungen nach Ablauf der Frist werden abgewiesen."@de .
+
+<urn:kanonik:cinema:req:A-7-1> a archimate:Requirement ;
+  archimate:name "A-7-1"@de ;
+  rdfs:label "A-7-1"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-7-1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Die Status einer Reservierung folgen der Reihenfolge angefragt → (Ersatz angeboten →) reserviert → bezahlt → abgeschlossen; storniert ist aus jedem Status außer abgeschlossen erreichbar."@de .
+
+<urn:kanonik:cinema:req:A-8-1> a archimate:Requirement ;
+  archimate:name "A-8-1"@de ;
+  rdfs:label "A-8-1"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-8-1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Der Stand jeder Reservierung ist jederzeit über die Reservierungsnummer nachvollziehbar."@de .
+
+<urn:kanonik:cinema:req:A-8-2> a archimate:Requirement ;
+  archimate:name "A-8-2"@de ;
+  rdfs:label "A-8-2"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-8-2" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Technische Fehler eines Dienstes (z. B. nicht erreichbar) führen zu Wiederholungen und nicht zur Stornierung; nur fachliche Fehler (Zahlungsfehler, keine freien Plätze) stornieren."@de .
+
+<urn:kanonik:cinema:req:A-8-3> a archimate:Requirement ;
+  archimate:name "A-8-3"@de ;
+  rdfs:label "A-8-3"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:A-8-3" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Die Prozessmodelle werden von der Kartenreservierung bereitgestellt."@de .
+
+<urn:kanonik:cinema:req:4.1:A1:T1> a archimate:Requirement ;
+  archimate:name "REQ-T-4.1-A1-01"@de ;
+  rdfs:label "REQ-T-4.1-A1-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.1:A1:T1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Die Kundenoberfläche muss Kunde die Möglichkeit bieten, eine Vorstellung zu wählen."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.1:A1:T2> a archimate:Requirement ;
+  archimate:name "REQ-T-4.1-A1-02"@de ;
+  rdfs:label "REQ-T-4.1-A1-02"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.1:A1:T2" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Die Kundenoberfläche muss Kunde die Möglichkeit bieten, die gewünschten Sitzplätze zu wählen."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.1:A2:T1> a archimate:Requirement ;
+  archimate:name "REQ-T-4.1-A2-01"@de ;
+  rdfs:label "REQ-T-4.1-A2-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.1:A2:T1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Die Kundenoberfläche muss fähig sein, die Reservierungsanfrage an die Kartenreservierung zu senden."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.1:A4:T1> a archimate:Requirement ;
+  archimate:name "REQ-T-4.1-A4-01"@de ;
+  rdfs:label "REQ-T-4.1-A4-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.1:A4:T1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Die Kundenoberfläche muss fähig sein, die Bestätigung über den Eingang der Reservierungsanfrage mit der Reservierungsnummer von Kartenreservierung entgegenzunehmen."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.3:A2:T1> a archimate:Requirement ;
+  archimate:name "REQ-T-4.3-A2-01"@de ;
+  rdfs:label "REQ-T-4.3-A2-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.3:A2:T1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Die Kundenoberfläche muss fähig sein, das Angebot mit den Ersatzplätzen und der Bestätigungsfrist entgegenzunehmen."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.3:A3:T1> a archimate:Requirement ;
+  archimate:name "REQ-T-4.3-A3-01"@de ;
+  rdfs:label "REQ-T-4.3-A3-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.3:A3:T1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Die Kundenoberfläche muss Kunde die Möglichkeit bieten, das Angebot mit den Ersatzplätzen innerhalb der Bestätigungsfrist zu bestätigen."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.7:A1:T1> a archimate:Requirement ;
+  archimate:name "REQ-T-4.7-A1-01"@de ;
+  rdfs:label "REQ-T-4.7-A1-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.7:A1:T1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Die Kundenoberfläche muss fähig sein, das Ticket von Benachrichtigung entgegenzunehmen."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.8:A2:T1> a archimate:Requirement ;
+  archimate:name "REQ-T-4.8-A2-01"@de ;
+  rdfs:label "REQ-T-4.8-A2-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.8:A2:T1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Die Kundenoberfläche muss fähig sein, die Information über die Stornierung und ihren Grund von Saalplan entgegenzunehmen."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.1:A2:Z1> a archimate:Requirement ;
+  archimate:name "REQ-Z-4.1-A2-01"@de ;
+  rdfs:label "REQ-Z-4.1-A2-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.1:A2:Z1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Kino muss fähig sein, die Reservierungsanfrage von Kunde entgegenzunehmen."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.1:A3:Z1> a archimate:Requirement ;
+  archimate:name "REQ-Z-4.1-A3-01"@de ;
+  rdfs:label "REQ-Z-4.1-A3-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.1:A3:Z1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Wenn der Kunde bekannt ist und die Vorstellung noch nicht begonnen hat, muss Kino eine Reservierungsnummer vergeben."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.1:A4:Z1> a archimate:Requirement ;
+  archimate:name "REQ-Z-4.1-A4-01"@de ;
+  rdfs:label "REQ-Z-4.1-A4-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.1:A4:Z1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Kino muss fähig sein, dem Kunden den Eingang der Reservierungsanfrage zu bestätigen."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.1:A5:Z1> a archimate:Requirement ;
+  archimate:name "REQ-Z-4.1-A5-01"@de ;
+  rdfs:label "REQ-Z-4.1-A5-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.1:A5:Z1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Wenn der Kunde unbekannt ist oder die Vorstellung bereits begonnen hat, muss Kino die Reservierungsanfrage ablehnen."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.2:A1:Z1> a archimate:Requirement ;
+  archimate:name "REQ-Z-4.2-A1-01"@de ;
+  rdfs:label "REQ-Z-4.2-A1-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.2:A1:Z1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Kino muss prüfen, ob alle gewünschten Sitzplätze der Vorstellung frei sind."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.2:A2:Z1> a archimate:Requirement ;
+  archimate:name "REQ-Z-4.2-A2-01"@de ;
+  rdfs:label "REQ-Z-4.2-A2-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.2:A2:Z1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Wenn alle Plätze frei sind, muss Kino die gewünschten Sitzplätze reservieren."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.2:A3:Z1> a archimate:Requirement ;
+  archimate:name "REQ-Z-4.2-A3-01"@de ;
+  rdfs:label "REQ-Z-4.2-A3-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.2:A3:Z1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Wenn nicht alle gewünschten Plätze frei sind, muss Kino Ersatzplätze anbieten."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.3:A1:Z1> a archimate:Requirement ;
+  archimate:name "REQ-Z-4.3-A1-01"@de ;
+  rdfs:label "REQ-Z-4.3-A1-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.3:A1:Z1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Kino muss dieselbe Anzahl freier Sitzplätze in derselben Vorstellung, nach Möglichkeit nebeneinander in einer Reihe, suchen."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.3:A2:Z1> a archimate:Requirement ;
+  archimate:name "REQ-Z-4.3-A2-01"@de ;
+  rdfs:label "REQ-Z-4.3-A2-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.3:A2:Z1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Kino muss fähig sein, das Angebot mit den Ersatzplätzen und der Bestätigungsfrist an Kunde zu übermitteln."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.4:A1:Z1> a archimate:Requirement ;
+  archimate:name "REQ-Z-4.4-A1-01"@de ;
+  rdfs:label "REQ-Z-4.4-A1-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.4:A1:Z1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Kino muss die Sitzplätze für die Reservierungsnummer reservieren."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.5:A1:Z1> a archimate:Requirement ;
+  archimate:name "REQ-Z-4.5-A1-01"@de ;
+  rdfs:label "REQ-Z-4.5-A1-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.5:A1:Z1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Kino muss die Summe der Kartenpreise aller reservierten Sitzplätze vom Kundenkonto abbuchen."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.5:A1:Z2> a archimate:Requirement ;
+  archimate:name "REQ-Z-4.5-A1-02"@de ;
+  rdfs:label "REQ-Z-4.5-A1-02"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.5:A1:Z2" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Kino muss die Abbuchung für dieselbe Reservierung höchstens einmal ausführen."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.5:A2:Z1> a archimate:Requirement ;
+  archimate:name "REQ-Z-4.5-A2-01"@de ;
+  rdfs:label "REQ-Z-4.5-A2-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.5:A2:Z1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Wenn das Guthaben nicht reicht oder die Abbuchung fehlschlägt, muss Kino die Reservierung stornieren."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.7:A1:Z1> a archimate:Requirement ;
+  archimate:name "REQ-Z-4.7-A1-01"@de ;
+  rdfs:label "REQ-Z-4.7-A1-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.7:A1:Z1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Kino muss fähig sein, das Ticket an die E-Mail-Adresse des Kunden zu senden."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.8:A1:Z1> a archimate:Requirement ;
+  archimate:name "REQ-Z-4.8-A1-01"@de ;
+  rdfs:label "REQ-Z-4.8-A1-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.8:A1:Z1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Kino muss alle für die Reservierung reservierten Sitzplätze wieder freigeben."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.8:A2:Z1> a archimate:Requirement ;
+  archimate:name "REQ-Z-4.8-A2-01"@de ;
+  rdfs:label "REQ-Z-4.8-A2-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.8:A2:Z1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Kino muss fähig sein, den Kunden über die Stornierung und ihren Grund zu informieren."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:req:4.8:A3:Z1> a archimate:Requirement ;
+  archimate:name "REQ-Z-4.8-A3-01"@de ;
+  rdfs:label "REQ-Z-4.8-A3-01"@de ;
+  dct:type archimate-skos:Requirement ;
+  archimate:identifier "ci_fachkonzept:req:4.8:A3:Z1" ;
+  va:layer "Motivation" ;
+  va:aspect "Motivation" ;
+  va:origin "graph" ;
+  va:status "extracted" ;
+  archimate:documentation "Wenn bereits abgebucht wurde, muss Kino dem Kundenkonto den Betrag wieder gutschreiben."@de ;
+  va:domain <urn:kanonik:cinema:am:domain:d-reservierung> .
+
+<urn:kanonik:cinema:am:domain:d-reservierung> a archimate:Grouping ;
+  archimate:name "Kartenreservierung"@de ;
+  rdfs:label "Kartenreservierung"@de ;
+  dct:type archimate-skos:Grouping ;
+  archimate:identifier "ci_fachkonzept:am:domain:d-reservierung" ;
+  va:layer "Other" ;
+  va:aspect "Composite" ;
+  va:origin "domaene" ;
+  va:status "candidate" ;
+  archimate:documentation "Ticket Reservation: steuert jede Reservierung (Hauptprozess)"@de .
+
+<urn:kanonik:cinema:am:domain:d-saalplan> a archimate:Grouping ;
+  archimate:name "Saalplan"@de ;
+  rdfs:label "Saalplan"@de ;
+  dct:type archimate-skos:Grouping ;
+  archimate:identifier "ci_fachkonzept:am:domain:d-saalplan" ;
+  va:layer "Other" ;
+  va:aspect "Composite" ;
+  va:origin "domaene" ;
+  va:status "candidate" ;
+  archimate:documentation "Seat Service: Verfügbarkeit, Ersatzplätze, Reservieren und Freigeben"@de .
+
+<urn:kanonik:cinema:am:domain:d-ticket> a archimate:Grouping ;
+  archimate:name "Ticketdienst"@de ;
+  rdfs:label "Ticketdienst"@de ;
+  dct:type archimate-skos:Grouping ;
+  archimate:identifier "ci_fachkonzept:am:domain:d-ticket" ;
+  va:layer "Other" ;
+  va:aspect "Composite" ;
+  va:origin "domaene" ;
+  va:status "candidate" ;
+  archimate:documentation "Ticket Service: Tickets mit QR-Code"@de .
+
+<urn:kanonik:cinema:am:domain:d-zahlung> a archimate:Grouping ;
+  archimate:name "Zahlung"@de ;
+  rdfs:label "Zahlung"@de ;
+  dct:type archimate-skos:Grouping ;
+  archimate:identifier "ci_fachkonzept:am:domain:d-zahlung" ;
+  va:layer "Other" ;
+  va:aspect "Composite" ;
+  va:origin "domaene" ;
+  va:status "candidate" ;
+  archimate:documentation "Payment Service: Abbuchung vom Kundenkonto"@de .
+
+<urn:kanonik:cinema:REST_reservation_CinemaController.acceptOffer> archimate:access <urn:kanonik:cinema:CinemaController.acceptOffer.request> .
+<urn:kanonik:cinema:REST_reservation_CinemaController.reserveSeat> archimate:access <urn:kanonik:cinema:CinemaController.reserveSeat.request> .
+<urn:kanonik:cinema:process:4.1:A1> archimate:access <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:process:4.1:A1> archimate:access <urn:kanonik:cinema:concept:vorstellung> .
+<urn:kanonik:cinema:process:4.1:A2> archimate:access <urn:kanonik:cinema:concept:reservierungsanfrage> .
+<urn:kanonik:cinema:process:4.1:A3> archimate:access <urn:kanonik:cinema:concept:reservierungsanfrage> .
+<urn:kanonik:cinema:process:4.1:A3> archimate:access <urn:kanonik:cinema:concept:reservierungsnummer> .
+<urn:kanonik:cinema:process:4.1:A4> archimate:access <urn:kanonik:cinema:concept:reservierungsanfrage> .
+<urn:kanonik:cinema:process:4.1:A4> archimate:access <urn:kanonik:cinema:concept:reservierungsnummer> .
+<urn:kanonik:cinema:process:4.1:A5> archimate:access <urn:kanonik:cinema:concept:reservierungsanfrage> .
+<urn:kanonik:cinema:process:4.1:E1> archimate:access <urn:kanonik:cinema:concept:reservierungsanfrage> .
+<urn:kanonik:cinema:process:4.2:A1> archimate:access <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:process:4.2:A1> archimate:access <urn:kanonik:cinema:concept:verfugbarkeitsprufung> .
+<urn:kanonik:cinema:process:4.2:A1> archimate:access <urn:kanonik:cinema:concept:vorstellung> .
+<urn:kanonik:cinema:process:4.2:A2> archimate:access <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:process:4.2:A2> archimate:access <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:process:4.2:A2> archimate:access <urn:kanonik:cinema:concept:verfugbarkeitsprufung> .
+<urn:kanonik:cinema:process:4.2:A3> archimate:access <urn:kanonik:cinema:concept:ersatzplatze> .
+<urn:kanonik:cinema:process:4.2:A3> archimate:access <urn:kanonik:cinema:concept:verfugbarkeitsprufung> .
+<urn:kanonik:cinema:process:4.3:A1> archimate:access <urn:kanonik:cinema:concept:ersatzplatze> .
+<urn:kanonik:cinema:process:4.3:A1> archimate:access <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:process:4.3:A1> archimate:access <urn:kanonik:cinema:concept:vorstellung> .
+<urn:kanonik:cinema:process:4.3:A2> archimate:access <urn:kanonik:cinema:concept:angebot-mit-ersatzplatzen> .
+<urn:kanonik:cinema:process:4.3:A2> archimate:access <urn:kanonik:cinema:concept:bestatigungsfrist> .
+<urn:kanonik:cinema:process:4.3:A3> archimate:access <urn:kanonik:cinema:concept:angebot-mit-ersatzplatzen> .
+<urn:kanonik:cinema:process:4.3:A3> archimate:access <urn:kanonik:cinema:concept:bestatigungsfrist> .
+<urn:kanonik:cinema:process:4.3:A3> archimate:access <urn:kanonik:cinema:concept:ersatzplatze> .
+<urn:kanonik:cinema:process:4.3:E1> archimate:access <urn:kanonik:cinema:concept:bestatigungsfrist> .
+<urn:kanonik:cinema:process:4.3:E2> archimate:access <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:process:4.3:E3> archimate:access <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:process:4.4:A1> archimate:access <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:process:4.4:A1> archimate:access <urn:kanonik:cinema:concept:reservierungsnummer> .
+<urn:kanonik:cinema:process:4.4:A1> archimate:access <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:process:4.5:A1> archimate:access <urn:kanonik:cinema:concept:abbuchung> .
+<urn:kanonik:cinema:process:4.5:A1> archimate:access <urn:kanonik:cinema:concept:guthaben> .
+<urn:kanonik:cinema:process:4.5:A1> archimate:access <urn:kanonik:cinema:concept:kartenpreis> .
+<urn:kanonik:cinema:process:4.5:A1> archimate:access <urn:kanonik:cinema:concept:kundenkonto> .
+<urn:kanonik:cinema:process:4.5:A1> archimate:access <urn:kanonik:cinema:concept:reservierter-sitzplatz> .
+<urn:kanonik:cinema:process:4.5:A2> archimate:access <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:process:4.5:A2> archimate:access <urn:kanonik:cinema:concept:stornierung-der-reservierung> .
+<urn:kanonik:cinema:process:4.5:A2> archimate:access <urn:kanonik:cinema:concept:zahlungsfehler> .
+<urn:kanonik:cinema:process:4.5:E1> archimate:access <urn:kanonik:cinema:concept:zahlungsfehler> .
+<urn:kanonik:cinema:process:4.5:E2> archimate:access <urn:kanonik:cinema:concept:stornierung-der-reservierung> .
+<urn:kanonik:cinema:process:4.6:A1> archimate:access <urn:kanonik:cinema:concept:qr-code> .
+<urn:kanonik:cinema:process:4.6:A1> archimate:access <urn:kanonik:cinema:concept:reservierungsnummer> .
+<urn:kanonik:cinema:process:4.6:A1> archimate:access <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:process:4.6:A1> archimate:access <urn:kanonik:cinema:concept:ticket> .
+<urn:kanonik:cinema:process:4.6:A1> archimate:access <urn:kanonik:cinema:concept:vorstellung> .
+<urn:kanonik:cinema:process:4.6:A1> archimate:access <urn:kanonik:cinema:concept:zahlung> .
+<urn:kanonik:cinema:process:4.6:A2> archimate:access <urn:kanonik:cinema:concept:qr-code> .
+<urn:kanonik:cinema:process:4.6:A2> archimate:access <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:process:4.6:E1> archimate:access <urn:kanonik:cinema:concept:zahlung> .
+<urn:kanonik:cinema:process:4.7:A1> archimate:access <urn:kanonik:cinema:concept:e-mail-adresse-des-kunden> .
+<urn:kanonik:cinema:process:4.7:A1> archimate:access <urn:kanonik:cinema:concept:ticket> .
+<urn:kanonik:cinema:process:4.7:A1> archimate:access <urn:kanonik:cinema:concept:ticket> .
+<urn:kanonik:cinema:process:4.7:E1> archimate:access <urn:kanonik:cinema:concept:reservierung-erfolgreich-abgeschlossen> .
+<urn:kanonik:cinema:process:4.7:E2> archimate:access <urn:kanonik:cinema:concept:sitzplatz-verkauft> .
+<urn:kanonik:cinema:process:4.8:A1> archimate:access <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:process:4.8:A1> archimate:access <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:process:4.8:A1> archimate:access <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:process:4.8:A1> archimate:access <urn:kanonik:cinema:concept:stornierung> .
+<urn:kanonik:cinema:process:4.8:A2> archimate:access <urn:kanonik:cinema:concept:stornierung> .
+<urn:kanonik:cinema:process:4.8:A2> archimate:access <urn:kanonik:cinema:concept:stornierungsgrund> .
+<urn:kanonik:cinema:process:4.8:A3> archimate:access <urn:kanonik:cinema:concept:abbuchung> .
+<urn:kanonik:cinema:process:4.8:A3> archimate:access <urn:kanonik:cinema:concept:betrag> .
+<urn:kanonik:cinema:process:4.8:A3> archimate:access <urn:kanonik:cinema:concept:gutschrift> .
+<urn:kanonik:cinema:process:4.8:A3> archimate:access <urn:kanonik:cinema:concept:kundenkonto> .
+<urn:kanonik:cinema:process:4.8:E1> archimate:access <urn:kanonik:cinema:concept:stornierung> .
+<urn:kanonik:cinema:process:4:E1> archimate:access <urn:kanonik:cinema:concept:reservierungsanfrage> .
+<urn:kanonik:cinema:process:4:E2> archimate:access <urn:kanonik:cinema:concept:reservierung-erfolgreich> .
+<urn:kanonik:cinema:process:4:E3> archimate:access <urn:kanonik:cinema:concept:reservierung-gescheitert> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:am:ex:4-1:dienst:ablehnung-unzulassiger-reservierungsanfragen> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:am:ex:4-1:dienst:bestatigung-des-eingangs-mit-reservierungsnummer> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:am:ex:4-1:dienst:entgegennahme-von-reservierungsanfragen> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:am:ex:4-2:dienst:prufung-der-verfugbarkeit-gewunschter-sitzplatze> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:am:ex:4-3:dienst:suche-nach-ersatzplatzen> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:am:ex:4-3:funktion:ersatzplatze-anbieten> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:am:ex:4-4:dienst:reservierung-von-sitzplatzen-fur-die-reservierungsnummer> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:am:ex:4-5:funktion:bezahlen-von-kartenreservierungen> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:am:ex:4-6:funktion:ticketerzeugung> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:am:ex:4-6:motivation:getrennter-einlass-von-begleitern> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:am:ex:4-8:dienst:freigabe-reservierter-sitzplatze-bei-stornierung> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:am:ex:4-8:funktion:stornierung-von-reservierungen> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:am:ex:4:akteur:kunde> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:abbuchung> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:angebot-mit-ersatzplatzen> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:benachrichtigung> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:bestatigungsfrist> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:betrag> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:e-mail-adresse-des-kunden> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:ersatzplatze> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:guthaben> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:gutschrift> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:kartenpreis> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:kartenreservierung> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:kundenkonto> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:qr-code> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:reservierter-sitzplatz> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:reservierung-erfolgreich> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:reservierung-erfolgreich-abgeschlossen> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:reservierung-gescheitert> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:reservierungsanfrage> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:reservierungsnummer> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:saalplan> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:sitzplatz-verkauft> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:stornierung> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:stornierung-der-reservierung> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:stornierungsgrund> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:ticket> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:ticketdienst> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:verfugbarkeitsprufung> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:vorstellung> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:zahlung> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:concept:zahlungsfehler> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.1:A1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.1:A2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.1:A3> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.1:A4> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.1:A5> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.1:E1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.1:E2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.1:E3> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.1:R1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.1:R2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.1:R3> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.1:R4> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.1:R5> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.2:A1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.2:A2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.2:A3> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.2:R1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.2:R2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.2:R3> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.3> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.3:A1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.3:A2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.3:A3> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.3:E1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.3:E2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.3:E3> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.3:E4> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.3:R1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.3:R2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.3:R3> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.3:R4> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.3:R5> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.4> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.4:A1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.4:E1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.4:R1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.4:R2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.4:R3> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.5> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.5:A1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.5:A2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.5:E1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.5:E2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.5:R1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.5:R2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.5:R3> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.6> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.6:A1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.6:A2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.6:E1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.6:R1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.6:R2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.7> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.7:A1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.7:E1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.7:E2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.7:R1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.7:R2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.7:R3> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.8> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.8:A1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.8:A2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.8:A3> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.8:E1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.8:R1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.8:R2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4.8:R3> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4:E1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4:E2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4:E3> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4:R1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4:R2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:process:4:R3> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.1:A1:T1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.1:A1:T2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.1:A2:T1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.1:A2:Z1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.1:A3:Z1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.1:A4:T1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.1:A4:Z1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.1:A5:Z1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.2:A1:Z1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.2:A2:Z1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.2:A3:Z1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.3:A1:Z1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.3:A2:T1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.3:A2:Z1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.3:A3:T1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.4:A1:Z1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.5:A1:Z1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.5:A1:Z2> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.5:A2:Z1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.7:A1:T1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.7:A1:Z1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.8:A1:Z1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.8:A2:T1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.8:A2:Z1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:req:4.8:A3:Z1> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:role:begleiter> .
+<urn:kanonik:cinema:am:domain:d-reservierung> archimate:aggregation <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:REST_reservation> archimate:assignment <urn:kanonik:cinema:REST_reservation_CinemaController.acceptOffer> .
+<urn:kanonik:cinema:REST_reservation> archimate:assignment <urn:kanonik:cinema:REST_reservation_CinemaController.reserveSeat> .
+<urn:kanonik:cinema:concept:benachrichtigung> archimate:assignment <urn:kanonik:cinema:process:4.7> .
+<urn:kanonik:cinema:concept:benachrichtigung> archimate:assignment <urn:kanonik:cinema:process:4.7:A1> .
+<urn:kanonik:cinema:concept:kartenreservierung> archimate:assignment <urn:kanonik:cinema:process:4.1> .
+<urn:kanonik:cinema:concept:kartenreservierung> archimate:assignment <urn:kanonik:cinema:process:4.1:A3> .
+<urn:kanonik:cinema:concept:kartenreservierung> archimate:assignment <urn:kanonik:cinema:process:4.1:A4> .
+<urn:kanonik:cinema:concept:kartenreservierung> archimate:assignment <urn:kanonik:cinema:process:4.1:A5> .
+<urn:kanonik:cinema:concept:saalplan> archimate:assignment <urn:kanonik:cinema:process:4.2> .
+<urn:kanonik:cinema:concept:saalplan> archimate:assignment <urn:kanonik:cinema:process:4.2:A1> .
+<urn:kanonik:cinema:concept:saalplan> archimate:assignment <urn:kanonik:cinema:process:4.2:A2> .
+<urn:kanonik:cinema:concept:saalplan> archimate:assignment <urn:kanonik:cinema:process:4.2:A3> .
+<urn:kanonik:cinema:concept:saalplan> archimate:assignment <urn:kanonik:cinema:process:4.3> .
+<urn:kanonik:cinema:concept:saalplan> archimate:assignment <urn:kanonik:cinema:process:4.3:A1> .
+<urn:kanonik:cinema:concept:saalplan> archimate:assignment <urn:kanonik:cinema:process:4.4> .
+<urn:kanonik:cinema:concept:saalplan> archimate:assignment <urn:kanonik:cinema:process:4.4:A1> .
+<urn:kanonik:cinema:concept:saalplan> archimate:assignment <urn:kanonik:cinema:process:4.8> .
+<urn:kanonik:cinema:concept:saalplan> archimate:assignment <urn:kanonik:cinema:process:4.8:A1> .
+<urn:kanonik:cinema:concept:saalplan> archimate:assignment <urn:kanonik:cinema:process:4.8:A2> .
+<urn:kanonik:cinema:concept:saalplan> archimate:assignment <urn:kanonik:cinema:process:4.8:A3> .
+<urn:kanonik:cinema:concept:ticketdienst> archimate:assignment <urn:kanonik:cinema:process:4.6> .
+<urn:kanonik:cinema:concept:ticketdienst> archimate:assignment <urn:kanonik:cinema:process:4.6:A1> .
+<urn:kanonik:cinema:concept:ticketdienst> archimate:assignment <urn:kanonik:cinema:process:4.6:A2> .
+<urn:kanonik:cinema:role:begleiter> archimate:assignment <urn:kanonik:cinema:process:4.6> .
+<urn:kanonik:cinema:role:kunde> archimate:assignment <urn:kanonik:cinema:process:4> .
+<urn:kanonik:cinema:role:kunde> archimate:assignment <urn:kanonik:cinema:process:4.1> .
+<urn:kanonik:cinema:role:kunde> archimate:assignment <urn:kanonik:cinema:process:4.1:A1> .
+<urn:kanonik:cinema:role:kunde> archimate:assignment <urn:kanonik:cinema:process:4.1:A2> .
+<urn:kanonik:cinema:role:kunde> archimate:assignment <urn:kanonik:cinema:process:4.3> .
+<urn:kanonik:cinema:role:kunde> archimate:assignment <urn:kanonik:cinema:process:4.3:A2> .
+<urn:kanonik:cinema:role:kunde> archimate:assignment <urn:kanonik:cinema:process:4.3:A3> .
+<urn:kanonik:cinema:role:kunde> archimate:assignment <urn:kanonik:cinema:process:4.5> .
+<urn:kanonik:cinema:role:kunde> archimate:assignment <urn:kanonik:cinema:process:4.5:A1> .
+<urn:kanonik:cinema:role:kunde> archimate:assignment <urn:kanonik:cinema:process:4.5:A2> .
+<urn:kanonik:cinema:role:kunde> archimate:assignment <urn:kanonik:cinema:process:4.6> .
+<urn:kanonik:cinema:role:kunde> archimate:assignment <urn:kanonik:cinema:process:4.7> .
+<urn:kanonik:cinema:role:kunde> archimate:assignment <urn:kanonik:cinema:process:4.8> .
+<urn:kanonik:cinema:process:4> archimate:association <urn:kanonik:cinema:process:4:E1> .
+<urn:kanonik:cinema:process:4> archimate:association <urn:kanonik:cinema:process:4:E2> .
+<urn:kanonik:cinema:process:4> archimate:association <urn:kanonik:cinema:process:4:E3> .
+<urn:kanonik:cinema:process:4> archimate:association <urn:kanonik:cinema:process:4:R1> .
+<urn:kanonik:cinema:process:4> archimate:association <urn:kanonik:cinema:process:4:R2> .
+<urn:kanonik:cinema:process:4> archimate:association <urn:kanonik:cinema:process:4:R3> .
+<urn:kanonik:cinema:process:4.1> archimate:association <urn:kanonik:cinema:process:4.1:E1> .
+<urn:kanonik:cinema:process:4.1> archimate:association <urn:kanonik:cinema:process:4.1:E2> .
+<urn:kanonik:cinema:process:4.1> archimate:association <urn:kanonik:cinema:process:4.1:E3> .
+<urn:kanonik:cinema:process:4.1> archimate:association <urn:kanonik:cinema:process:4.1:R1> .
+<urn:kanonik:cinema:process:4.1> archimate:association <urn:kanonik:cinema:process:4.1:R2> .
+<urn:kanonik:cinema:process:4.1> archimate:association <urn:kanonik:cinema:process:4.1:R3> .
+<urn:kanonik:cinema:process:4.1> archimate:association <urn:kanonik:cinema:process:4.1:R4> .
+<urn:kanonik:cinema:process:4.1> archimate:association <urn:kanonik:cinema:process:4.1:R5> .
+<urn:kanonik:cinema:process:4.1:R1> archimate:association <urn:kanonik:cinema:concept:reservierungsanfrage> .
+<urn:kanonik:cinema:process:4.1:R1> archimate:association <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:process:4.1:R1> archimate:association <urn:kanonik:cinema:concept:vorstellung> .
+<urn:kanonik:cinema:process:4.1:R1> archimate:association <urn:kanonik:cinema:process:4.1:A2> .
+<urn:kanonik:cinema:process:4.1:R1> archimate:association <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:process:4.1:R2> archimate:association <urn:kanonik:cinema:concept:kartenreservierung> .
+<urn:kanonik:cinema:process:4.1:R2> archimate:association <urn:kanonik:cinema:concept:reservierungsnummer> .
+<urn:kanonik:cinema:process:4.1:R2> archimate:association <urn:kanonik:cinema:process:4.1:A3> .
+<urn:kanonik:cinema:process:4.1:R3> archimate:association <urn:kanonik:cinema:concept:kartenreservierung> .
+<urn:kanonik:cinema:process:4.1:R3> archimate:association <urn:kanonik:cinema:concept:reservierungsanfrage> .
+<urn:kanonik:cinema:process:4.1:R3> archimate:association <urn:kanonik:cinema:concept:reservierungsnummer> .
+<urn:kanonik:cinema:process:4.1:R3> archimate:association <urn:kanonik:cinema:process:4.1:A4> .
+<urn:kanonik:cinema:process:4.1:R3> archimate:association <urn:kanonik:cinema:process:4.1:E3> .
+<urn:kanonik:cinema:process:4.1:R4> archimate:association <urn:kanonik:cinema:concept:kartenreservierung> .
+<urn:kanonik:cinema:process:4.1:R4> archimate:association <urn:kanonik:cinema:concept:reservierungsanfrage> .
+<urn:kanonik:cinema:process:4.1:R4> archimate:association <urn:kanonik:cinema:process:4.1:A5> .
+<urn:kanonik:cinema:process:4.1:R4> archimate:association <urn:kanonik:cinema:process:4.1:E2> .
+<urn:kanonik:cinema:process:4.1:R5> archimate:association <urn:kanonik:cinema:concept:kartenreservierung> .
+<urn:kanonik:cinema:process:4.1:R5> archimate:association <urn:kanonik:cinema:concept:reservierungsanfrage> .
+<urn:kanonik:cinema:process:4.1:R5> archimate:association <urn:kanonik:cinema:concept:vorstellung> .
+<urn:kanonik:cinema:process:4.1:R5> archimate:association <urn:kanonik:cinema:process:4.1:A5> .
+<urn:kanonik:cinema:process:4.1:R5> archimate:association <urn:kanonik:cinema:process:4.1:E2> .
+<urn:kanonik:cinema:process:4.2> archimate:association <urn:kanonik:cinema:process:4.2:R1> .
+<urn:kanonik:cinema:process:4.2> archimate:association <urn:kanonik:cinema:process:4.2:R2> .
+<urn:kanonik:cinema:process:4.2> archimate:association <urn:kanonik:cinema:process:4.2:R3> .
+<urn:kanonik:cinema:process:4.2:R1> archimate:association <urn:kanonik:cinema:concept:saalplan> .
+<urn:kanonik:cinema:process:4.2:R1> archimate:association <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:process:4.2:R1> archimate:association <urn:kanonik:cinema:concept:verfugbarkeitsprufung> .
+<urn:kanonik:cinema:process:4.2:R1> archimate:association <urn:kanonik:cinema:concept:vorstellung> .
+<urn:kanonik:cinema:process:4.2:R1> archimate:association <urn:kanonik:cinema:process:4.2:A1> .
+<urn:kanonik:cinema:process:4.2:R2> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:process:4.2:R2> archimate:association <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:process:4.2:R2> archimate:association <urn:kanonik:cinema:process:4.2:A2> .
+<urn:kanonik:cinema:process:4.2:R3> archimate:association <urn:kanonik:cinema:concept:ersatzplatze> .
+<urn:kanonik:cinema:process:4.2:R3> archimate:association <urn:kanonik:cinema:process:4.2:A3> .
+<urn:kanonik:cinema:process:4.3> archimate:association <urn:kanonik:cinema:process:4.3:E1> .
+<urn:kanonik:cinema:process:4.3> archimate:association <urn:kanonik:cinema:process:4.3:E2> .
+<urn:kanonik:cinema:process:4.3> archimate:association <urn:kanonik:cinema:process:4.3:E3> .
+<urn:kanonik:cinema:process:4.3> archimate:association <urn:kanonik:cinema:process:4.3:E4> .
+<urn:kanonik:cinema:process:4.3> archimate:association <urn:kanonik:cinema:process:4.3:R1> .
+<urn:kanonik:cinema:process:4.3> archimate:association <urn:kanonik:cinema:process:4.3:R2> .
+<urn:kanonik:cinema:process:4.3> archimate:association <urn:kanonik:cinema:process:4.3:R3> .
+<urn:kanonik:cinema:process:4.3> archimate:association <urn:kanonik:cinema:process:4.3:R4> .
+<urn:kanonik:cinema:process:4.3> archimate:association <urn:kanonik:cinema:process:4.3:R5> .
+<urn:kanonik:cinema:process:4.3:R1> archimate:association <urn:kanonik:cinema:concept:ersatzplatze> .
+<urn:kanonik:cinema:process:4.3:R1> archimate:association <urn:kanonik:cinema:concept:saalplan> .
+<urn:kanonik:cinema:process:4.3:R1> archimate:association <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:process:4.3:R1> archimate:association <urn:kanonik:cinema:concept:vorstellung> .
+<urn:kanonik:cinema:process:4.3:R1> archimate:association <urn:kanonik:cinema:process:4.3:A1> .
+<urn:kanonik:cinema:process:4.3:R2> archimate:association <urn:kanonik:cinema:concept:angebot-mit-ersatzplatzen> .
+<urn:kanonik:cinema:process:4.3:R2> archimate:association <urn:kanonik:cinema:concept:bestatigungsfrist> .
+<urn:kanonik:cinema:process:4.3:R2> archimate:association <urn:kanonik:cinema:concept:ersatzplatze> .
+<urn:kanonik:cinema:process:4.3:R2> archimate:association <urn:kanonik:cinema:process:4.3:A2> .
+<urn:kanonik:cinema:process:4.3:R2> archimate:association <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:process:4.3:R3> archimate:association <urn:kanonik:cinema:concept:bestatigungsfrist> .
+<urn:kanonik:cinema:process:4.3:R3> archimate:association <urn:kanonik:cinema:concept:ersatzplatze> .
+<urn:kanonik:cinema:process:4.3:R3> archimate:association <urn:kanonik:cinema:process:4.3:A3> .
+<urn:kanonik:cinema:process:4.3:R3> archimate:association <urn:kanonik:cinema:process:4.3:E2> .
+<urn:kanonik:cinema:process:4.3:R3> archimate:association <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:process:4.3:R4> archimate:association <urn:kanonik:cinema:concept:bestatigungsfrist> .
+<urn:kanonik:cinema:process:4.3:R4> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:process:4.3:R4> archimate:association <urn:kanonik:cinema:process:4.3:E1> .
+<urn:kanonik:cinema:process:4.3:R4> archimate:association <urn:kanonik:cinema:process:4.3:E3> .
+<urn:kanonik:cinema:process:4.3:R4> archimate:association <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:process:4.3:R5> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:process:4.3:R5> archimate:association <urn:kanonik:cinema:concept:saalplan> .
+<urn:kanonik:cinema:process:4.3:R5> archimate:association <urn:kanonik:cinema:process:4.3:E3> .
+<urn:kanonik:cinema:process:4.3:R5> archimate:association <urn:kanonik:cinema:process:4.3:E4> .
+<urn:kanonik:cinema:process:4.4> archimate:association <urn:kanonik:cinema:process:4.4:E1> .
+<urn:kanonik:cinema:process:4.4> archimate:association <urn:kanonik:cinema:process:4.4:R1> .
+<urn:kanonik:cinema:process:4.4> archimate:association <urn:kanonik:cinema:process:4.4:R2> .
+<urn:kanonik:cinema:process:4.4> archimate:association <urn:kanonik:cinema:process:4.4:R3> .
+<urn:kanonik:cinema:process:4.4:R1> archimate:association <urn:kanonik:cinema:concept:reservierungsnummer> .
+<urn:kanonik:cinema:process:4.4:R1> archimate:association <urn:kanonik:cinema:concept:saalplan> .
+<urn:kanonik:cinema:process:4.4:R1> archimate:association <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:process:4.4:R1> archimate:association <urn:kanonik:cinema:process:4.4:A1> .
+<urn:kanonik:cinema:process:4.4:R2> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:process:4.4:R2> archimate:association <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:process:4.4:R2> archimate:association <urn:kanonik:cinema:concept:vorstellung> .
+<urn:kanonik:cinema:process:4.4:R3> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:process:4.4:R3> archimate:association <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:process:4.4:R3> archimate:association <urn:kanonik:cinema:process:4.4:E1> .
+<urn:kanonik:cinema:process:4.5> archimate:association <urn:kanonik:cinema:process:4.5:E1> .
+<urn:kanonik:cinema:process:4.5> archimate:association <urn:kanonik:cinema:process:4.5:E2> .
+<urn:kanonik:cinema:process:4.5> archimate:association <urn:kanonik:cinema:process:4.5:R1> .
+<urn:kanonik:cinema:process:4.5> archimate:association <urn:kanonik:cinema:process:4.5:R2> .
+<urn:kanonik:cinema:process:4.5> archimate:association <urn:kanonik:cinema:process:4.5:R3> .
+<urn:kanonik:cinema:process:4.5:R1> archimate:association <urn:kanonik:cinema:concept:kartenpreis> .
+<urn:kanonik:cinema:process:4.5:R1> archimate:association <urn:kanonik:cinema:concept:kundenkonto> .
+<urn:kanonik:cinema:process:4.5:R1> archimate:association <urn:kanonik:cinema:concept:reservierter-sitzplatz> .
+<urn:kanonik:cinema:process:4.5:R1> archimate:association <urn:kanonik:cinema:concept:zahlung> .
+<urn:kanonik:cinema:process:4.5:R1> archimate:association <urn:kanonik:cinema:process:4.5:A1> .
+<urn:kanonik:cinema:process:4.5:R2> archimate:association <urn:kanonik:cinema:concept:abbuchung> .
+<urn:kanonik:cinema:process:4.5:R2> archimate:association <urn:kanonik:cinema:concept:guthaben> .
+<urn:kanonik:cinema:process:4.5:R2> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:process:4.5:R2> archimate:association <urn:kanonik:cinema:concept:stornierung-der-reservierung> .
+<urn:kanonik:cinema:process:4.5:R2> archimate:association <urn:kanonik:cinema:concept:zahlungsfehler> .
+<urn:kanonik:cinema:process:4.5:R2> archimate:association <urn:kanonik:cinema:process:4.5:A2> .
+<urn:kanonik:cinema:process:4.5:R2> archimate:association <urn:kanonik:cinema:process:4.5:E1> .
+<urn:kanonik:cinema:process:4.5:R2> archimate:association <urn:kanonik:cinema:process:4.5:E2> .
+<urn:kanonik:cinema:process:4.5:R3> archimate:association <urn:kanonik:cinema:concept:abbuchung> .
+<urn:kanonik:cinema:process:4.5:R3> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:process:4.5:R3> archimate:association <urn:kanonik:cinema:process:4.5:A1> .
+<urn:kanonik:cinema:process:4.6> archimate:association <urn:kanonik:cinema:process:4.6:E1> .
+<urn:kanonik:cinema:process:4.6> archimate:association <urn:kanonik:cinema:process:4.6:R1> .
+<urn:kanonik:cinema:process:4.6> archimate:association <urn:kanonik:cinema:process:4.6:R2> .
+<urn:kanonik:cinema:process:4.6:R1> archimate:association <urn:kanonik:cinema:concept:qr-code> .
+<urn:kanonik:cinema:process:4.6:R1> archimate:association <urn:kanonik:cinema:concept:reservierungsnummer> .
+<urn:kanonik:cinema:process:4.6:R1> archimate:association <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:process:4.6:R1> archimate:association <urn:kanonik:cinema:concept:ticket> .
+<urn:kanonik:cinema:process:4.6:R1> archimate:association <urn:kanonik:cinema:concept:ticketdienst> .
+<urn:kanonik:cinema:process:4.6:R1> archimate:association <urn:kanonik:cinema:concept:vorstellung> .
+<urn:kanonik:cinema:process:4.6:R1> archimate:association <urn:kanonik:cinema:concept:zahlung> .
+<urn:kanonik:cinema:process:4.6:R1> archimate:association <urn:kanonik:cinema:process:4.6:A1> .
+<urn:kanonik:cinema:process:4.6:R1> archimate:association <urn:kanonik:cinema:process:4.6:E1> .
+<urn:kanonik:cinema:process:4.6:R2> archimate:association <urn:kanonik:cinema:concept:qr-code> .
+<urn:kanonik:cinema:process:4.6:R2> archimate:association <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:process:4.6:R2> archimate:association <urn:kanonik:cinema:concept:ticketdienst> .
+<urn:kanonik:cinema:process:4.6:R2> archimate:association <urn:kanonik:cinema:process:4.6:A2> .
+<urn:kanonik:cinema:process:4.7> archimate:association <urn:kanonik:cinema:process:4.7:E1> .
+<urn:kanonik:cinema:process:4.7> archimate:association <urn:kanonik:cinema:process:4.7:E2> .
+<urn:kanonik:cinema:process:4.7> archimate:association <urn:kanonik:cinema:process:4.7:R1> .
+<urn:kanonik:cinema:process:4.7> archimate:association <urn:kanonik:cinema:process:4.7:R2> .
+<urn:kanonik:cinema:process:4.7> archimate:association <urn:kanonik:cinema:process:4.7:R3> .
+<urn:kanonik:cinema:process:4.7:R1> archimate:association <urn:kanonik:cinema:concept:benachrichtigung> .
+<urn:kanonik:cinema:process:4.7:R1> archimate:association <urn:kanonik:cinema:concept:e-mail-adresse-des-kunden> .
+<urn:kanonik:cinema:process:4.7:R1> archimate:association <urn:kanonik:cinema:concept:ticket> .
+<urn:kanonik:cinema:process:4.7:R1> archimate:association <urn:kanonik:cinema:process:4.7:A1> .
+<urn:kanonik:cinema:process:4.7:R2> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:process:4.7:R2> archimate:association <urn:kanonik:cinema:concept:reservierung-erfolgreich-abgeschlossen> .
+<urn:kanonik:cinema:process:4.7:R2> archimate:association <urn:kanonik:cinema:process:4.7:A1> .
+<urn:kanonik:cinema:process:4.7:R2> archimate:association <urn:kanonik:cinema:process:4.7:E1> .
+<urn:kanonik:cinema:process:4.7:R3> archimate:association <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:process:4.7:R3> archimate:association <urn:kanonik:cinema:concept:sitzplatz-verkauft> .
+<urn:kanonik:cinema:process:4.7:R3> archimate:association <urn:kanonik:cinema:process:4.7:A1> .
+<urn:kanonik:cinema:process:4.7:R3> archimate:association <urn:kanonik:cinema:process:4.7:E2> .
+<urn:kanonik:cinema:process:4.8> archimate:association <urn:kanonik:cinema:process:4.8:E1> .
+<urn:kanonik:cinema:process:4.8> archimate:association <urn:kanonik:cinema:process:4.8:R1> .
+<urn:kanonik:cinema:process:4.8> archimate:association <urn:kanonik:cinema:process:4.8:R2> .
+<urn:kanonik:cinema:process:4.8> archimate:association <urn:kanonik:cinema:process:4.8:R3> .
+<urn:kanonik:cinema:process:4.8:R1> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:process:4.8:R1> archimate:association <urn:kanonik:cinema:concept:saalplan> .
+<urn:kanonik:cinema:process:4.8:R1> archimate:association <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:process:4.8:R1> archimate:association <urn:kanonik:cinema:concept:stornierung> .
+<urn:kanonik:cinema:process:4.8:R1> archimate:association <urn:kanonik:cinema:process:4.8:A1> .
+<urn:kanonik:cinema:process:4.8:R1> archimate:association <urn:kanonik:cinema:process:4.8:E1> .
+<urn:kanonik:cinema:process:4.8:R2> archimate:association <urn:kanonik:cinema:concept:stornierung> .
+<urn:kanonik:cinema:process:4.8:R2> archimate:association <urn:kanonik:cinema:concept:stornierungsgrund> .
+<urn:kanonik:cinema:process:4.8:R2> archimate:association <urn:kanonik:cinema:process:4.8:A2> .
+<urn:kanonik:cinema:process:4.8:R2> archimate:association <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:process:4.8:R3> archimate:association <urn:kanonik:cinema:concept:abbuchung> .
+<urn:kanonik:cinema:process:4.8:R3> archimate:association <urn:kanonik:cinema:concept:betrag> .
+<urn:kanonik:cinema:process:4.8:R3> archimate:association <urn:kanonik:cinema:concept:gutschrift> .
+<urn:kanonik:cinema:process:4.8:R3> archimate:association <urn:kanonik:cinema:concept:kundenkonto> .
+<urn:kanonik:cinema:process:4.8:R3> archimate:association <urn:kanonik:cinema:process:4.8:A3> .
+<urn:kanonik:cinema:process:4.8:R3> archimate:association <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:process:4:R1> archimate:association <urn:kanonik:cinema:concept:reservierungsanfrage> .
+<urn:kanonik:cinema:process:4:R1> archimate:association <urn:kanonik:cinema:process:4:E1> .
+<urn:kanonik:cinema:process:4:R1> archimate:association <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:process:4:R2> archimate:association <urn:kanonik:cinema:concept:reservierung-erfolgreich> .
+<urn:kanonik:cinema:process:4:R2> archimate:association <urn:kanonik:cinema:concept:ticket> .
+<urn:kanonik:cinema:process:4:R2> archimate:association <urn:kanonik:cinema:process:4:E2> .
+<urn:kanonik:cinema:process:4:R3> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:process:4:R3> archimate:association <urn:kanonik:cinema:concept:reservierung-gescheitert> .
+<urn:kanonik:cinema:process:4:R3> archimate:association <urn:kanonik:cinema:process:4:E3> .
+<urn:kanonik:cinema:req:4.1:A1:T1> archimate:association <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:req:4.1:A1:T1> archimate:association <urn:kanonik:cinema:concept:vorstellung> .
+<urn:kanonik:cinema:req:4.1:A1:T1> archimate:association <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:req:4.1:A1:T2> archimate:association <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:req:4.1:A1:T2> archimate:association <urn:kanonik:cinema:concept:vorstellung> .
+<urn:kanonik:cinema:req:4.1:A1:T2> archimate:association <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:req:4.1:A2:T1> archimate:association <urn:kanonik:cinema:concept:kartenreservierung> .
+<urn:kanonik:cinema:req:4.1:A2:T1> archimate:association <urn:kanonik:cinema:concept:reservierungsanfrage> .
+<urn:kanonik:cinema:req:4.1:A2:T1> archimate:association <urn:kanonik:cinema:process:4.1:R1> .
+<urn:kanonik:cinema:req:4.1:A2:T1> archimate:association <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:req:4.1:A2:Z1> archimate:association <urn:kanonik:cinema:concept:reservierungsanfrage> .
+<urn:kanonik:cinema:req:4.1:A2:Z1> archimate:association <urn:kanonik:cinema:process:4.1:R1> .
+<urn:kanonik:cinema:req:4.1:A2:Z1> archimate:association <urn:kanonik:cinema:req:4.1:A2:T1> .
+<urn:kanonik:cinema:req:4.1:A2:Z1> archimate:association <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:req:4.1:A3:Z1> archimate:association <urn:kanonik:cinema:concept:kartenreservierung> .
+<urn:kanonik:cinema:req:4.1:A3:Z1> archimate:association <urn:kanonik:cinema:concept:reservierungsanfrage> .
+<urn:kanonik:cinema:req:4.1:A3:Z1> archimate:association <urn:kanonik:cinema:concept:reservierungsnummer> .
+<urn:kanonik:cinema:req:4.1:A3:Z1> archimate:association <urn:kanonik:cinema:process:4.1:R2> .
+<urn:kanonik:cinema:req:4.1:A4:T1> archimate:association <urn:kanonik:cinema:concept:kartenreservierung> .
+<urn:kanonik:cinema:req:4.1:A4:T1> archimate:association <urn:kanonik:cinema:concept:reservierungsanfrage> .
+<urn:kanonik:cinema:req:4.1:A4:T1> archimate:association <urn:kanonik:cinema:concept:reservierungsnummer> .
+<urn:kanonik:cinema:req:4.1:A4:T1> archimate:association <urn:kanonik:cinema:process:4.1:R3> .
+<urn:kanonik:cinema:req:4.1:A4:T1> archimate:association <urn:kanonik:cinema:req:4.1:A4:Z1> .
+<urn:kanonik:cinema:req:4.1:A4:Z1> archimate:association <urn:kanonik:cinema:concept:kartenreservierung> .
+<urn:kanonik:cinema:req:4.1:A4:Z1> archimate:association <urn:kanonik:cinema:concept:reservierungsanfrage> .
+<urn:kanonik:cinema:req:4.1:A4:Z1> archimate:association <urn:kanonik:cinema:concept:reservierungsnummer> .
+<urn:kanonik:cinema:req:4.1:A4:Z1> archimate:association <urn:kanonik:cinema:process:4.1:R3> .
+<urn:kanonik:cinema:req:4.1:A4:Z1> archimate:association <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:req:4.1:A5:Z1> archimate:association <urn:kanonik:cinema:concept:kartenreservierung> .
+<urn:kanonik:cinema:req:4.1:A5:Z1> archimate:association <urn:kanonik:cinema:concept:reservierungsanfrage> .
+<urn:kanonik:cinema:req:4.1:A5:Z1> archimate:association <urn:kanonik:cinema:process:4.1:R4> .
+<urn:kanonik:cinema:req:4.1:A5:Z1> archimate:association <urn:kanonik:cinema:process:4.1:R5> .
+<urn:kanonik:cinema:req:4.2:A1:Z1> archimate:association <urn:kanonik:cinema:concept:saalplan> .
+<urn:kanonik:cinema:req:4.2:A1:Z1> archimate:association <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:req:4.2:A1:Z1> archimate:association <urn:kanonik:cinema:concept:verfugbarkeitsprufung> .
+<urn:kanonik:cinema:req:4.2:A1:Z1> archimate:association <urn:kanonik:cinema:concept:vorstellung> .
+<urn:kanonik:cinema:req:4.2:A1:Z1> archimate:association <urn:kanonik:cinema:process:4.2:R1> .
+<urn:kanonik:cinema:req:4.2:A2:Z1> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:req:4.2:A2:Z1> archimate:association <urn:kanonik:cinema:concept:saalplan> .
+<urn:kanonik:cinema:req:4.2:A2:Z1> archimate:association <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:req:4.2:A2:Z1> archimate:association <urn:kanonik:cinema:concept:verfugbarkeitsprufung> .
+<urn:kanonik:cinema:req:4.2:A2:Z1> archimate:association <urn:kanonik:cinema:process:4.2:R2> .
+<urn:kanonik:cinema:req:4.2:A3:Z1> archimate:association <urn:kanonik:cinema:concept:ersatzplatze> .
+<urn:kanonik:cinema:req:4.2:A3:Z1> archimate:association <urn:kanonik:cinema:concept:saalplan> .
+<urn:kanonik:cinema:req:4.2:A3:Z1> archimate:association <urn:kanonik:cinema:concept:verfugbarkeitsprufung> .
+<urn:kanonik:cinema:req:4.2:A3:Z1> archimate:association <urn:kanonik:cinema:process:4.2:R3> .
+<urn:kanonik:cinema:req:4.3:A1:Z1> archimate:association <urn:kanonik:cinema:concept:ersatzplatze> .
+<urn:kanonik:cinema:req:4.3:A1:Z1> archimate:association <urn:kanonik:cinema:concept:saalplan> .
+<urn:kanonik:cinema:req:4.3:A1:Z1> archimate:association <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:req:4.3:A1:Z1> archimate:association <urn:kanonik:cinema:concept:vorstellung> .
+<urn:kanonik:cinema:req:4.3:A1:Z1> archimate:association <urn:kanonik:cinema:process:4.3:R1> .
+<urn:kanonik:cinema:req:4.3:A2:T1> archimate:association <urn:kanonik:cinema:concept:angebot-mit-ersatzplatzen> .
+<urn:kanonik:cinema:req:4.3:A2:T1> archimate:association <urn:kanonik:cinema:concept:bestatigungsfrist> .
+<urn:kanonik:cinema:req:4.3:A2:T1> archimate:association <urn:kanonik:cinema:concept:saalplan> .
+<urn:kanonik:cinema:req:4.3:A2:T1> archimate:association <urn:kanonik:cinema:process:4.3:R2> .
+<urn:kanonik:cinema:req:4.3:A2:T1> archimate:association <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:req:4.3:A2:Z1> archimate:association <urn:kanonik:cinema:concept:angebot-mit-ersatzplatzen> .
+<urn:kanonik:cinema:req:4.3:A2:Z1> archimate:association <urn:kanonik:cinema:concept:bestatigungsfrist> .
+<urn:kanonik:cinema:req:4.3:A2:Z1> archimate:association <urn:kanonik:cinema:process:4.3:R2> .
+<urn:kanonik:cinema:req:4.3:A2:Z1> archimate:association <urn:kanonik:cinema:req:4.3:A2:T1> .
+<urn:kanonik:cinema:req:4.3:A2:Z1> archimate:association <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:req:4.3:A3:T1> archimate:association <urn:kanonik:cinema:concept:angebot-mit-ersatzplatzen> .
+<urn:kanonik:cinema:req:4.3:A3:T1> archimate:association <urn:kanonik:cinema:concept:bestatigungsfrist> .
+<urn:kanonik:cinema:req:4.3:A3:T1> archimate:association <urn:kanonik:cinema:concept:ersatzplatze> .
+<urn:kanonik:cinema:req:4.3:A3:T1> archimate:association <urn:kanonik:cinema:process:4.3:R3> .
+<urn:kanonik:cinema:req:4.3:A3:T1> archimate:association <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:req:4.4:A1:Z1> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:req:4.4:A1:Z1> archimate:association <urn:kanonik:cinema:concept:reservierungsnummer> .
+<urn:kanonik:cinema:req:4.4:A1:Z1> archimate:association <urn:kanonik:cinema:concept:saalplan> .
+<urn:kanonik:cinema:req:4.4:A1:Z1> archimate:association <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:req:4.4:A1:Z1> archimate:association <urn:kanonik:cinema:process:4.4:R1> .
+<urn:kanonik:cinema:req:4.4:A1:Z1> archimate:association <urn:kanonik:cinema:process:4.4:R2> .
+<urn:kanonik:cinema:req:4.4:A1:Z1> archimate:association <urn:kanonik:cinema:process:4.4:R3> .
+<urn:kanonik:cinema:req:4.5:A1:Z1> archimate:association <urn:kanonik:cinema:concept:abbuchung> .
+<urn:kanonik:cinema:req:4.5:A1:Z1> archimate:association <urn:kanonik:cinema:concept:guthaben> .
+<urn:kanonik:cinema:req:4.5:A1:Z1> archimate:association <urn:kanonik:cinema:concept:kartenpreis> .
+<urn:kanonik:cinema:req:4.5:A1:Z1> archimate:association <urn:kanonik:cinema:concept:kundenkonto> .
+<urn:kanonik:cinema:req:4.5:A1:Z1> archimate:association <urn:kanonik:cinema:concept:reservierter-sitzplatz> .
+<urn:kanonik:cinema:req:4.5:A1:Z1> archimate:association <urn:kanonik:cinema:process:4.5:R1> .
+<urn:kanonik:cinema:req:4.5:A1:Z1> archimate:association <urn:kanonik:cinema:process:4.5:R3> .
+<urn:kanonik:cinema:req:4.5:A1:Z1> archimate:association <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:req:4.5:A1:Z2> archimate:association <urn:kanonik:cinema:concept:abbuchung> .
+<urn:kanonik:cinema:req:4.5:A1:Z2> archimate:association <urn:kanonik:cinema:concept:guthaben> .
+<urn:kanonik:cinema:req:4.5:A1:Z2> archimate:association <urn:kanonik:cinema:concept:kartenpreis> .
+<urn:kanonik:cinema:req:4.5:A1:Z2> archimate:association <urn:kanonik:cinema:concept:kundenkonto> .
+<urn:kanonik:cinema:req:4.5:A1:Z2> archimate:association <urn:kanonik:cinema:concept:reservierter-sitzplatz> .
+<urn:kanonik:cinema:req:4.5:A1:Z2> archimate:association <urn:kanonik:cinema:process:4.5:R1> .
+<urn:kanonik:cinema:req:4.5:A1:Z2> archimate:association <urn:kanonik:cinema:process:4.5:R3> .
+<urn:kanonik:cinema:req:4.5:A1:Z2> archimate:association <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:req:4.5:A2:Z1> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:req:4.5:A2:Z1> archimate:association <urn:kanonik:cinema:concept:stornierung-der-reservierung> .
+<urn:kanonik:cinema:req:4.5:A2:Z1> archimate:association <urn:kanonik:cinema:concept:zahlungsfehler> .
+<urn:kanonik:cinema:req:4.5:A2:Z1> archimate:association <urn:kanonik:cinema:process:4.5:R2> .
+<urn:kanonik:cinema:req:4.5:A2:Z1> archimate:association <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:req:4.7:A1:T1> archimate:association <urn:kanonik:cinema:concept:benachrichtigung> .
+<urn:kanonik:cinema:req:4.7:A1:T1> archimate:association <urn:kanonik:cinema:concept:e-mail-adresse-des-kunden> .
+<urn:kanonik:cinema:req:4.7:A1:T1> archimate:association <urn:kanonik:cinema:concept:ticket> .
+<urn:kanonik:cinema:req:4.7:A1:T1> archimate:association <urn:kanonik:cinema:process:4.7:R1> .
+<urn:kanonik:cinema:req:4.7:A1:T1> archimate:association <urn:kanonik:cinema:process:4.7:R2> .
+<urn:kanonik:cinema:req:4.7:A1:T1> archimate:association <urn:kanonik:cinema:process:4.7:R3> .
+<urn:kanonik:cinema:req:4.7:A1:T1> archimate:association <urn:kanonik:cinema:req:4.7:A1:Z1> .
+<urn:kanonik:cinema:req:4.7:A1:Z1> archimate:association <urn:kanonik:cinema:concept:benachrichtigung> .
+<urn:kanonik:cinema:req:4.7:A1:Z1> archimate:association <urn:kanonik:cinema:concept:e-mail-adresse-des-kunden> .
+<urn:kanonik:cinema:req:4.7:A1:Z1> archimate:association <urn:kanonik:cinema:concept:ticket> .
+<urn:kanonik:cinema:req:4.7:A1:Z1> archimate:association <urn:kanonik:cinema:process:4.7:R1> .
+<urn:kanonik:cinema:req:4.7:A1:Z1> archimate:association <urn:kanonik:cinema:process:4.7:R2> .
+<urn:kanonik:cinema:req:4.7:A1:Z1> archimate:association <urn:kanonik:cinema:process:4.7:R3> .
+<urn:kanonik:cinema:req:4.7:A1:Z1> archimate:association <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:req:4.8:A1:Z1> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:req:4.8:A1:Z1> archimate:association <urn:kanonik:cinema:concept:saalplan> .
+<urn:kanonik:cinema:req:4.8:A1:Z1> archimate:association <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:req:4.8:A1:Z1> archimate:association <urn:kanonik:cinema:concept:stornierung> .
+<urn:kanonik:cinema:req:4.8:A1:Z1> archimate:association <urn:kanonik:cinema:process:4.8:R1> .
+<urn:kanonik:cinema:req:4.8:A2:T1> archimate:association <urn:kanonik:cinema:concept:saalplan> .
+<urn:kanonik:cinema:req:4.8:A2:T1> archimate:association <urn:kanonik:cinema:concept:stornierung> .
+<urn:kanonik:cinema:req:4.8:A2:T1> archimate:association <urn:kanonik:cinema:concept:stornierungsgrund> .
+<urn:kanonik:cinema:req:4.8:A2:T1> archimate:association <urn:kanonik:cinema:process:4.8:R2> .
+<urn:kanonik:cinema:req:4.8:A2:T1> archimate:association <urn:kanonik:cinema:req:4.8:A2:Z1> .
+<urn:kanonik:cinema:req:4.8:A2:Z1> archimate:association <urn:kanonik:cinema:concept:saalplan> .
+<urn:kanonik:cinema:req:4.8:A2:Z1> archimate:association <urn:kanonik:cinema:concept:stornierung> .
+<urn:kanonik:cinema:req:4.8:A2:Z1> archimate:association <urn:kanonik:cinema:concept:stornierungsgrund> .
+<urn:kanonik:cinema:req:4.8:A2:Z1> archimate:association <urn:kanonik:cinema:process:4.8:R2> .
+<urn:kanonik:cinema:req:4.8:A2:Z1> archimate:association <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:req:4.8:A3:Z1> archimate:association <urn:kanonik:cinema:concept:abbuchung> .
+<urn:kanonik:cinema:req:4.8:A3:Z1> archimate:association <urn:kanonik:cinema:concept:betrag> .
+<urn:kanonik:cinema:req:4.8:A3:Z1> archimate:association <urn:kanonik:cinema:concept:gutschrift> .
+<urn:kanonik:cinema:req:4.8:A3:Z1> archimate:association <urn:kanonik:cinema:concept:kundenkonto> .
+<urn:kanonik:cinema:req:4.8:A3:Z1> archimate:association <urn:kanonik:cinema:concept:saalplan> .
+<urn:kanonik:cinema:req:4.8:A3:Z1> archimate:association <urn:kanonik:cinema:process:4.8:R3> .
+<urn:kanonik:cinema:req:A-4.1-1> archimate:association <urn:kanonik:cinema:concept:reservierungsanfrage> .
+<urn:kanonik:cinema:req:A-4.1-1> archimate:association <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:req:A-4.1-1> archimate:association <urn:kanonik:cinema:concept:vorstellung> .
+<urn:kanonik:cinema:req:A-4.1-2> archimate:association <urn:kanonik:cinema:concept:kartenreservierung> .
+<urn:kanonik:cinema:req:A-4.1-2> archimate:association <urn:kanonik:cinema:concept:reservierungsnummer> .
+<urn:kanonik:cinema:req:A-4.2-1> archimate:association <urn:kanonik:cinema:concept:saalplan> .
+<urn:kanonik:cinema:req:A-4.2-1> archimate:association <urn:kanonik:cinema:concept:vorstellung> .
+<urn:kanonik:cinema:req:A-4.2-2> archimate:association <urn:kanonik:cinema:concept:ersatzplatze> .
+<urn:kanonik:cinema:req:A-4.3-1> archimate:association <urn:kanonik:cinema:concept:saalplan> .
+<urn:kanonik:cinema:req:A-4.3-1> archimate:association <urn:kanonik:cinema:concept:vorstellung> .
+<urn:kanonik:cinema:req:A-4.3-2> archimate:association <urn:kanonik:cinema:concept:bestatigungsfrist> .
+<urn:kanonik:cinema:req:A-4.3-3> archimate:association <urn:kanonik:cinema:concept:bestatigungsfrist> .
+<urn:kanonik:cinema:req:A-4.3-3> archimate:association <urn:kanonik:cinema:concept:ersatzplatze> .
+<urn:kanonik:cinema:req:A-4.3-4> archimate:association <urn:kanonik:cinema:concept:bestatigungsfrist> .
+<urn:kanonik:cinema:req:A-4.3-4> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:req:A-4.3-5> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:req:A-4.4-1> archimate:association <urn:kanonik:cinema:concept:reservierungsnummer> .
+<urn:kanonik:cinema:req:A-4.4-1> archimate:association <urn:kanonik:cinema:concept:saalplan> .
+<urn:kanonik:cinema:req:A-4.4-2> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:req:A-4.4-2> archimate:association <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:req:A-4.4-2> archimate:association <urn:kanonik:cinema:concept:vorstellung> .
+<urn:kanonik:cinema:req:A-4.5-1> archimate:association <urn:kanonik:cinema:concept:kundenkonto> .
+<urn:kanonik:cinema:req:A-4.5-1> archimate:association <urn:kanonik:cinema:concept:zahlung> .
+<urn:kanonik:cinema:req:A-4.5-2> archimate:association <urn:kanonik:cinema:concept:guthaben> .
+<urn:kanonik:cinema:req:A-4.5-2> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:req:A-4.5-2> archimate:association <urn:kanonik:cinema:concept:zahlungsfehler> .
+<urn:kanonik:cinema:req:A-4.5-3> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:req:A-4.6-1> archimate:association <urn:kanonik:cinema:concept:qr-code> .
+<urn:kanonik:cinema:req:A-4.6-1> archimate:association <urn:kanonik:cinema:concept:reservierungsnummer> .
+<urn:kanonik:cinema:req:A-4.6-1> archimate:association <urn:kanonik:cinema:concept:ticket> .
+<urn:kanonik:cinema:req:A-4.6-1> archimate:association <urn:kanonik:cinema:concept:ticketdienst> .
+<urn:kanonik:cinema:req:A-4.6-1> archimate:association <urn:kanonik:cinema:concept:vorstellung> .
+<urn:kanonik:cinema:req:A-4.6-1> archimate:association <urn:kanonik:cinema:concept:zahlung> .
+<urn:kanonik:cinema:req:A-4.6-2> archimate:association <urn:kanonik:cinema:concept:qr-code> .
+<urn:kanonik:cinema:req:A-4.6-2> archimate:association <urn:kanonik:cinema:concept:sitzplatz> .
+<urn:kanonik:cinema:req:A-4.7-1> archimate:association <urn:kanonik:cinema:concept:benachrichtigung> .
+<urn:kanonik:cinema:req:A-4.7-1> archimate:association <urn:kanonik:cinema:concept:ticket> .
+<urn:kanonik:cinema:req:A-4.7-2> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:req:A-4.8-1> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:req:A-4.8-1> archimate:association <urn:kanonik:cinema:concept:saalplan> .
+<urn:kanonik:cinema:req:A-4.8-3> archimate:association <urn:kanonik:cinema:concept:kundenkonto> .
+<urn:kanonik:cinema:req:A-6-1> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:req:A-6-1> archimate:association <urn:kanonik:cinema:concept:reservierungsnummer> .
+<urn:kanonik:cinema:req:A-7-1> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:req:A-8-1> archimate:association <urn:kanonik:cinema:concept:reservierung> .
+<urn:kanonik:cinema:req:A-8-1> archimate:association <urn:kanonik:cinema:concept:reservierungsnummer> .
+<urn:kanonik:cinema:req:A-8-2> archimate:association <urn:kanonik:cinema:concept:zahlungsfehler> .
+<urn:kanonik:cinema:req:A-8-3> archimate:association <urn:kanonik:cinema:concept:kartenreservierung> .
+<urn:kanonik:cinema:process:4.1> archimate:composition <urn:kanonik:cinema:process:4.1:A1> .
+<urn:kanonik:cinema:process:4.1> archimate:composition <urn:kanonik:cinema:process:4.1:A2> .
+<urn:kanonik:cinema:process:4.1> archimate:composition <urn:kanonik:cinema:process:4.1:A3> .
+<urn:kanonik:cinema:process:4.1> archimate:composition <urn:kanonik:cinema:process:4.1:A4> .
+<urn:kanonik:cinema:process:4.1> archimate:composition <urn:kanonik:cinema:process:4.1:A5> .
+<urn:kanonik:cinema:process:4.2> archimate:composition <urn:kanonik:cinema:process:4.2:A1> .
+<urn:kanonik:cinema:process:4.2> archimate:composition <urn:kanonik:cinema:process:4.2:A2> .
+<urn:kanonik:cinema:process:4.2> archimate:composition <urn:kanonik:cinema:process:4.2:A3> .
+<urn:kanonik:cinema:process:4.3> archimate:composition <urn:kanonik:cinema:process:4.3:A1> .
+<urn:kanonik:cinema:process:4.3> archimate:composition <urn:kanonik:cinema:process:4.3:A2> .
+<urn:kanonik:cinema:process:4.3> archimate:composition <urn:kanonik:cinema:process:4.3:A3> .
+<urn:kanonik:cinema:process:4.4> archimate:composition <urn:kanonik:cinema:process:4.4:A1> .
+<urn:kanonik:cinema:process:4.5> archimate:composition <urn:kanonik:cinema:process:4.5:A1> .
+<urn:kanonik:cinema:process:4.5> archimate:composition <urn:kanonik:cinema:process:4.5:A2> .
+<urn:kanonik:cinema:process:4.6> archimate:composition <urn:kanonik:cinema:process:4.6:A1> .
+<urn:kanonik:cinema:process:4.6> archimate:composition <urn:kanonik:cinema:process:4.6:A2> .
+<urn:kanonik:cinema:process:4.7> archimate:composition <urn:kanonik:cinema:process:4.7:A1> .
+<urn:kanonik:cinema:process:4.8> archimate:composition <urn:kanonik:cinema:process:4.8:A1> .
+<urn:kanonik:cinema:process:4.8> archimate:composition <urn:kanonik:cinema:process:4.8:A2> .
+<urn:kanonik:cinema:process:4.8> archimate:composition <urn:kanonik:cinema:process:4.8:A3> .
+<urn:kanonik:cinema:process:4.1:A2> archimate:flow <urn:kanonik:cinema:concept:kartenreservierung> .
+<urn:kanonik:cinema:process:4.1:A4> archimate:flow <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:process:4.3:A1> archimate:flow <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:process:4.7:A1> archimate:flow <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:process:4.8:A2> archimate:flow <urn:kanonik:cinema:role:kunde> .
+<urn:kanonik:cinema:concept:kartenreservierung> archimate:realization <urn:kanonik:cinema:am:ex:4-1:dienst:ablehnung-unzulassiger-reservierungsanfragen> .
+<urn:kanonik:cinema:concept:kartenreservierung> archimate:realization <urn:kanonik:cinema:am:ex:4-1:dienst:bestatigung-des-eingangs-mit-reservierungsnummer> .
+<urn:kanonik:cinema:concept:kartenreservierung> archimate:realization <urn:kanonik:cinema:am:ex:4-1:dienst:entgegennahme-von-reservierungsanfragen> .
+<urn:kanonik:cinema:concept:saalplan> archimate:realization <urn:kanonik:cinema:am:ex:4-2:dienst:prufung-der-verfugbarkeit-gewunschter-sitzplatze> .
+<urn:kanonik:cinema:concept:saalplan> archimate:realization <urn:kanonik:cinema:am:ex:4-3:dienst:suche-nach-ersatzplatzen> .
+<urn:kanonik:cinema:concept:saalplan> archimate:realization <urn:kanonik:cinema:am:ex:4-4:dienst:reservierung-von-sitzplatzen-fur-die-reservierungsnummer> .
+<urn:kanonik:cinema:concept:saalplan> archimate:realization <urn:kanonik:cinema:am:ex:4-8:dienst:freigabe-reservierter-sitzplatze-bei-stornierung> .
+<urn:kanonik:cinema:process:4.1:A1> archimate:realization <urn:kanonik:cinema:req:4.1:A1:T1> .
+<urn:kanonik:cinema:process:4.1:A1> archimate:realization <urn:kanonik:cinema:req:4.1:A1:T2> .
+<urn:kanonik:cinema:process:4.1:A2> archimate:realization <urn:kanonik:cinema:req:4.1:A2:T1> .
+<urn:kanonik:cinema:process:4.1:A2> archimate:realization <urn:kanonik:cinema:req:4.1:A2:Z1> .
+<urn:kanonik:cinema:process:4.1:A3> archimate:realization <urn:kanonik:cinema:req:4.1:A3:Z1> .
+<urn:kanonik:cinema:process:4.1:A4> archimate:realization <urn:kanonik:cinema:req:4.1:A4:T1> .
+<urn:kanonik:cinema:process:4.1:A4> archimate:realization <urn:kanonik:cinema:req:4.1:A4:Z1> .
+<urn:kanonik:cinema:process:4.1:A5> archimate:realization <urn:kanonik:cinema:req:4.1:A5:Z1> .
+<urn:kanonik:cinema:process:4.2:A1> archimate:realization <urn:kanonik:cinema:req:4.2:A1:Z1> .
+<urn:kanonik:cinema:process:4.2:A2> archimate:realization <urn:kanonik:cinema:req:4.2:A2:Z1> .
+<urn:kanonik:cinema:process:4.2:A3> archimate:realization <urn:kanonik:cinema:req:4.2:A3:Z1> .
+<urn:kanonik:cinema:process:4.3:A1> archimate:realization <urn:kanonik:cinema:req:4.3:A1:Z1> .
+<urn:kanonik:cinema:process:4.3:A2> archimate:realization <urn:kanonik:cinema:req:4.3:A2:T1> .
+<urn:kanonik:cinema:process:4.3:A2> archimate:realization <urn:kanonik:cinema:req:4.3:A2:Z1> .
+<urn:kanonik:cinema:process:4.3:A3> archimate:realization <urn:kanonik:cinema:req:4.3:A3:T1> .
+<urn:kanonik:cinema:process:4.4:A1> archimate:realization <urn:kanonik:cinema:req:4.4:A1:Z1> .
+<urn:kanonik:cinema:process:4.5:A1> archimate:realization <urn:kanonik:cinema:req:4.5:A1:Z1> .
+<urn:kanonik:cinema:process:4.5:A1> archimate:realization <urn:kanonik:cinema:req:4.5:A1:Z2> .
+<urn:kanonik:cinema:process:4.5:A2> archimate:realization <urn:kanonik:cinema:req:4.5:A2:Z1> .
+<urn:kanonik:cinema:process:4.7:A1> archimate:realization <urn:kanonik:cinema:req:4.7:A1:T1> .
+<urn:kanonik:cinema:process:4.7:A1> archimate:realization <urn:kanonik:cinema:req:4.7:A1:Z1> .
+<urn:kanonik:cinema:process:4.8:A1> archimate:realization <urn:kanonik:cinema:req:4.8:A1:Z1> .
+<urn:kanonik:cinema:process:4.8:A2> archimate:realization <urn:kanonik:cinema:req:4.8:A2:T1> .
+<urn:kanonik:cinema:process:4.8:A2> archimate:realization <urn:kanonik:cinema:req:4.8:A2:Z1> .
+<urn:kanonik:cinema:process:4.8:A3> archimate:realization <urn:kanonik:cinema:req:4.8:A3:Z1> .
+<urn:kanonik:cinema:concept:guthaben> archimate:specialization <urn:kanonik:cinema:concept:kundenkonto> .
+<urn:kanonik:cinema:concept:reservierungsnummer> archimate:specialization <urn:kanonik:cinema:concept:ticket> .
+<urn:kanonik:cinema:concept:stornierungsgrund> archimate:specialization <urn:kanonik:cinema:concept:stornierung> .
+<urn:kanonik:cinema:process:4.1:A1> archimate:triggering <urn:kanonik:cinema:process:4.1:A2> .
+<urn:kanonik:cinema:process:4.1:A2> archimate:triggering <urn:kanonik:cinema:process:4.1:E1> .
+<urn:kanonik:cinema:process:4.1:A3> archimate:triggering <urn:kanonik:cinema:process:4.1:A4> .
+<urn:kanonik:cinema:process:4.1:A4> archimate:triggering <urn:kanonik:cinema:process:4.1:E3> .
+<urn:kanonik:cinema:process:4.1:A5> archimate:triggering <urn:kanonik:cinema:process:4.1:E2> .
+<urn:kanonik:cinema:process:4.1:E1> archimate:triggering <urn:kanonik:cinema:process:4.1:A3> .
+<urn:kanonik:cinema:process:4.1:E1> archimate:triggering <urn:kanonik:cinema:process:4.1:A5> .
+<urn:kanonik:cinema:process:4.2:A1> archimate:triggering <urn:kanonik:cinema:process:4.2:A2> .
+<urn:kanonik:cinema:process:4.2:A1> archimate:triggering <urn:kanonik:cinema:process:4.2:A3> .
+<urn:kanonik:cinema:process:4.3:A1> archimate:triggering <urn:kanonik:cinema:process:4.3:A2> .
+<urn:kanonik:cinema:process:4.3:A1> archimate:triggering <urn:kanonik:cinema:process:4.3:E4> .
+<urn:kanonik:cinema:process:4.3:A2> archimate:triggering <urn:kanonik:cinema:process:4.3:A3> .
+<urn:kanonik:cinema:process:4.3:A2> archimate:triggering <urn:kanonik:cinema:process:4.3:E1> .
+<urn:kanonik:cinema:process:4.3:A2> archimate:triggering <urn:kanonik:cinema:process:4.3:E3> .
+<urn:kanonik:cinema:process:4.3:A3> archimate:triggering <urn:kanonik:cinema:process:4.3:E2> .
+<urn:kanonik:cinema:process:4.3:E1> archimate:triggering <urn:kanonik:cinema:process:4.3:E3> .
+<urn:kanonik:cinema:process:4.3:E4> archimate:triggering <urn:kanonik:cinema:process:4.3:E3> .
+<urn:kanonik:cinema:process:4.4:E1> archimate:triggering <urn:kanonik:cinema:process:4.4:A1> .
+<urn:kanonik:cinema:process:4.5:A1> archimate:triggering <urn:kanonik:cinema:process:4.5:E1> .
+<urn:kanonik:cinema:process:4.5:A2> archimate:triggering <urn:kanonik:cinema:process:4.5:E2> .
+<urn:kanonik:cinema:process:4.5:E1> archimate:triggering <urn:kanonik:cinema:process:4.5:A2> .
+<urn:kanonik:cinema:process:4.6:E1> archimate:triggering <urn:kanonik:cinema:process:4.6:A1> .
+<urn:kanonik:cinema:process:4.7:A1> archimate:triggering <urn:kanonik:cinema:process:4.7:E1> .
+<urn:kanonik:cinema:process:4.7:E1> archimate:triggering <urn:kanonik:cinema:process:4.7:E2> .
+<urn:kanonik:cinema:process:4.8:E1> archimate:triggering <urn:kanonik:cinema:process:4.8:A1> .
+<urn:kanonik:cinema:process:4.8:E1> archimate:triggering <urn:kanonik:cinema:process:4.8:A2> .
+<urn:kanonik:cinema:process:4.8:E1> archimate:triggering <urn:kanonik:cinema:process:4.8:A3> .

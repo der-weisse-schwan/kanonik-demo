@@ -1,1 +1,1 @@
-{"id":"fr_fachkonzept:bpmn:fr-zahlung-einziehen/EB_A1","artifacts":[],"tests":[]}
+{"id":"fr_fachkonzept:bpmn:fr-zahlung-einziehen/EB_A1","diagrams":[{"process":{"id":"fr_fachkonzept:bpmn:fr-zahlung-einziehen","labels":["BpmnProcess"],"label":"BpmnProcess","type":null,"title":"Zahlung einziehen","titleEn":null,"editable":false,"doc":"fr_fachkonzept","lang":"de"},"processId":"fr-zahlung-einziehen","file":"fr-zahlung-einziehen.bpmn","prefix":"fr_fachkonzept:bpmn:","elementIds":["EB_A1"],"elements":[{"id":"EB_A1","name":"Antwort der Zahlung oder Frist","decision":null}]}]}

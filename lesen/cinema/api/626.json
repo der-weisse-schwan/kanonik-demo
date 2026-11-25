@@ -1,1 +1,1 @@
-{"id":"ci_fachkonzept:bpmn:ci-ticket-versenden/A1","artifacts":[],"tests":[]}
+{"id":"ci_fachkonzept:bpmn:ci-ticket-versenden/A1","diagrams":[{"process":{"id":"ci_fachkonzept:bpmn:ci-ticket-versenden","labels":["BpmnProcess"],"label":"BpmnProcess","type":null,"title":"Ticket versenden","titleEn":null,"editable":false,"doc":"ci_fachkonzept","lang":"de"},"processId":"ci-ticket-versenden","file":"ci-ticket-versenden.bpmn","prefix":"ci_fachkonzept:bpmn:","elementIds":["A1"],"elements":[{"id":"A1","name":"Ticket an den Kunden senden","decision":null}]}]}

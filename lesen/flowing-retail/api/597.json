@@ -1,1 +1,1 @@
-{"id":"fr_fachkonzept:req:4.6:A2:Z1","artifacts":[],"tests":[]}
+{"id":"fr_fachkonzept:req:4.6:A2:Z1","diagrams":[{"process":{"id":"fr_fachkonzept:bpmn:fr-bestellung-stornieren","labels":["BpmnProcess"],"label":"BpmnProcess","type":null,"title":"Bestellung stornieren","titleEn":null,"editable":false,"doc":"fr_fachkonzept","lang":"de"},"processId":"fr-bestellung-stornieren","file":"fr-bestellung-stornieren.bpmn","prefix":"fr_fachkonzept:bpmn:","elementIds":["A2"],"elements":[{"id":"A2","name":"Betrag dem Kundenguthaben gutschreiben","decision":null}]}]}

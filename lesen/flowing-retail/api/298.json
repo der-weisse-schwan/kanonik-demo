@@ -1,1 +1,1 @@
-{"id":"fr_fachkonzept:process:4.3:A1","artifacts":[],"tests":[]}
+{"id":"fr_fachkonzept:process:4.3:A1","diagrams":[{"process":{"id":"fr_fachkonzept:bpmn:fr-zahlung-einziehen","labels":["BpmnProcess"],"label":"BpmnProcess","type":null,"title":"Zahlung einziehen","titleEn":null,"editable":false,"doc":"fr_fachkonzept","lang":"de"},"processId":"fr-zahlung-einziehen","file":"fr-zahlung-einziehen.bpmn","prefix":"fr_fachkonzept:bpmn:","elementIds":["A1"],"elements":[{"id":"A1","name":"Zahlung einziehen (Kommando)","decision":null}]}]}

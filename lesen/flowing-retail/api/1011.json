@@ -1,1 +1,1 @@
-{"id":"fr_fachkonzept:bpmn:fr-waren-versenden/A1","artifacts":[],"tests":[]}
+{"id":"fr_fachkonzept:bpmn:fr-waren-versenden/A1","diagrams":[{"process":{"id":"fr_fachkonzept:bpmn:fr-waren-versenden","labels":["BpmnProcess"],"label":"BpmnProcess","type":null,"title":"Waren versenden","titleEn":null,"editable":false,"doc":"fr_fachkonzept","lang":"de"},"processId":"fr-waren-versenden","file":"fr-waren-versenden.bpmn","prefix":"fr_fachkonzept:bpmn:","elementIds":["A1"],"elements":[{"id":"A1","name":"Waren versenden (Kommando)","decision":null}]}]}

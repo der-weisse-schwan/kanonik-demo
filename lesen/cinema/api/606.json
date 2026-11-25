@@ -1,1 +1,1 @@
-{"id":"ci_fachkonzept:bpmn:ci-bezahlen/E_bezahlt","artifacts":[],"tests":[]}
+{"id":"ci_fachkonzept:bpmn:ci-bezahlen/E_bezahlt","diagrams":[{"process":{"id":"ci_fachkonzept:bpmn:ci-bezahlen","labels":["BpmnProcess"],"label":"BpmnProcess","type":null,"title":"Bezahlen","titleEn":null,"editable":false,"doc":"ci_fachkonzept","lang":"de"},"processId":"ci-bezahlen","file":"ci-bezahlen.bpmn","prefix":"ci_fachkonzept:bpmn:","elementIds":["E_bezahlt"],"elements":[{"id":"E_bezahlt","name":"bezahlt","decision":null}]}]}

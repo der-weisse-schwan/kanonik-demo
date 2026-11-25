@@ -667,3 +667,23 @@ button.imp-start { padding: 0 6px; min-height: 0; line-height: 1.4; font-size: 1
 .baum-check { list-style: "☐  "; padding-left: 22px; margin: 2px 0 6px; }
 .baum-check li.baum-unter { list-style: "–  "; margin-left: 18px; }
 .am-dateien { list-style: none; padding: 0; margin: 6px 0 0; display: grid; gap: 6px; }
+
+/* BPMN als Graph: Zuordnung je Element (Grund, Sicherheit, Entscheidung) */
+.gg-zuordnung { margin: .4rem 0; padding: .35rem .5rem; border-left: 3px solid var(--line, #ccc); }
+.gg-zuordnung .el-bar { margin-top: .3rem; display: flex; flex-wrap: wrap; gap: .3rem; align-items: center; }
+.gg-zuordnung select { max-width: 22rem; }
+.pill.gg-sicher-hoch, .pill.gg-sicher-bestaetigt { background: #dff0d8; color: #1b5e20; }
+.pill.gg-sicher-mittel { background: #fff3c4; color: #6d4c00; }
+.pill.gg-sicher-niedrig { background: #f8d7da; color: #8a1c1c; }
+.gg-struktur { margin: .3rem 0 .6rem; }
+.gg-struktur table { margin-top: .3rem; }
+.gg-herkunft { margin: .4rem 0; padding: .35rem .5rem; border-left: 3px solid #90a4ae; }
+.gg-annahme { color: #8a1c1c; }
+.gg-annahme .pill { margin-left: .4rem; }
+.an-tab td { vertical-align: top; }
+.an-tab tr.an-geaendert td { background: #fff8e1; }
+.an-tab { table-layout: fixed; width: 100%; }
+.an-tab th:nth-child(1) { width: 36%; } .an-tab th:nth-child(2), .an-tab th:nth-child(3) { width: 14%; }
+.an-tab th:nth-child(4) { width: 16%; } .an-tab th:nth-child(5) { width: 20%; }
+.an-tab td { overflow-wrap: anywhere; }
+.gg-sync { margin-left: .8rem; white-space: nowrap; }

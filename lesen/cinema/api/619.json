@@ -1,1 +1,1 @@
-{"id":"ci_fachkonzept:bpmn:ci-ticket-erzeugen/S_erzeugt","diagrams":[{"process":{"id":"ci_fachkonzept:bpmn:ci-ticket-erzeugen","labels":["BpmnProcess"],"label":"BpmnProcess","type":null,"title":"Ticket erzeugen","titleEn":null,"editable":false,"doc":"ci_fachkonzept","lang":"de"},"processId":"ci-ticket-erzeugen","file":"ci-ticket-erzeugen.bpmn","prefix":"ci_fachkonzept:bpmn:","elementIds":["S_erzeugt"],"elements":[{"id":"S_erzeugt","name":"Status: Ticket erzeugt","decision":null}]}]}
+{"id":"ci_fachkonzept:bpmn:ci-ticket-erzeugen/A2","artifacts":[],"tests":[]}

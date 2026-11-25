@@ -1,1 +1,1 @@
-{"id":"ci_fachkonzept:bpmn:ci-ticket-versenden/S_verkauft","diagrams":[{"process":{"id":"ci_fachkonzept:bpmn:ci-ticket-versenden","labels":["BpmnProcess"],"label":"BpmnProcess","type":null,"title":"Ticket versenden","titleEn":null,"editable":false,"doc":"ci_fachkonzept","lang":"de"},"processId":"ci-ticket-versenden","file":"ci-ticket-versenden.bpmn","prefix":"ci_fachkonzept:bpmn:","elementIds":["S_verkauft"],"elements":[{"id":"S_verkauft","name":"Status: abgeschlossen","decision":null}]}]}
+{"id":"ci_fachkonzept:bpmn:ci-ticket-versenden/A1","artifacts":[],"tests":[]}

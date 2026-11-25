@@ -1,689 +1,169 @@
-asyncapi: 3.0.0
+openapi: 3.1.0
 info:
-  title: flowing-retail – Ereignisse (aus dem Code)
+  title: flowing-retail – REST (aus dem Code)
   version: 24465429195e
   description: Erzeugt von Kanonik aus dem Quelltext (Code First); x-kanonik-code verweist je Element auf die Code-Stelle.
-channels:
-  kafka_flowing-retail:
-    address: flowing-retail
-    messages:
-      OrderPlacedEvent:
-        $ref: '#/components/messages/OrderPlacedEvent'
-      PaymentReceivedEvent:
-        $ref: '#/components/messages/PaymentReceivedEvent'
-      GoodsFetchedEvent:
-        $ref: '#/components/messages/GoodsFetchedEvent'
-      GoodsShippedEvent:
-        $ref: '#/components/messages/GoodsShippedEvent'
-      FetchGoodsCommand:
-        $ref: '#/components/messages/FetchGoodsCommand'
-      OrderCompletedEvent:
-        $ref: '#/components/messages/OrderCompletedEvent'
-      RetrievePaymentCommand:
-        $ref: '#/components/messages/RetrievePaymentCommand'
-      ShipGoodsCommand:
-        $ref: '#/components/messages/ShipGoodsCommand'
-    description: kafka-Topic
-    x-kanonik-transport: kafka
-operations:
-  checkout.sendet.OrderPlacedEvent:
-    action: send
-    channel:
-      $ref: '#/channels/kafka_flowing-retail'
-    messages:
-    - $ref: '#/channels/kafka_flowing-retail/messages/OrderPlacedEvent'
-    x-kanonik-dienst: checkout
-    x-kanonik-code:
-    - dienst: checkout
-      klasse: io.flowing.retail.checkout.rest.ShopRestController
-      datei: kafka/java/checkout/src/main/java/io/flowing/retail/checkout/rest/ShopRestController.java
-      zeile: 24
-      methode: placeOrder
-      url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/checkout/src/main/java/io/flowing/retail/checkout/rest/ShopRestController.java#L24
-  inventory.empfaengt.FetchGoodsCommand:
-    action: receive
-    channel:
-      $ref: '#/channels/kafka_flowing-retail'
-    messages:
-    - $ref: '#/channels/kafka_flowing-retail/messages/FetchGoodsCommand'
-    x-kanonik-dienst: inventory
-    x-kanonik-code:
-    - dienst: inventory
-      klasse: io.flowing.retail.inventory.messages.MessageListener
-      datei: kafka/java/inventory/src/main/java/io/flowing/retail/inventory/messages/MessageListener.java
-      zeile: 26
-      methode: messageReceived
-      url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/inventory/src/main/java/io/flowing/retail/inventory/messages/MessageListener.java#L26
-  inventory.sendet.GoodsFetchedEvent:
-    action: send
-    channel:
-      $ref: '#/channels/kafka_flowing-retail'
-    messages:
-    - $ref: '#/channels/kafka_flowing-retail/messages/GoodsFetchedEvent'
-    x-kanonik-dienst: inventory
-    x-kanonik-code:
-    - dienst: inventory
-      klasse: io.flowing.retail.inventory.messages.MessageListener
-      datei: kafka/java/inventory/src/main/java/io/flowing/retail/inventory/messages/MessageListener.java
-      zeile: 26
-      methode: messageReceived
-      url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/inventory/src/main/java/io/flowing/retail/inventory/messages/MessageListener.java#L26
-  order.empfaengt.GoodsFetchedEvent:
-    action: receive
-    channel:
-      $ref: '#/channels/kafka_flowing-retail'
-    messages:
-    - $ref: '#/channels/kafka_flowing-retail/messages/GoodsFetchedEvent'
-    x-kanonik-dienst: order
-    x-kanonik-code:
-    - dienst: order
-      klasse: io.flowing.retail.kafka.order.messages.MessageListener
-      datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/messages/MessageListener.java
-      zeile: 38
-      methode: messageReceived
-      url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/messages/MessageListener.java#L38
-  order.empfaengt.GoodsShippedEvent:
-    action: receive
-    channel:
-      $ref: '#/channels/kafka_flowing-retail'
-    messages:
-    - $ref: '#/channels/kafka_flowing-retail/messages/GoodsShippedEvent'
-    x-kanonik-dienst: order
-    x-kanonik-code:
-    - dienst: order
-      klasse: io.flowing.retail.kafka.order.messages.MessageListener
-      datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/messages/MessageListener.java
-      zeile: 38
-      methode: messageReceived
-      url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/messages/MessageListener.java#L38
-  order.empfaengt.OrderPlacedEvent:
-    action: receive
-    channel:
-      $ref: '#/channels/kafka_flowing-retail'
-    messages:
-    - $ref: '#/channels/kafka_flowing-retail/messages/OrderPlacedEvent'
-    x-kanonik-dienst: order
-    x-kanonik-code:
-    - dienst: order
-      klasse: io.flowing.retail.kafka.order.messages.MessageListener
-      datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/messages/MessageListener.java
-      zeile: 38
-      methode: messageReceived
-      url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/messages/MessageListener.java#L38
-  order.empfaengt.PaymentReceivedEvent:
-    action: receive
-    channel:
-      $ref: '#/channels/kafka_flowing-retail'
-    messages:
-    - $ref: '#/channels/kafka_flowing-retail/messages/PaymentReceivedEvent'
-    x-kanonik-dienst: order
-    x-kanonik-code:
-    - dienst: order
-      klasse: io.flowing.retail.kafka.order.messages.MessageListener
-      datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/messages/MessageListener.java
-      zeile: 38
-      methode: messageReceived
-      url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/messages/MessageListener.java#L38
-  order.sendet.FetchGoodsCommand:
-    action: send
-    channel:
-      $ref: '#/channels/kafka_flowing-retail'
-    messages:
-    - $ref: '#/channels/kafka_flowing-retail/messages/FetchGoodsCommand'
-    x-kanonik-dienst: order
-    x-kanonik-code:
-    - dienst: order
-      klasse: io.flowing.retail.kafka.order.process.FetchGoodsAdapter
-      datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/FetchGoodsAdapter.java
-      zeile: 29
-      methode: handle
-      url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/FetchGoodsAdapter.java#L29
-  order.sendet.OrderCompletedEvent:
-    action: send
-    channel:
-      $ref: '#/channels/kafka_flowing-retail'
-    messages:
-    - $ref: '#/channels/kafka_flowing-retail/messages/OrderCompletedEvent'
-    x-kanonik-dienst: order
-    x-kanonik-code:
-    - dienst: order
-      klasse: io.flowing.retail.kafka.order.process.OrderCompletedAdapter
-      datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/OrderCompletedAdapter.java
-      zeile: 20
-      methode: handle
-      url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/OrderCompletedAdapter.java#L20
-  order.sendet.RetrievePaymentCommand:
-    action: send
-    channel:
-      $ref: '#/channels/kafka_flowing-retail'
-    messages:
-    - $ref: '#/channels/kafka_flowing-retail/messages/RetrievePaymentCommand'
-    x-kanonik-dienst: order
-    x-kanonik-code:
-    - dienst: order
-      klasse: io.flowing.retail.kafka.order.process.RetrievePaymentAdapter
-      datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/RetrievePaymentAdapter.java
-      zeile: 28
-      methode: handle
-      url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/RetrievePaymentAdapter.java#L28
-  order.sendet.ShipGoodsCommand:
-    action: send
-    channel:
-      $ref: '#/channels/kafka_flowing-retail'
-    messages:
-    - $ref: '#/channels/kafka_flowing-retail/messages/ShipGoodsCommand'
-    x-kanonik-dienst: order
-    x-kanonik-code:
-    - dienst: order
-      klasse: io.flowing.retail.kafka.order.process.ShipGoodsAdapter
-      datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/ShipGoodsAdapter.java
-      zeile: 28
-      methode: handle
-      url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/ShipGoodsAdapter.java#L28
-  payment.empfaengt.RetrievePaymentCommand:
-    action: receive
-    channel:
-      $ref: '#/channels/kafka_flowing-retail'
-    messages:
-    - $ref: '#/channels/kafka_flowing-retail/messages/RetrievePaymentCommand'
-    x-kanonik-dienst: payment
-    x-kanonik-code:
-    - dienst: payment
-      klasse: io.flowing.retail.payment.messages.MessageListener
-      datei: kafka/java/payment-zeebe/src/main/java/io/flowing/retail/payment/messages/MessageListener.java
-      zeile: 28
-      methode: messageReceived
-      url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/payment-zeebe/src/main/java/io/flowing/retail/payment/messages/MessageListener.java#L28
-  payment.sendet.PaymentReceivedEvent:
-    action: send
-    channel:
-      $ref: '#/channels/kafka_flowing-retail'
-    messages:
-    - $ref: '#/channels/kafka_flowing-retail/messages/PaymentReceivedEvent'
-    x-kanonik-dienst: payment
-    x-kanonik-code:
-    - dienst: payment
-      klasse: io.flowing.retail.payment.flow.PaymentReceivedAdapter
-      datei: kafka/java/payment-zeebe/src/main/java/io/flowing/retail/payment/flow/PaymentReceivedAdapter.java
-      zeile: 17
-      methode: paymentReceived
-      url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/payment-zeebe/src/main/java/io/flowing/retail/payment/flow/PaymentReceivedAdapter.java#L17
-  shipping.empfaengt.ShipGoodsCommand:
-    action: receive
-    channel:
-      $ref: '#/channels/kafka_flowing-retail'
-    messages:
-    - $ref: '#/channels/kafka_flowing-retail/messages/ShipGoodsCommand'
-    x-kanonik-dienst: shipping
-    x-kanonik-code:
-    - dienst: shipping
-      klasse: io.flowing.retail.shipping.messages.MessageListener
-      datei: kafka/java/shipping/src/main/java/io/flowing/retail/shipping/messages/MessageListener.java
-      zeile: 26
-      methode: messageReceived
-      url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/shipping/src/main/java/io/flowing/retail/shipping/messages/MessageListener.java#L26
-  shipping.sendet.GoodsShippedEvent:
-    action: send
-    channel:
-      $ref: '#/channels/kafka_flowing-retail'
-    messages:
-    - $ref: '#/channels/kafka_flowing-retail/messages/GoodsShippedEvent'
-    x-kanonik-dienst: shipping
-    x-kanonik-code:
-    - dienst: shipping
-      klasse: io.flowing.retail.shipping.messages.MessageListener
-      datei: kafka/java/shipping/src/main/java/io/flowing/retail/shipping/messages/MessageListener.java
-      zeile: 26
-      methode: messageReceived
-      url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/shipping/src/main/java/io/flowing/retail/shipping/messages/MessageListener.java#L26
-components:
-  messages:
-    FetchGoodsCommand:
-      name: FetchGoodsCommand
-      title: Fetch Goods Command
-      payload:
-        $ref: '#/components/schemas/payload_FetchGoodsCommandPayload'
-      x-kanonik-code:
-        dienst: order
-        klasse: io.flowing.retail.kafka.order.process.FetchGoodsAdapter
-        datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/FetchGoodsAdapter.java
-        zeile: 20
-        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/FetchGoodsAdapter.java#L20
-    GoodsFetchedEvent:
-      name: GoodsFetchedEvent
-      title: Goods Fetched Event
-      payload:
-        $ref: '#/components/schemas/messages_GoodsFetchedEventPayload'
-      x-kanonik-code:
-        dienst: inventory
-        klasse: io.flowing.retail.inventory.messages.MessageListener
-        datei: kafka/java/inventory/src/main/java/io/flowing/retail/inventory/messages/MessageListener.java
-        zeile: 13
-        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/inventory/src/main/java/io/flowing/retail/inventory/messages/MessageListener.java#L13
-    GoodsShippedEvent:
-      name: GoodsShippedEvent
-      title: Goods Shipped Event
-      payload:
-        $ref: '#/components/schemas/messages_GoodsShippedEventPayload'
-      x-kanonik-code:
-        dienst: shipping
-        klasse: io.flowing.retail.shipping.messages.MessageListener
-        datei: kafka/java/shipping/src/main/java/io/flowing/retail/shipping/messages/MessageListener.java
-        zeile: 13
-        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/shipping/src/main/java/io/flowing/retail/shipping/messages/MessageListener.java#L13
-    OrderCompletedEvent:
-      name: OrderCompletedEvent
-      title: Order Completed Event
-      payload:
-        $ref: '#/components/schemas/OrderCompletedEventPayload'
-      x-kanonik-code:
-        dienst: order
-        klasse: io.flowing.retail.kafka.order.process.OrderCompletedAdapter
-        datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/OrderCompletedAdapter.java
-        zeile: 14
-        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/OrderCompletedAdapter.java#L14
-    OrderPlacedEvent:
-      name: OrderPlacedEvent
-      title: Order Placed Event
-      payload:
-        $ref: '#/components/schemas/domain_Order'
+tags:
+- name: checkout
+- name: monitor
+paths:
+  /api/cart/order:
+    put:
+      operationId: checkout.ShopRestController.placeOrder
+      tags:
+      - checkout
+      summary: place order
       x-kanonik-code:
         dienst: checkout
         klasse: io.flowing.retail.checkout.rest.ShopRestController
         datei: kafka/java/checkout/src/main/java/io/flowing/retail/checkout/rest/ShopRestController.java
-        zeile: 18
-        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/checkout/src/main/java/io/flowing/retail/checkout/rest/ShopRestController.java#L18
-    PaymentReceivedEvent:
-      name: PaymentReceivedEvent
-      title: Payment Received Event
-      payload:
-        $ref: '#/components/schemas/flow_PaymentReceivedEventPayload'
+        zeile: 24
+        methode: placeOrder
+        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/checkout/src/main/java/io/flowing/retail/checkout/rest/ShopRestController.java#L24
+      parameters:
+      - name: customerId
+        in: query
+        required: true
+        schema:
+          type: string
+        x-kanonik-code:
+          dienst: checkout
+          klasse: io.flowing.retail.checkout.rest.ShopRestController
+          datei: kafka/java/checkout/src/main/java/io/flowing/retail/checkout/rest/ShopRestController.java
+          zeile: 24
+          methode: placeOrder
+          url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/checkout/src/main/java/io/flowing/retail/checkout/rest/ShopRestController.java#L24
+          parameter: customerId
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+  /event:
+    get:
+      operationId: monitor.MonitorRestController.getAllEvents
+      tags:
+      - monitor
+      summary: get all events
       x-kanonik-code:
-        dienst: payment
-        klasse: io.flowing.retail.payment.flow.PaymentReceivedAdapter
-        datei: kafka/java/payment-zeebe/src/main/java/io/flowing/retail/payment/flow/PaymentReceivedAdapter.java
-        zeile: 11
-        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/payment-zeebe/src/main/java/io/flowing/retail/payment/flow/PaymentReceivedAdapter.java#L11
-    RetrievePaymentCommand:
-      name: RetrievePaymentCommand
-      title: Retrieve Payment Command
-      payload:
-        $ref: '#/components/schemas/payload_RetrievePaymentCommandPayload'
+        dienst: monitor
+        klasse: io.flowing.retail.monitor.web.MonitorRestController
+        datei: kafka/java/monitor/src/main/java/io/flowing/retail/monitor/web/MonitorRestController.java
+        zeile: 21
+        methode: getAllEvents
+        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/monitor/src/main/java/io/flowing/retail/monitor/web/MonitorRestController.java#L21
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/PastEvent'
+  /event/{traceId}:
+    get:
+      operationId: monitor.MonitorRestController.getAllEvents_2
+      tags:
+      - monitor
+      summary: get all events
       x-kanonik-code:
-        dienst: order
-        klasse: io.flowing.retail.kafka.order.process.RetrievePaymentAdapter
-        datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/RetrievePaymentAdapter.java
-        zeile: 19
-        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/RetrievePaymentAdapter.java#L19
-    ShipGoodsCommand:
-      name: ShipGoodsCommand
-      title: Ship Goods Command
-      payload:
-        $ref: '#/components/schemas/payload_ShipGoodsCommandPayload'
-      x-kanonik-code:
-        dienst: order
-        klasse: io.flowing.retail.kafka.order.process.ShipGoodsAdapter
-        datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/ShipGoodsAdapter.java
-        zeile: 19
-        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/ShipGoodsAdapter.java#L19
+        dienst: monitor
+        klasse: io.flowing.retail.monitor.web.MonitorRestController
+        datei: kafka/java/monitor/src/main/java/io/flowing/retail/monitor/web/MonitorRestController.java
+        zeile: 26
+        methode: getAllEvents
+        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/monitor/src/main/java/io/flowing/retail/monitor/web/MonitorRestController.java#L26
+      parameters:
+      - name: traceId
+        in: path
+        required: true
+        schema:
+          type: string
+        x-kanonik-code:
+          dienst: monitor
+          klasse: io.flowing.retail.monitor.web.MonitorRestController
+          datei: kafka/java/monitor/src/main/java/io/flowing/retail/monitor/web/MonitorRestController.java
+          zeile: 26
+          methode: getAllEvents
+          url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/monitor/src/main/java/io/flowing/retail/monitor/web/MonitorRestController.java#L26
+          parameter: traceId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PastEvent'
+components:
   schemas:
-    OrderCompletedEventPayload:
-      title: OrderCompletedEventPayload
+    PastEvent:
+      title: PastEvent
       x-kanonik-code:
-        dienst: order
-        klasse: io.flowing.retail.kafka.order.process.payload.OrderCompletedEventPayload
-        datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/OrderCompletedEventPayload.java
+        dienst: monitor
+        klasse: io.flowing.retail.monitor.domain.PastEvent
+        datei: kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java
         zeile: 3
-        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/OrderCompletedEventPayload.java#L3
+        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java#L3
       type: object
       properties:
-        orderId:
+        transactionId:
           type: string
           x-kanonik-code:
-            dienst: order
-            klasse: io.flowing.retail.kafka.order.process.payload.OrderCompletedEventPayload
-            datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/OrderCompletedEventPayload.java
+            dienst: monitor
+            klasse: io.flowing.retail.monitor.domain.PastEvent
+            datei: kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java
             zeile: 5
-            feld: orderId
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/OrderCompletedEventPayload.java#L5
-    OrderItem:
-      title: OrderItem
-      x-kanonik-code:
-        dienst: order
-        klasse: io.flowing.retail.kafka.order.domain.OrderItem
-        datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/domain/OrderItem.java
-        zeile: 12
-        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/domain/OrderItem.java#L12
-      type: object
-      properties:
-        id:
+            feld: transactionId
+            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java#L5
+        type:
           type: string
           x-kanonik-code:
-            dienst: order
-            klasse: io.flowing.retail.kafka.order.domain.OrderItem
-            datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/domain/OrderItem.java
-            zeile: 17
-            feld: id
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/domain/OrderItem.java#L17
-        articleId:
-          type: string
-          x-kanonik-code:
-            dienst: order
-            klasse: io.flowing.retail.kafka.order.domain.OrderItem
-            datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/domain/OrderItem.java
-            zeile: 19
-            feld: articleId
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/domain/OrderItem.java#L19
-        amount:
-          type: integer
-          format: int32
-          x-kanonik-code:
-            dienst: order
-            klasse: io.flowing.retail.kafka.order.domain.OrderItem
-            datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/domain/OrderItem.java
-            zeile: 20
-            feld: amount
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/domain/OrderItem.java#L20
-    domain_Customer:
-      title: Customer
-      x-kanonik-code:
-        dienst: checkout
-        klasse: io.flowing.retail.checkout.domain.Customer
-        datei: kafka/java/checkout/src/main/java/io/flowing/retail/checkout/domain/Customer.java
-        zeile: 3
-        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/checkout/src/main/java/io/flowing/retail/checkout/domain/Customer.java#L3
-      type: object
-      properties:
+            dienst: monitor
+            klasse: io.flowing.retail.monitor.domain.PastEvent
+            datei: kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java
+            zeile: 6
+            feld: type
+            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java#L6
         name:
           type: string
           x-kanonik-code:
-            dienst: checkout
-            klasse: io.flowing.retail.checkout.domain.Customer
-            datei: kafka/java/checkout/src/main/java/io/flowing/retail/checkout/domain/Customer.java
-            zeile: 5
+            dienst: monitor
+            klasse: io.flowing.retail.monitor.domain.PastEvent
+            datei: kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java
+            zeile: 7
             feld: name
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/checkout/src/main/java/io/flowing/retail/checkout/domain/Customer.java#L5
-        address:
+            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java#L7
+        content:
           type: string
           x-kanonik-code:
-            dienst: checkout
-            klasse: io.flowing.retail.checkout.domain.Customer
-            datei: kafka/java/checkout/src/main/java/io/flowing/retail/checkout/domain/Customer.java
-            zeile: 6
-            feld: address
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/checkout/src/main/java/io/flowing/retail/checkout/domain/Customer.java#L6
-    domain_Item:
-      title: Item
-      x-kanonik-code:
-        dienst: checkout
-        klasse: io.flowing.retail.checkout.domain.Item
-        datei: kafka/java/checkout/src/main/java/io/flowing/retail/checkout/domain/Item.java
-        zeile: 3
-        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/checkout/src/main/java/io/flowing/retail/checkout/domain/Item.java#L3
-      type: object
-      properties:
-        articleId:
-          type: string
-          x-kanonik-code:
-            dienst: checkout
-            klasse: io.flowing.retail.checkout.domain.Item
-            datei: kafka/java/checkout/src/main/java/io/flowing/retail/checkout/domain/Item.java
-            zeile: 5
-            feld: articleId
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/checkout/src/main/java/io/flowing/retail/checkout/domain/Item.java#L5
-        amount:
-          type: integer
-          format: int32
-          x-kanonik-code:
-            dienst: checkout
-            klasse: io.flowing.retail.checkout.domain.Item
-            datei: kafka/java/checkout/src/main/java/io/flowing/retail/checkout/domain/Item.java
-            zeile: 6
-            feld: amount
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/checkout/src/main/java/io/flowing/retail/checkout/domain/Item.java#L6
-    domain_Order:
-      title: Order
-      x-kanonik-code:
-        dienst: checkout
-        klasse: io.flowing.retail.checkout.domain.Order
-        datei: kafka/java/checkout/src/main/java/io/flowing/retail/checkout/domain/Order.java
-        zeile: 7
-        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/checkout/src/main/java/io/flowing/retail/checkout/domain/Order.java#L7
-      type: object
-      properties:
-        orderId:
-          type: string
-          x-kanonik-code:
-            dienst: checkout
-            klasse: io.flowing.retail.checkout.domain.Order
-            datei: kafka/java/checkout/src/main/java/io/flowing/retail/checkout/domain/Order.java
-            zeile: 9
-            feld: orderId
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/checkout/src/main/java/io/flowing/retail/checkout/domain/Order.java#L9
-        customer:
-          $ref: '#/components/schemas/domain_Customer'
-          x-kanonik-code:
-            dienst: checkout
-            klasse: io.flowing.retail.checkout.domain.Order
-            datei: kafka/java/checkout/src/main/java/io/flowing/retail/checkout/domain/Order.java
-            zeile: 10
-            feld: customer
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/checkout/src/main/java/io/flowing/retail/checkout/domain/Order.java#L10
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/domain_Item'
-          x-kanonik-code:
-            dienst: checkout
-            klasse: io.flowing.retail.checkout.domain.Order
-            datei: kafka/java/checkout/src/main/java/io/flowing/retail/checkout/domain/Order.java
-            zeile: 11
-            feld: items
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/checkout/src/main/java/io/flowing/retail/checkout/domain/Order.java#L11
-    flow_PaymentReceivedEventPayload:
-      title: PaymentReceivedEventPayload
-      x-kanonik-code:
-        dienst: payment
-        klasse: io.flowing.retail.payment.flow.PaymentReceivedEventPayload
-        datei: kafka/java/payment-zeebe/src/main/java/io/flowing/retail/payment/flow/PaymentReceivedEventPayload.java
-        zeile: 3
-        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/payment-zeebe/src/main/java/io/flowing/retail/payment/flow/PaymentReceivedEventPayload.java#L3
-      type: object
-      properties:
-        refId:
-          type: string
-          x-kanonik-code:
-            dienst: payment
-            klasse: io.flowing.retail.payment.flow.PaymentReceivedEventPayload
-            datei: kafka/java/payment-zeebe/src/main/java/io/flowing/retail/payment/flow/PaymentReceivedEventPayload.java
-            zeile: 4
-            feld: refId
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/payment-zeebe/src/main/java/io/flowing/retail/payment/flow/PaymentReceivedEventPayload.java#L4
-    messages_GoodsFetchedEventPayload:
-      title: GoodsFetchedEventPayload
-      x-kanonik-code:
-        dienst: inventory
-        klasse: io.flowing.retail.inventory.messages.GoodsFetchedEventPayload
-        datei: kafka/java/inventory/src/main/java/io/flowing/retail/inventory/messages/GoodsFetchedEventPayload.java
-        zeile: 3
-        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/inventory/src/main/java/io/flowing/retail/inventory/messages/GoodsFetchedEventPayload.java#L3
-      type: object
-      properties:
-        refId:
-          type: string
-          x-kanonik-code:
-            dienst: inventory
-            klasse: io.flowing.retail.inventory.messages.GoodsFetchedEventPayload
-            datei: kafka/java/inventory/src/main/java/io/flowing/retail/inventory/messages/GoodsFetchedEventPayload.java
-            zeile: 5
-            feld: refId
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/inventory/src/main/java/io/flowing/retail/inventory/messages/GoodsFetchedEventPayload.java#L5
-        pickId:
-          type: string
-          x-kanonik-code:
-            dienst: inventory
-            klasse: io.flowing.retail.inventory.messages.GoodsFetchedEventPayload
-            datei: kafka/java/inventory/src/main/java/io/flowing/retail/inventory/messages/GoodsFetchedEventPayload.java
-            zeile: 6
-            feld: pickId
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/inventory/src/main/java/io/flowing/retail/inventory/messages/GoodsFetchedEventPayload.java#L6
-    messages_GoodsShippedEventPayload:
-      title: GoodsShippedEventPayload
-      x-kanonik-code:
-        dienst: shipping
-        klasse: io.flowing.retail.shipping.messages.GoodsShippedEventPayload
-        datei: kafka/java/shipping/src/main/java/io/flowing/retail/shipping/messages/GoodsShippedEventPayload.java
-        zeile: 3
-        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/shipping/src/main/java/io/flowing/retail/shipping/messages/GoodsShippedEventPayload.java#L3
-      type: object
-      properties:
-        refId:
-          type: string
-          x-kanonik-code:
-            dienst: shipping
-            klasse: io.flowing.retail.shipping.messages.GoodsShippedEventPayload
-            datei: kafka/java/shipping/src/main/java/io/flowing/retail/shipping/messages/GoodsShippedEventPayload.java
-            zeile: 5
-            feld: refId
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/shipping/src/main/java/io/flowing/retail/shipping/messages/GoodsShippedEventPayload.java#L5
-        shipmentId:
-          type: string
-          x-kanonik-code:
-            dienst: shipping
-            klasse: io.flowing.retail.shipping.messages.GoodsShippedEventPayload
-            datei: kafka/java/shipping/src/main/java/io/flowing/retail/shipping/messages/GoodsShippedEventPayload.java
-            zeile: 6
-            feld: shipmentId
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/shipping/src/main/java/io/flowing/retail/shipping/messages/GoodsShippedEventPayload.java#L6
-    payload_FetchGoodsCommandPayload:
-      title: FetchGoodsCommandPayload
-      x-kanonik-code:
-        dienst: order
-        klasse: io.flowing.retail.kafka.order.process.payload.FetchGoodsCommandPayload
-        datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/FetchGoodsCommandPayload.java
-        zeile: 8
-        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/FetchGoodsCommandPayload.java#L8
-      type: object
-      properties:
-        refId:
-          type: string
-          x-kanonik-code:
-            dienst: order
-            klasse: io.flowing.retail.kafka.order.process.payload.FetchGoodsCommandPayload
-            datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/FetchGoodsCommandPayload.java
-            zeile: 10
-            feld: refId
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/FetchGoodsCommandPayload.java#L10
-        reason:
-          type: string
-          x-kanonik-code:
-            dienst: order
-            klasse: io.flowing.retail.kafka.order.process.payload.FetchGoodsCommandPayload
-            datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/FetchGoodsCommandPayload.java
-            zeile: 11
-            feld: reason
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/FetchGoodsCommandPayload.java#L11
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderItem'
-          x-kanonik-code:
-            dienst: order
-            klasse: io.flowing.retail.kafka.order.process.payload.FetchGoodsCommandPayload
-            datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/FetchGoodsCommandPayload.java
-            zeile: 12
-            feld: items
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/FetchGoodsCommandPayload.java#L12
-    payload_RetrievePaymentCommandPayload:
-      title: RetrievePaymentCommandPayload
-      x-kanonik-code:
-        dienst: order
-        klasse: io.flowing.retail.kafka.order.process.payload.RetrievePaymentCommandPayload
-        datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/RetrievePaymentCommandPayload.java
-        zeile: 3
-        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/RetrievePaymentCommandPayload.java#L3
-      type: object
-      properties:
-        refId:
-          type: string
-          x-kanonik-code:
-            dienst: order
-            klasse: io.flowing.retail.kafka.order.process.payload.RetrievePaymentCommandPayload
-            datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/RetrievePaymentCommandPayload.java
-            zeile: 5
-            feld: refId
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/RetrievePaymentCommandPayload.java#L5
-        reason:
-          type: string
-          x-kanonik-code:
-            dienst: order
-            klasse: io.flowing.retail.kafka.order.process.payload.RetrievePaymentCommandPayload
-            datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/RetrievePaymentCommandPayload.java
-            zeile: 6
-            feld: reason
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/RetrievePaymentCommandPayload.java#L6
-        amount:
-          type: integer
-          format: int32
-          x-kanonik-code:
-            dienst: order
-            klasse: io.flowing.retail.kafka.order.process.payload.RetrievePaymentCommandPayload
-            datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/RetrievePaymentCommandPayload.java
-            zeile: 7
-            feld: amount
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/RetrievePaymentCommandPayload.java#L7
-    payload_ShipGoodsCommandPayload:
-      title: ShipGoodsCommandPayload
-      x-kanonik-code:
-        dienst: order
-        klasse: io.flowing.retail.kafka.order.process.payload.ShipGoodsCommandPayload
-        datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/ShipGoodsCommandPayload.java
-        zeile: 3
-        url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/ShipGoodsCommandPayload.java#L3
-      type: object
-      properties:
-        refId:
-          type: string
-          x-kanonik-code:
-            dienst: order
-            klasse: io.flowing.retail.kafka.order.process.payload.ShipGoodsCommandPayload
-            datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/ShipGoodsCommandPayload.java
-            zeile: 5
-            feld: refId
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/ShipGoodsCommandPayload.java#L5
-        pickId:
-          type: string
-          x-kanonik-code:
-            dienst: order
-            klasse: io.flowing.retail.kafka.order.process.payload.ShipGoodsCommandPayload
-            datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/ShipGoodsCommandPayload.java
-            zeile: 6
-            feld: pickId
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/ShipGoodsCommandPayload.java#L6
-        logisticsProvider:
-          type: string
-          x-kanonik-code:
-            dienst: order
-            klasse: io.flowing.retail.kafka.order.process.payload.ShipGoodsCommandPayload
-            datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/ShipGoodsCommandPayload.java
-            zeile: 7
-            feld: logisticsProvider
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/ShipGoodsCommandPayload.java#L7
-        recipientName:
-          type: string
-          x-kanonik-code:
-            dienst: order
-            klasse: io.flowing.retail.kafka.order.process.payload.ShipGoodsCommandPayload
-            datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/ShipGoodsCommandPayload.java
+            dienst: monitor
+            klasse: io.flowing.retail.monitor.domain.PastEvent
+            datei: kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java
             zeile: 8
-            feld: recipientName
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/ShipGoodsCommandPayload.java#L8
-        recipientAddress:
+            feld: content
+            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java#L8
+        sender:
           type: string
           x-kanonik-code:
-            dienst: order
-            klasse: io.flowing.retail.kafka.order.process.payload.ShipGoodsCommandPayload
-            datei: kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/ShipGoodsCommandPayload.java
+            dienst: monitor
+            klasse: io.flowing.retail.monitor.domain.PastEvent
+            datei: kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java
             zeile: 9
-            feld: recipientAddress
-            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/order-zeebe/src/main/java/io/flowing/retail/kafka/order/process/payload/ShipGoodsCommandPayload.java#L9
+            feld: sender
+            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java#L9
+        sourceJson:
+          type: string
+          x-kanonik-code:
+            dienst: monitor
+            klasse: io.flowing.retail.monitor.domain.PastEvent
+            datei: kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java
+            zeile: 11
+            feld: sourceJson
+            url: https://github.com/berndruecker/flowing-retail/blob/24465429195e422f11d67d38a73f604f52164fdd/kafka/java/monitor/src/main/java/io/flowing/retail/monitor/domain/PastEvent.java#L11
