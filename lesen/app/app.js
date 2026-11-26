@@ -28,6 +28,19 @@ function t(text, params) {
 }
 // Einzahl/Mehrzahl (v63.0.3): tp(n, "1 Entscheidung", "{n} Entscheidungen", { … })
 function tp(n, one, many, params = {}) { return t(Number(n) === 1 ? one : many, { n, ...params }); }
+// Begründungen und Kommentare in der Sprache der Oberfläche: x[feld_<sprache>] (Übersetzung), sonst x[feld] – in
+// anderer Sprache geschrieben (x[feld_sprache], Vorgabe Deutsch), dann mit Hinweis auf die Sprache
+function textRoh(x, feld) {
+  if (!x) return "";
+  return x[`${feld}_${I18N.lang}`] || x[feld] || "";
+}
+function textSp(x, feld) {
+  if (!x) return "";
+  if (x[`${feld}_${I18N.lang}`]) return x[`${feld}_${I18N.lang}`];
+  if (!x[feld]) return "";
+  const quelle = x[`${feld}_sprache`] || "de";
+  return quelle === I18N.lang ? x[feld] : `${x[feld]} ${SPRACH_HINWEIS[quelle] || `(${quelle})`}`;
+}
 // Text aus curation_config.json: "Text" (alle Sprachen) oder {"de": "…", "en": "…"}
 function L(v) {
   if (v && typeof v === "object" && !Array.isArray(v)) return v[I18N.lang] ?? v.de ?? Object.values(v)[0] ?? "";
@@ -45,6 +58,8 @@ function localizeConfig(cfg) {
   return cfg;
 }
 const tr = (obj) => new Proxy(obj, { get: (o, k) => (k in o ? t(o[k]) : undefined) });
+const SPRACH_HINWEIS = tr({ de: "(auf Deutsch)", en: "(auf Englisch)" });
+const GRAD = tr({ muss: "muss", sollte: "sollte", soll: "soll", kann: "kann", darf: "darf" });
 
 const STATUS_DE = tr({ extracted: "extrahiert", curated: "bearbeitet", confirmed: "verifiziert", rejected: "abgelehnt" });
 const ACTION_DE = tr({ save: "gespeichert", verify: "verifiziert", unverify: "Verifizierung aufgehoben", reject: "abgelehnt", create: "angelegt" });
@@ -162,7 +177,7 @@ function scheduleListRefresh() {
 async function apiRaw(path, opts) {
   // Bearbeitername mitschicken: Mengenbegrenzung je Person ohne Anmeldung (v63.1, common/schutz.py)
   const who = ($("user") && $("user").value.trim()) || "";
-  const res = await fetch(path, { headers: { "Content-Type": "application/json", ...(who ? { "X-Kanonik-User": encodeURIComponent(who) } : {}) }, ...opts });
+  const res = await fetch(path, { headers: { "Content-Type": "application/json", "X-Kanonik-Sprache": I18N.lang, ...(who ? { "X-Kanonik-User": encodeURIComponent(who) } : {}) }, ...opts });
   let body = null;
   try { body = await res.json(); } catch { /* leer */ }
   if (!res.ok) {
@@ -1264,10 +1279,10 @@ function decisionInfo(e, compact = true) {
   // letzte Entscheidung an einer Beziehung bzw. einem Knoten: Grundlage und Begründung
   if (!e || (!e.grundlage && !e.comment)) return null;
   const n = (e.grundlage || []).length;
-  const title = [`${fmtTs(e.ts)} · ${e.user || ""}`, e.comment ? t("Begründung: {c}", { c: e.comment }) : null,
+  const title = [`${fmtTs(e.ts)} · ${e.user || ""}`, e.comment ? t("Begründung: {c}", { c: textSp(e, "comment") }) : null,
     ...(e.grundlage || []).map((g) => `• ${BASIS_ART()[g.art] || g.art}: ${basisLabel(g)}`)].filter(Boolean).join("\n");
   if (compact) return h("span", { class: "pill basis-pill", title, text: n ? `📎 ${n}` : "💬" });
-  return h("div", { class: "decision" }, e.comment ? h("div", { class: "small", text: t("Begründung: {c}", { c: e.comment }) }) : null,
+  return h("div", { class: "decision" }, e.comment ? h("div", { class: "small", text: t("Begründung: {c}", { c: textSp(e, "comment") }) }) : null,
     n ? h("div", { class: "bchips" }, ...e.grundlage.map((g) => basisChip(g))) : null);
 }
 function listenDocling() {
@@ -1681,7 +1696,7 @@ function srcCard(v) {
       v.frei_verfuegbar ? t("frei: {f}", { f: v.frei_verfuegbar }) + (v.lizenz ? ` (${v.lizenz})` : "") : null,
       v.sicherheit != null ? t("Sicherheit {s}", { s: Number(v.sicherheit).toFixed(2) }) : null].filter(Boolean).join(" · ") }),
     v.nutzen ? h("div", { class: "small", text: v.nutzen + (v.luecke ? ` – ${v.luecke}` : "") }) : null,
-    v.entschieden_von ? h("div", { class: "small muted", text: t("{e} · {d} · {u}", { e: SRC_DEC()[v.entscheidung] || v.entscheidung, d: v.entschieden_am || "", u: v.entschieden_von }) + (v.kommentar ? ` · „${v.kommentar}“` : "") }) : null,
+    v.entschieden_von ? h("div", { class: "small muted", text: t("{e} · {d} · {u}", { e: SRC_DEC()[v.entscheidung] || v.entscheidung, d: v.entschieden_am || "", u: v.entschieden_von }) + (v.kommentar ? ` · „${textSp(v, "kommentar")}“` : "") }) : null,
     ro || v.aufgenommen ? null : h("div", { class: "el-bar" }, btn("aufnehmen", "primary", t("Aufnehmen")), btn("offen", "", t("Zurückstellen")),
       btn("verwerfen", "danger", t("Verwerfen")),
       h("button", { type: "button", class: "small link", onclick: () => { form.hidden = !form.hidden; } }, t("Angaben …"))),
@@ -1866,12 +1881,15 @@ function renderGapList() {
 async function gapDecide(x, entscheidung, kommentar, nachher) {
   const user = $("user").value.trim();
   if (!user) { toast(t("Bitte oben einen Bearbeiternamen eintragen."), true); $("user").focus(); return; }
-  try { await api("api/luecken/entscheiden", { method: "POST", body: JSON.stringify({ schluessel: x.schluessel, entscheidung, user, kommentar, titel: x.titel }) }); }
+  const behalten = !!kommentar && kommentar === textRoh(x.entschieden, "kommentar");   // unverändert: Sprache und Übersetzung bleiben
+  try { await api("api/luecken/entscheiden", { method: "POST", body: JSON.stringify({ schluessel: x.schluessel, entscheidung, user, kommentar, titel: x.titel, kommentar_behalten: behalten }) }); }
   catch (e) { toast(e.message, true); return; }
-  toast(t("„{t}“: {e}", { t: x.titel, e: GAP_DEC()[entscheidung] }));
+  toast(t("„{t}“: {e}", { t: textRoh(x, "titel"), e: GAP_DEC()[entscheidung] }));
   if (nachher) {                                         // z. B. aus dem BPMN-Graph: Ansicht behalten, nur Stand nachführen
     x.entscheidung = entscheidung;
-    x.entschieden = { von: user, am: new Date().toISOString().slice(0, 10), ...(kommentar ? { kommentar } : {}) };
+    x.entschieden = { von: user, am: new Date().toISOString().slice(0, 10),
+      ...(behalten ? Object.fromEntries(Object.entries(x.entschieden || {}).filter(([k]) => k.startsWith("kommentar")))
+        : kommentar ? { kommentar, ...(I18N.lang !== "de" ? { kommentar_sprache: I18N.lang } : {}) } : {}) };
     renderGapList();
     nachher(x);
     return;
@@ -1899,22 +1917,22 @@ function gapHinweise(x) {
   return h("div", { class: "gap-hinweise small" }, h("strong", { text: t("Zum Urteil") }),
     ...x.hinweise.map((w) => h("div", { class: `gap-hinweis gap-hinweis-${w.art}` },
       h("span", { class: "gap-hinweis-art", text: { dagegen: t("spricht dagegen"), dafuer: t("stützt die Lücke"), pruefen: t("zu prüfen"), wo: t("wo im Code") }[w.art] || w.art }), " ",
-      h("span", { text: w.text }),
+      h("span", { text: textSp(w, "text") }),
       // „wo“: Orte einzeln mit Sprung in die Quelltext-Ansicht; sonst Belege in einer Zeile
       (w.belege || []).length ? (w.art === "wo" ? h("ul", { class: "mono muted gap-wo" }, ...w.belege.map((b) => h("li", {}, ...belegZeile(b))))
         : h("div", { class: "mono muted", text: w.belege.join(" · ") })) : null)));
 }
 function gapCard(x, nachher, innen = false) {        // innen: in einer anderen Karte (ohne verschachtelte Haupt-/Folgelücken)
-  const note = h("input", { type: "text", class: "small", placeholder: t("Kommentar (optional)"), value: (x.entschieden || {}).kommentar || "" });
+  const note = h("input", { type: "text", class: "small", placeholder: t("Kommentar (optional)"), value: textRoh(x.entschieden, "kommentar") });
   const pill = { fehlt: "rel-rejected", abweichend: "rel-candidate", unvollstaendig: "rel-candidate" }[x.art] || "type";
   return h("div", { class: "card" },
-    h("h2", {}, `${x.id} · ${x.titel}`),
+    h("h2", {}, `${x.id} · ${textRoh(x, "titel")}`),
     h("div", { class: "r-meta" }, h("span", { class: `pill ${pill}`, text: GAP_ART()[x.art] || x.art }),
       h("span", { class: "pill type", text: x.sicht === "beide" ? t("BPMN und Code") : x.sicht === "schnittstelle" ? t("Schnittstelle") : x.sicht.toUpperCase() }),
       ...gapTypPills(x),
       h("span", { class: `pill ${x.entscheidung === "bestaetigt" ? "rel-confirmed" : x.entscheidung === "falsch" ? "rel-rejected" : "type"}`, text: GAP_DEC()[x.entscheidung] || x.entscheidung }),
       x.entschieden ? h("span", { class: "muted small", text: `${x.entschieden.von || ""} ${x.entschieden.am || ""}` }) : null),
-    h("p", { text: x.beschreibung }),
+    h("p", { text: textSp(x, "beschreibung") }),
     gapHinweise(x),
     (x.haengt_an || []).length ? h("div", { class: "gap-folge small" }, t("Folgelücke von {k} – sie besteht, weil die Hauptlücke besteht, und wird erst entschieden, wenn diese behoben ist.",
       { k: x.haengt_an.join(", ") }), " ", ...(innen ? [] : x.haengt_an.map((k) => gapMini(k)))) : null,
@@ -1927,6 +1945,7 @@ function gapCard(x, nachher, innen = false) {        // innen: in einer anderen 
       e.preventDefault(); const k = (x.haengt_an || [])[0] || x.id; state.baumOffen = k; zuAnsicht("gap", "baum"); } })),
     h("div", { class: "muted small", title: gapTypen(x).join(", "),          // Kennung (Regel des Abgleichs) nur im Tooltip
       text: t("Lückentyp: {r}", { r: gapTypen(x).map(gapTypName).join(", ") }) }),
+    state.config.readonly && textSp(x.entschieden, "kommentar") ? h("div", { class: "small", text: t("Begründung: {c}", { c: textSp(x.entschieden, "kommentar") }) }) : null,
     state.config.readonly ? null : h("div", { class: "el-bar" }, note,
       h("button", { type: "button", class: "small", onclick: () => gapDecide(x, "bestaetigt", note.value.trim() || null, nachher) }, t("Bestätigen")),
       h("button", { type: "button", class: "small", onclick: () => gapDecide(x, "falsch", note.value.trim() || null, nachher) }, t("Fehlalarm")),
@@ -1955,7 +1974,7 @@ function gapVolltext(x, voll, q) {
   const passt = (s) => { const n = gapNorm(s); return w.every((x) => n.includes(x)); };
   const texte = state.gapIndex.texte || {};
   const ids = [...x.anforderungen, ...x.regeln].filter((a) => passt(`${a} ${texte[a] || ""}`));
-  const selbst = passt(`${voll.titel || ""} ${voll.beschreibung || ""}`);
+  const selbst = passt(`${voll.titel || ""} ${voll.beschreibung || ""} ${voll.titel_en || ""} ${voll.beschreibung_en || ""}`);
   return ids.length || selbst ? { ids, selbst } : null;
 }
 function gapKennung(id, q) {
@@ -2131,10 +2150,16 @@ function quellLink(par, text) {
     text || t("ganze Datei ↗"));
 }
 const CODE_BELEG = /^([\w./\\-]+\.(?:java|bpmn|dmn|kt|groovy|xml|ya?ml|properties|json|ts|js|py)):\s*(.*)$/;
+// Vorsilben der Belege des Abgleichs („Kapitel 7: …“, „abgeleitet: …“) in der Sprache der Oberfläche
+const BELEG_VORSILBE = tr({ Kapitel: "Kapitel", abgeleitet: "abgeleitet", vorhanden: "vorhanden", Regel: "Regel" });
+function belegText(b) {
+  const m = /^(Kapitel|abgeleitet|vorhanden|Regel)\b/.exec(b || "");
+  return m ? BELEG_VORSILBE[m[1]] + b.slice(m[1].length) : b;
+}
 function belegZeile(b) {
   // Beleg „pfad/X.java: Klasse.methode …“: Text und Sprung in die ganze Datei (gesucht wird Klasse.methode bzw. das Element)
   const m = CODE_BELEG.exec(b || "");
-  if (!m) return [b];
+  if (!m) return [belegText(b)];
   const such = (m[2].match(/^[\w.$]+/) || [""])[0];
   return [b, " ", quellLink({ art: "code", datei: m[1], such })];
 }
@@ -2176,7 +2201,7 @@ function gapMini(id) {
     h("summary", {}, h("span", { class: `pill ${pill}`, text: GAP_ART()[x.art] || x.art }), " ",
       h("span", { class: "pill type", text: x.sicht === "beide" ? t("BPMN und Code") : x.sicht === "schnittstelle" ? t("Schnittstelle") : x.sicht.toUpperCase() }), " ",
       ...gapTypPills(full).flatMap((p) => [p, " "]),
-      h("strong", { text: `${x.id} · ${x.titel}` }), " ",
+      h("strong", { text: `${x.id} · ${textRoh(x, "titel")}` }), " ",
       (full.haengt_an || []).length ? h("span", { class: "pill type", title: t("Folgelücke von {k}", { k: full.haengt_an.join(", ") }), text: `↳ ${full.haengt_an.join(", ")}` }) : null, " ",
       h("span", { class: `pill ${full.entscheidung === "bestaetigt" ? "rel-confirmed" : full.entscheidung === "falsch" ? "rel-rejected" : "type"}`,
         text: GAP_DEC()[full.entscheidung] || full.entscheidung || "" })),
@@ -2185,7 +2210,7 @@ function gapMini(id) {
 function gapReqLine(e, mitLuecken) {
   return h("div", { class: "gap-req" },
     h("div", {}, h("span", { class: `pill ${e.art === "regel" ? "rel-candidate" : "type"}`, text: e.art === "regel" ? t("Regel") : e.art === "anforderung" ? t("Anforderung") : t("abgeleitet") }),
-      " ", h("strong", { class: "mono", text: e.id }), e.grad ? h("span", { class: "muted small", text: ` ${e.grad.toUpperCase()}` }) : null,
+      " ", h("strong", { class: "mono", text: e.id }), e.grad ? h("span", { class: "muted small", text: ` ${(GRAD[e.grad] || e.grad).toUpperCase()}` }) : null,
       " ", e.text, " ", gapDocLink(e.block, e.zitat)),
     mitLuecken ? (e.luecken.length ? h("div", { class: "gap-sub" }, ...e.luecken.map(gapCodeOfGap))
       : h("div", { class: "muted small gap-sub", text: t("keine Lücke gefunden") })) : null);
@@ -2429,7 +2454,7 @@ function gapMatrix() {
       h("td", {}, trListe(z.nachrichten, (x) => x.name, (x) => `${x.titel || ""} (${x.absender || "?"} → ${(x.empfaenger || []).join(", ")})${x.code ? "\n" + t("im Code gesendet") : ""}`)),
       h("td", {}, trListe(z.klassen, (k) => k.klasse, (k) => `${k.dienst} · ${k.paket || ""}\n${(k.gruende || []).join("; ")}`)),
       h("td", {}, trListe(z.tests, (x) => x.klasse, (x) => `${t("{n} Testfälle", { n: x.testfaelle })}\n${(x.beispiele || []).join("\n")}`)),
-      h("td", {}, z.luecken.length ? h("div", { class: "tr-liste" }, ...z.luecken.map((x) => h("a", { href: "#", title: x.titel, text: x.id,
+      h("td", {}, z.luecken.length ? h("div", { class: "tr-liste" }, ...z.luecken.map((x) => h("a", { href: "#", title: textRoh(x, "titel"), text: x.id,
         onclick: (e) => { e.preventDefault(); zuAnsicht("gap", "suche"); } }))) : h("span", { class: "muted", text: "–" })))))));
   return [zahlen, h("section", { class: "card sb-karte" }, filter,
     h("div", { class: "muted small", text: t("{n} von {g} Einträgen · Zuordnung zu Klassen und Tests heuristisch (Begriffe, Domänenmodell, Nachrichten); Zeiger auf eine Zelle zeigt Grund und Rest.", { n: zeilen.length, g: n }) }),
@@ -2573,7 +2598,7 @@ async function mdKopieren(text) {
   catch { mdDatei("aufgabe.md", text); }
 }
 function baumLuecke(n) {
-  const d = n.dazu, a = n.aufgabe, art = GAP_ART();
+  const d = n.dazu, a = (I18N.lang === "en" && n.aufgabe_en) || n.aufgabe, art = GAP_ART();
   const pill = { fehlt: "rel-rejected", abweichend: "rel-candidate", unvollstaendig: "rel-candidate" }[n.art] || "type";
   const liste = (titel, xs, f) => (xs.length ? h("div", { class: "baum-teil" }, h("strong", { text: `${titel} (${xs.length})` }),
     h("ul", { class: "small" }, ...xs.map((x) => h("li", {}, f(x))))) : null);
@@ -2581,7 +2606,7 @@ function baumLuecke(n) {
     liste(t("Anforderungen und Regeln"), d.anforderungen, (x) => [gapReqLink(x.id), " ", h("span", { class: x.kern ? "" : "muted", text: x.text || "" })]),
     liste(t("Nachrichten"), d.nachrichten, (x) => [h("span", { class: "mono", text: x.name }), ` „${x.titel || ""}“ · ${x.absender || "?"} → ${(x.empfaenger || []).join(", ")}`,
       x.daten ? h("div", { class: "muted", text: t("Daten: {d}", { d: x.daten }) }) : null]),
-    liste(t("Prozesselemente"), d.prozesse, (x) => x),
+    liste(t("Prozesselemente"), d.prozesse, (x) => x.replace(" (fehlt im vorhandenen BPMN)", t(" (fehlt im vorhandenen BPMN)"))),
     liste(t("Klassen"), d.klassen, (x) => h("span", { class: "mono", text: x })),
     liste(t("Tests"), d.tests, (x) => [h("span", { class: "mono", text: x.klasse }), h("span", { class: "muted", text: ` · ${t("{n} Testfälle", { n: x.testfaelle })}` })]),
     liste(t("Codestellen und Modelle"), d.codestellen, (x) => h("span", { class: "mono", text: x })));
@@ -2596,7 +2621,7 @@ function baumLuecke(n) {
   // Entscheiden direkt im Baum (wie in der Lückenkarte); auf Wunsch die Folgelücken gleich mit
   const voll = (id) => (state.gap.luecken || []).find((y) => y.id === id);
   const x = voll(n.id);
-  const notiz = h("input", { type: "text", class: "small", placeholder: t("Kommentar (optional)"), value: ((x || {}).entschieden || {}).kommentar || "" });
+  const notiz = h("input", { type: "text", class: "small", placeholder: t("Kommentar (optional)"), value: textRoh((x || {}).entschieden, "kommentar") });
   const mit = n.folgen.length ? h("label", { class: "small am-schalter" }, h("input", { type: "checkbox" }), ` ${t("Folgelücken genauso entscheiden")}`) : null;
   const entscheiden = async (e) => {
     const k = notiz.value.trim() || null;
@@ -2611,11 +2636,11 @@ function baumLuecke(n) {
     h("button", { type: "button", class: "small", onclick: () => entscheiden("offen") }, t("Zurückstellen")));
   return h("details", { class: "card baum-luecke", id: `baum-${n.id}`, open: state.baumOffen === n.id },
     h("summary", {}, h("span", { class: `pill ${pill}`, text: art[n.art] || n.art }), " ", ...gapTypPills(n).flatMap((p) => [p, " "]),
-      h("strong", { text: `${n.id} · ${n.titel}` }), " ",
+      h("strong", { text: `${n.id} · ${textRoh(n, "titel")}` }), " ",
       n.folgen.length ? h("span", { class: "pill type", text: t("+{n} Folgelücken", { n: n.folgen.length }) }) : null, " ",
       h("span", { class: `pill ${n.entscheidung === "bestaetigt" ? "rel-confirmed" : n.entscheidung === "falsch" ? "rel-rejected" : "type"}`,
         text: GAP_DEC()[n.entscheidung] || n.entscheidung || "" })),
-    h("p", { class: "small", text: n.beschreibung }),
+    h("p", { class: "small", text: textSp(n, "beschreibung") }),
     gapHinweise(x || n),
     leiste,
     n.folgen.length ? h("div", { class: "baum-folgen" }, h("strong", { class: "small", text: t("Folgelücken") }), ...n.folgen.map((f) => gapMini(f.id))) : null,
@@ -2629,7 +2654,7 @@ function gapBaum() {
     return [h("div", { class: "muted small", text: t("Lückenbaum wird aufgebaut …") })];
   }
   const m = state.baum, z = m.zahlen;
-  const alle = () => m.kapitel.map((k) => `# ${k.nummer} ${k.titel || ""}\n\n` + k.luecken.map((n) => n.aufgabe.markdown).join("\n")).join("\n");
+  const alle = () => m.kapitel.map((k) => `# ${k.nummer} ${k.titel || ""}\n\n` + k.luecken.map((n) => ((I18N.lang === "en" && n.aufgabe_en) || n.aufgabe).markdown).join("\n")).join("\n");
   const kopf = h("div", { class: "card small" },
     h("div", { text: t("{h} Hauptlücken mit {f} Folgelücken in {k} Kapiteln. Je Hauptlücke: was dazugehört und ein Aufgabenvorschlag, der sie samt Folgelücken schließt – aus Fachkonzept, BPMN und Code abgeleitet, ohne Sprachmodell; vor dem Übernehmen prüfen.",
       { h: z.hauptluecken, f: z.folgeluecken, k: z.kapitel }) }),
@@ -2688,7 +2713,7 @@ function gapSteckbrief() {
     h("div", { class: "small" }, [...Object.entries(lz.sicht || {}).map(([v, n]) => `${sichtName(v)} ${n}`),
       ...Object.entries(lz.art || {}).map(([v, n]) => `${art[v] || v} ${n}`)].join(" · ") || "–"),
     tabelle([t("Kennung"), t("Lücke"), t("Art"), t("Sicht"), t("Lückentyp")],
-      (s.luecken || []).map((x) => [h("a", { href: "#", text: x.id, onclick: (e) => { e.preventDefault(); zuAnsicht("gap", "suche"); } }), x.titel,
+      (s.luecken || []).map((x) => [h("a", { href: "#", text: x.id, onclick: (e) => { e.preventDefault(); zuAnsicht("gap", "suche"); } }), textRoh(x, "titel"),
         art[x.art] || x.art, sichtName(x.sicht), gapTypName(x.regel)])));
   return [kopf, zahlen, sys, proz, sst, dien, lue];
 }
@@ -2913,7 +2938,7 @@ function decVorschlag(v) {
     v.heute ? h("span", { title: t("älterer Eintrag: Vorschlag aus dem heutigen Graphen"), text: t(" (heute)") }) : null);
 }
 function decBasis(e) {
-  return h("div", {}, e.comment ? h("div", { class: "small", text: t("Begründung: {c}", { c: e.comment }) }) : null,
+  return h("div", {}, e.comment ? h("div", { class: "small", text: t("Begründung: {c}", { c: textSp(e, "comment") }) }) : null,
     (e.grundlage || []).length ? h("div", { class: "bchips" }, ...e.grundlage.map((g) => basisChip(g))) : null);
 }
 function renderDecisions(cat) {
@@ -2927,13 +2952,13 @@ function renderDecisions(cat) {
   if (cat === "geaendert") {
     parts.push(h("div", { class: "card" }, ...(d.geaendert.length ? d.geaendert.map((e) => h("div", { class: "hist" },
       h("div", {}, decAction(e), " ", decTarget(e)),
-      ...e.probleme.map((p) => h("div", { class: "small" }, h("span", { class: `pill ${p.grund === "fehlt" ? "rel-rejected" : "rel-candidate"}`, text: p.text }), " ", basisChip(p.quelle))),
+      ...e.probleme.map((p) => h("div", { class: "small" }, h("span", { class: `pill ${p.grund === "fehlt" ? "rel-rejected" : "rel-candidate"}`, text: textSp(p, "text") }), " ", basisChip(p.quelle))),
       decBasis(e))) : [h("div", { class: "muted", text: t("keine – alle Grundlagen unverändert") })]), more(d.n_geaendert, d.geaendert.length)));
   } else if (cat === "zurueck") {
     parts.push(h("div", { class: "card" }, ...(d.zurueck.length ? d.zurueck.map((r) => h("div", { class: "hist" },
       h("div", {}, decAction(r.entscheidung), " ", decTarget(r.entscheidung)),
       decVorschlag(r.entscheidung.vorschlag), decBasis(r.entscheidung),
-      h("div", { class: "small" }, "↩ ", decAction(r.spaeter), r.spaeter.comment ? h("span", { class: "muted", text: ` · „${r.spaeter.comment}“` }) : null),
+      h("div", { class: "small" }, "↩ ", decAction(r.spaeter), r.spaeter.comment ? h("span", { class: "muted", text: ` · „${textSp(r.spaeter, "comment")}“` }) : null),
       decBasis({ grundlage: r.spaeter.grundlage }))) : [h("div", { class: "muted", text: t("keine") })]), more(d.n_zurueck, d.zurueck.length)));
   } else if (cat === "verbesserungen") {
     const card = h("div", { class: "card" }, loadingEl());
@@ -2962,7 +2987,7 @@ function renderDecisions(cat) {
     parts.push(h("div", { class: "card" }, h("h2", { text: t("Je Herkunft des Vorschlags") }),
       h("div", { class: "bchips" }, ...Object.entries(d.ohne_grundlage_je_herkunft).map(([k, n]) => h("span", {}, herkunftPills({ arten: [k] }, true) || k, ` ${n}`)))));
     parts.push(h("div", { class: "card" }, ...(d.ohne_grundlage.length ? d.ohne_grundlage.map((e) => h("div", { class: "hist" },
-      h("div", {}, decAction(e), " ", decTarget(e), e.comment ? h("span", { class: "muted", text: ` · „${e.comment}“` }) : null), decVorschlag(e.vorschlag)))
+      h("div", {}, decAction(e), " ", decTarget(e), e.comment ? h("span", { class: "muted", text: ` · „${textSp(e, "comment")}“` }) : null), decVorschlag(e.vorschlag)))
       : [h("div", { class: "muted", text: t("keine") })]), more(d.n_ohne_grundlage, d.ohne_grundlage.length)));
   } else {
     const pct = (x) => `${Math.round(100 * x)} %`;
@@ -4470,19 +4495,19 @@ function histDecision(e, el) {
 function histItem(e) {
   if (e.kind === "evidence") return h("div", { class: "hist" },
     h("div", {}, h("strong", { text: e.action === "remove" ? t("Quellbeleg entfernt") : t("Quellbeleg wieder zugelassen") }), ` · ${fmtTs(e.ts)} · ${e.user}`,
-      e.comment ? h("span", { class: "muted", text: ` · „${e.comment}“` }) : null),
+      e.comment ? h("span", { class: "muted", text: ` · „${textSp(e, "comment")}“` }) : null),
     h("div", { class: "small mono", text: `${e.type} → ${e.end}` }));
   return e.kind === "retype" ? h("div", { class: "hist" },
     h("div", {}, h("strong", { text: t("Beziehungsart geändert") }), ` · ${fmtTs(e.ts)} · ${e.user}`,
-      e.comment ? h("span", { class: "muted", text: ` · „${e.comment}“` }) : null),
+      e.comment ? h("span", { class: "muted", text: ` · „${textSp(e, "comment")}“` }) : null),
     h("div", { class: "small" }, `${relTitle(e.type)} → ${relTitle(e.to)}`),
     h("div", { class: "small mono", text: `${e.start} -[${e.type} → ${e.to}]-> ${e.end}` })) : e.kind === "relation" || e.kind === "link" ? h("div", { class: "hist" },
     h("div", {}, h("strong", { text: (e.kind === "link" ? LINK_ACTION_DE : REL_ACTION_DE)[e.action] || e.action }), ` · ${fmtTs(e.ts)} · ${e.user}`,
       h("span", {}, " → ", h("span", { class: `pill rel-${e.status}`, text: REL_STATUS_DE[e.status] || e.status })),
-      e.comment ? h("span", { class: "muted", text: ` · „${e.comment}“` }) : null),
+      e.comment ? h("span", { class: "muted", text: ` · „${textSp(e, "comment")}“` }) : null),
     h("div", { class: "small mono", text: `${e.start} -[${e.type}]-> ${e.end}` })) : h("div", { class: "hist" },
     h("div", {}, h("strong", { text: ACTION_DE[e.action] || e.action }), ` · ${fmtTs(e.ts)} · ${e.user}`,
-      e.status ? h("span", {}, " → ", pill(e.status)) : null, e.comment ? h("span", { class: "muted", text: ` · „${e.comment}“` }) : null),
+      e.status ? h("span", {}, " → ", pill(e.status)) : null, e.comment ? h("span", { class: "muted", text: ` · „${textSp(e, "comment")}“` }) : null),
     Object.keys(e.changes || {}).length ? h("ul", { class: "diff" }, ...Object.entries(e.changes).map(([k, c]) =>
       h("li", {}, h("span", { class: "mono", text: `${k}: ` }), h("del", { text: fmtVal(c.old) }), " → ", h("ins", { text: fmtVal(c.new) })))) : null);
 }
@@ -4999,9 +5024,9 @@ function gapGraphProzess(p) {
     const box = h("div", { class: "gg-zuordnung" },
       h("div", {}, h("strong", { text: t("Zuordnung") + ": " }), g === "@code" ? t("im Code vor dem Prozessstart")
         : g ? `→ ${vName(gk, g)} (${g}${gk && vModelle[0] && gk !== vModelle[0].key ? ", " + gk : ""})` : t("kein Gegenstück"), " ", sicher),
-      z ? h("div", { class: "muted", text: `${GG_VERFAHREN()[z.verfahren] || z.verfahren}: ${z.grund}` }) : null,
-      z && z.entscheidung ? h("div", { class: "muted", text: t("entschieden von {v} am {a}", { v: z.von || "–", a: z.am || "–" }) + (z.kommentar ? ` – ${z.kommentar}` : "") }) : null,
-      z && z.warnung ? h("div", { class: "card warn small", text: z.warnung }) : null);
+      z ? h("div", { class: "muted", text: `${GG_VERFAHREN()[z.verfahren] || z.verfahren}: ${textSp(z, "grund")}` }) : null,
+      z && z.entscheidung ? h("div", { class: "muted", text: t("entschieden von {v} am {a}", { v: z.von || "–", a: z.am || "–" }) + (z.kommentar ? ` – ${textSp(z, "kommentar")}` : "") }) : null,
+      z && z.warnung ? h("div", { class: "card warn small", text: textSp(z, "warnung") }) : null);
     if (state.config.readonly || !v) return box;
     const senden = async (entscheidung, vorhanden) => {
       const user = $("user").value.trim();
@@ -5098,7 +5123,7 @@ function gapGraphProzess(p) {
           los ? { text: t("im abgeleiteten Modell zeigen"), los } : null,
           zg ? h("div", { class: "gg-zuordnung" }, h("div", {}, h("strong", { text: t("Zuordnung") + ": " }), `← ${g.element} (${g.baustein}) `,
             zg.sicherheit ? h("span", { class: `pill gg-sicher gg-sicher-${zg.sicherheit}`, text: GG_SICHER()[zg.sicherheit] || zg.sicherheit }) : null),
-            h("div", { class: "muted", text: `${GG_VERFAHREN()[zg.verfahren] || zg.verfahren}: ${zg.grund}` })) : null);
+            h("div", { class: "muted", text: `${GG_VERFAHREN()[zg.verfahren] || zg.verfahren}: ${textSp(zg, "grund")}` })) : null);
       }, { komm: komm(), marke: zeigeLuecken, prozess: m.prozess, seite: "v" });
       if (fokus) vw.fokus(fokus);
     } catch (e) { boxV.replaceChildren(h("div", { class: "muted", text: e.message })); }

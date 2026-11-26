@@ -1254,5 +1254,13 @@
  "Job ohne Worker": "Job without worker",
  "Worker ohne Job im Modell": "Worker without job in the model",
  "Beim Klick auf ein Element sein Gegenstück im anderen Diagramm zeigen": "On click, show the element's counterpart in the other diagram",
- "Gegenstück mitführen": "Follow counterpart"
+ "Gegenstück mitführen": "Follow counterpart",
+ "(auf Deutsch)": "(in German)",
+ "(auf Englisch)": "(in English)",
+ "muss": "must",
+ "sollte": "should",
+ "soll": "shall",
+ "kann": "may",
+ "darf": "may",
+ " (fehlt im vorhandenen BPMN)": " (missing in the existing BPMN)"
 }
