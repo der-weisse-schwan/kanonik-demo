@@ -1262,5 +1262,19 @@
  "soll": "shall",
  "kann": "may",
  "darf": "may",
- " (fehlt im vorhandenen BPMN)": " (missing in the existing BPMN)"
+ " (fehlt im vorhandenen BPMN)": " (missing in the existing BPMN)",
+ "Achtung: zugleich bestätigt bei {b} – dort ggf. ebenfalls zurücksetzen.": "Note: also confirmed at {b} – reset it there as well if needed.",
+ "Begriff anlegen und 1 Element zuordnen": "Create term and assign 1 element",
+ "Begriff „{b}“ entfernt, {d} Entscheidungen zurückgenommen": "Term “{b}” removed, {d} decisions undone",
+ "Bitte eine Benennung angeben.": "Please enter a label.",
+ "Bitte mindestens ein Element anhaken.": "Please tick at least one element.",
+ "Begriff {node_id} wurde danach weiter verwendet ({n} spätere Entscheidungen) – bitte diese zuerst zurücknehmen": "Term {node_id} was used again afterwards ({n} later decisions) – please undo those first",
+ "Mindestens ein Reiter bleibt sichtbar.": "At least one tab stays visible.",
+ "Reiter": "Tabs",
+ "Reiter {r} anzeigen": "Show tab {r}",
+ "anzeigen und Reihenfolge – gilt in diesem Browser": "visibility and order – applies in this browser",
+ "nach hinten": "move back",
+ "nach vorn": "move forward",
+ "{r} nach vorn": "Move {r} forward",
+ "{r} nach hinten": "Move {r} back"
 }

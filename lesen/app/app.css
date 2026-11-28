@@ -214,6 +214,9 @@ table.paths td.cur .curate { flex-wrap: nowrap; }
 .disp-sec { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; }
 .disp-sec > strong { width: 100%; font-size: 12.5px; }
 .disp-sec label { display: inline-flex; gap: 4px; align-items: center; }
+.disp-sec .reiter-zeile { width: 100%; display: flex; gap: 6px; align-items: center; }
+.disp-sec .reiter-zeile label { flex: 1; }
+.disp-sec .reiter-zeile button[disabled] { visibility: hidden; }
 .disp-sec.types label { font-family: var(--mono); font-size: 12px; }
 
 .toast { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); background: var(--text); color: var(--bg);

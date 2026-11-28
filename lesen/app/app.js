@@ -127,7 +127,7 @@ async function api(path, opts = {}) {
   try {
     const res = await apiRaw(path, opts);
     if (decision) basisUsed();
-    if (changesData(path, opts)) scheduleListRefresh();
+    if (changesData(path, opts)) { state.dataVer = (state.dataVer || 0) + 1; scheduleListRefresh(); }
     if (res && res.transitiv && (res.transitiv.done || res.transitiv.failed.length)) showTransitiv(res.transitiv);
     return res;
   } finally { busyChanged(-1); }
@@ -552,11 +552,17 @@ async function openNode(id, { force = false, push = true, label = null } = {}) {
   const q = new URLSearchParams({ id });
   if (label) q.set("label", label);
   const seq = (state.openSeq = (state.openSeq || 0) + 1);
+  const ver = state.dataVer || 0;
   detailLoading(true);
-  try { node = await api(`api/node?${q}`); } catch (e) { if (seq === state.openSeq) { detailLoading(false); toast(e.message, true); } return; }
+  try { node = await api(`api/node?${q}`); } catch (e) {
+    if (seq !== state.openSeq) return;
+    detailLoading(false); toast(e.message, true);
+    if (e.status === 404 && state.node && state.node.id === id) { state.node = null; $("detail").replaceChildren(); }   // inzwischen gelöscht
+    return;
+  }
   if (seq !== state.openSeq) return;                // inzwischen anderer Knoten angefordert: ältere Antwort verwerfen
   detailLoading(false);
-  state.node = node; state.selected = id; state.pending = null; state.errors = {};
+  state.node = node; state.nodeVer = ver; state.selected = id; state.pending = null; state.errors = {};
   state.original = {}; state.values = {};
   for (const [k, spec] of Object.entries(node.editable)) {
     state.original[k] = normalize(spec, node.props[k]);
@@ -814,7 +820,9 @@ function elementsCard(n) {
   const shown = () => { const f = q.value.trim().toLowerCase(); return rels.filter((r) => !f || elemText(r, ctx[r.other.id]).includes(f)); };
   const chosen = () => shown().filter((r) => sel.get(key(r)) && !(openForm && groupOf(r) === openForm));
   const footHint = h("span", { class: "muted small" });
+  let actionsBar = null;              // angeheftete Leiste unten; solange ein eigener Begriff in Arbeit ist, ausgeblendet
   const upd = () => {
+    if (actionsBar) actionsBar.style.display = openForm ? "none" : "";  // verdeckte sonst den Bereich „Eigener Begriff“ (kleine Fenster)
     const c = chosen().length;
     footHint.textContent = t("ordnet die ausgewählten Elemente „{b}“ zu bzw. lehnt die Zuordnung ab – legt keinen Begriff an", { b: ttl(n) })
       + (openForm ? " · " + t("Feldgruppe „{g}“ zählt hier nicht mit (eigener Begriff in Arbeit)", { g: openForm }) : "");
@@ -880,6 +888,7 @@ function elementsCard(n) {
       const user = $("user").value.trim();
       if (!user) { toast(t("Bitte oben einen Bearbeiternamen eintragen."), true); $("user").focus(); return; }
       const items = rs.filter((r) => fsel.get(key(r)));
+      if (!de.value.trim() || !items.length) { updForm(); de.focus(); return; }
       let res;
       try { res = await api("api/concept/create", { method: "POST", body: JSON.stringify({ label: de.value.trim(), label_en: en.value.trim() || null,
         broader: bro.checked ? n.id : null, related: rel.checked && relId ? relId : null, user,
@@ -892,7 +901,15 @@ function elementsCard(n) {
       openNode(res.id, { force: true });
     };
     const btnGo = h("button", { type: "button", class: "small primary", onclick: go });
-    const updForm = () => { const c = rs.filter((r) => fsel.get(key(r))).length; btnGo.textContent = t("Begriff anlegen und {n} Elemente zuordnen", { n: c }); btnGo.disabled = !c; };
+    const goHint = h("span", { class: "muted small", role: "status" });
+    const updForm = () => {
+      const c = rs.filter((r) => fsel.get(key(r))).length, leer = !de.value.trim();
+      btnGo.textContent = tp(c, "Begriff anlegen und 1 Element zuordnen", "Begriff anlegen und {n} Elemente zuordnen");
+      btnGo.disabled = !c || leer;
+      goHint.textContent = leer ? t("Bitte eine Benennung angeben.") : !c ? t("Bitte mindestens ein Element anhaken.") : "";
+      de.setAttribute("aria-invalid", String(leer));
+    };
+    de.addEventListener("input", updForm);
     updForm();
     return [h("tr", { class: "el-form" }, h("td", {}), h("td", { colspan: 2 },
       h("div", { class: "el-form-title", text: t("Eigener Begriff für die Feldgruppe „{g}“", { g }) }),
@@ -902,7 +919,7 @@ function elementsCard(n) {
       h("div", {}, h("label", { class: "small" }, bro, " ", t("Oberbegriff „{b}“", { b: ttl(n) }))), h("div", {}, relBox))),
       ...rs.map((r) => { const tr = row(r, fsel, updForm); tr.classList.add("el-in-form"); return tr; }),
       h("tr", { class: "el-form el-form-foot" }, h("td", {}), h("td", { colspan: 2 }, h("div", { class: "el-bar" }, btnGo,
-        h("button", { type: "button", class: "link small", onclick: () => { openForm = null; render(); } }, t("Abbrechen")))))];
+        h("button", { type: "button", class: "link small", onclick: () => { openForm = null; render(); } }, t("Abbrechen")), goHint)))];
   };
   const render = () => {
     const groups = new Map();
@@ -959,7 +976,8 @@ function elementsCard(n) {
       items: rs.map((r) => ({ start: r.curate.start, type: r.curate.type, end: r.curate.end, start_label: r.curate.start_label || null, expected_status: r.props.status })),
       comment: ($("comment") || {}).value || t("Sammelentscheidung Datenelemente → {b} zurückgesetzt", { b: ttl(n) }) }) }); }
     catch (e) { toast(e.message, true); return; }
-    toast(t("{d} zurückgesetzt", { d: res.done }) + (res.failed.length ? t(", {f} nicht möglich (inzwischen geändert?)", { f: res.failed.length }) : ""), res.failed.length > 0);
+    toast(t("{d} zurückgesetzt", { d: res.done }) + (res.failed.length ? t(", {f} nicht möglich (inzwischen geändert?)", { f: res.failed.length }) : "")
+      + zugleichHinweis(res), res.failed.length > 0 || !!zugleichHinweis(res));
     openNode(n.id, { force: true, label: n.type ? null : n.label });
   });
   const doneBox = done.length ? h("details", { class: "el-done" },
@@ -982,7 +1000,7 @@ function elementsCard(n) {
     h("div", { class: "table-wrap" }, h("table", { class: "el-tbl" },
       h("thead", {}, h("tr", {}, h("th", {}), h("th", { text: t("Element") }), h("th", { text: t("Kontext (Nachricht, Feld, Pfad)") }))), tbody))] : null,
     doneBox,
-    rels.length ? h("div", { class: "actions" }, btnOk, btnNo, footHint) : null);
+    rels.length ? (actionsBar = h("div", { class: "actions" }, btnOk, btnNo, footHint)) : null);
   render(); drender();
   const ids = [...new Set([...rels, ...done].map((r) => r.other.id))];
   api(`api/elements/context?${new URLSearchParams(ids.map((x) => ["ids", x]))}`).then((d) => {
@@ -1569,6 +1587,12 @@ async function doLinkAction(action, start, type, end, startLabel, endLabel, forc
     toast(e.message, true); return false;
   }
 }
+// Einzelnes Zurücksetzen: ist das Element zugleich bei einem anderen Begriff bestätigt (z. B. nach „Eigenen Begriff
+// anlegen“), darauf hinweisen – sonst steht es ohne Hinweis bei beiden
+function zugleichHinweis(res) {
+  const z = (res && res.zugleich) || [];
+  return z.length ? " " + t("Achtung: zugleich bestätigt bei {b} – dort ggf. ebenfalls zurücksetzen.", { b: z.map((x) => `„${x.title}“`).join(", ") }) : "";
+}
 async function doRelAction(curate, action, currentStatus) {
   const user = $("user").value.trim();
   if (!user) { toast(t("Bitte oben einen Bearbeiternamen eintragen."), true); $("user").focus(); return; }
@@ -1579,7 +1603,7 @@ async function doRelAction(curate, action, currentStatus) {
   try {
     const res = await api("api/relation/action", { method: "POST", body: JSON.stringify(payload) });
     if (res.node) applyNodeUpdate(res.node);
-    toast(`${REL_ACTION_DE[action]}: ${curate.type} → ${curate.end}`);
+    toast(`${REL_ACTION_DE[action]}: ${curate.type} → ${curate.end}` + zugleichHinweis(res), !!zugleichHinweis(res));
     renderDetail(); loadHistory(n.id);
   } catch (e) { toast(e.message, true); }
 }
@@ -1592,8 +1616,16 @@ function methodInfo(m) { return (relCfg().method_labels || {})[m || "–"] || { 
 function relTitle(rt) { return (relCfg().rel_titles || {})[rt] || (linkTypes()[rt] || {}).title || rt; }
 // Reiter „Ontologie“ und Klassen-Sprünge nur für Domänen mit Ontologie-Curator (domain.yaml ontologie_curator)
 const ontoAn = () => !!(state.config && state.config.domaene && state.config.domaene.ontologie_curator);
+// Zurück zur Knotenansicht nach einem anderen Reiter: hat sich inzwischen etwas geändert (z. B. Sammelentscheidung
+// zurückgenommen, Begriff gelöscht), den Knoten neu laden statt die alte Ansicht zu zeigen
+function nodeWieder() {
+  if (!state.node) return;
+  if (state.nodeVer !== (state.dataVer || 0) && !isDirty()) openNode(state.node.id, { force: true, push: false, label: state.node.type ? null : state.node.label });
+  else renderDetail();
+}
 function setTab(tab) {
   if ((tab === "onto" && !ontoAn()) || (STATIC && ["props", "dec", "src"].includes(tab))) tab = "nodes";
+  if ($(`tab-${tab}`) && $(`tab-${tab}`).hidden && (!state.reiterVerfuegbar || state.reiterVerfuegbar.has(tab))) $(`tab-${tab}`).hidden = false;   // versteckter Reiter: beim Aufruf (Link, Lücke → Knoten) doch zeigen
   state.tab = tab;
   storage("curator.tab", tab);
   applyWinName();                                   // Prüfstand/Metamodell: nicht mehr Ziel von „↗“ aus anderen Fenstern
@@ -1602,12 +1634,12 @@ function setTab(tab) {
   $("prop-form").hidden = tab !== "props";
   $("meta-form").hidden = tab !== "meta";
   $("onto-form").hidden = tab !== "onto";
-  if (tab !== "onto" && state.ontoShown) { state.ontoShown = false; if (state.node) renderDetail(); }
-  if (tab !== "review" && state.reviewShown) { state.reviewShown = false; if (state.node && tab !== "meta") renderDetail(); }
-  if (tab !== "meta" && state.metaShown) { state.metaShown = false; if (state.node) renderDetail(); }
-  if (tab !== "dec" && state.decShown) { state.decShown = false; if (state.node) renderDetail(); }
-  if (tab !== "src" && state.srcShown) { state.srcShown = false; if (state.node) renderDetail(); }
-  if (tab !== "gap" && state.gapShown) { state.gapShown = false; if (state.node) renderDetail(); }
+  if (tab !== "onto" && state.ontoShown) { state.ontoShown = false; nodeWieder(); }
+  if (tab !== "review" && state.reviewShown) { state.reviewShown = false; if (tab !== "meta") nodeWieder(); }
+  if (tab !== "meta" && state.metaShown) { state.metaShown = false; nodeWieder(); }
+  if (tab !== "dec" && state.decShown) { state.decShown = false; nodeWieder(); }
+  if (tab !== "src" && state.srcShown) { state.srcShown = false; nodeWieder(); }
+  if (tab !== "gap" && state.gapShown) { state.gapShown = false; nodeWieder(); }
   $("results").removeAttribute("aria-busy");
   if (tab === "props") searchProposals();
   else if (tab === "review") loadReview();
@@ -2880,7 +2912,7 @@ async function loadDecisions() {
   state.dec = res;
   renderDecisions(state.decCat || "geaendert");
 }
-function decCount(c) { const d = state.dec; return c === "quellen" ? d.quellen.length : c === "sammel" ? (state.batches || { n: 0 }).n
+function decCount(c) { const d = state.dec; return c === "quellen" ? d.quellen.length : c === "sammel" ? ((state.batches || {}).offen ?? (state.batches || { n: 0 }).n)
   : c === "verbesserungen" ? (state.auswertung ? state.auswertung.vorschlaege.length : "…") : d[`n_${c}`]; }
 const BATCH_ACTION = () => ({ "relation:confirm": t("bestätigt"), "relation:reject": t("abgelehnt"), "relation:reset": t("zurückgesetzt"),
   "retype:None": t("Beziehungsart geändert"), "link:add": t("Verknüpfung angelegt") });
@@ -2893,7 +2925,8 @@ async function undoBatch(b) {
   let res;
   try { res = await api("api/batch/undo", { method: "POST", body: JSON.stringify({ batch: b.batch, user, comment: ($("comment") || {}).value || null }) }); }
   catch (e) { toast(e.message, true); return; }
-  toast(t("{d} zurückgenommen", { d: res.done }) + (res.failed.length ? t(", {f} nicht möglich (inzwischen geändert?)", { f: res.failed.length }) : ""), res.failed.length > 0);
+  toast((res.node_deleted ? t("Begriff „{b}“ entfernt, {d} Entscheidungen zurückgenommen", { b: b.node ? b.node.title : res.node_deleted, d: res.done })
+    : t("{d} zurückgenommen", { d: res.done })) + (res.failed.length ? t(", {f} nicht möglich (inzwischen geändert?)", { f: res.failed.length }) : ""), res.failed.length > 0);
   if (res.failed.length) console.warn(res.failed);
   loadDecisions();
 }
@@ -4365,7 +4398,7 @@ async function doProposalAction(it, action) {
   if (n) { payload.view_id = n.id; payload.view_label = n.type ? null : n.label; }
   try {
     const res = await api("api/relation/action", { method: "POST", body: JSON.stringify(payload) });
-    toast(`${REL_ACTION_DE[action]}: ${ttl(it.start)} → ${ttl(it.end)}`);
+    toast(`${REL_ACTION_DE[action]}: ${ttl(it.start)} → ${ttl(it.end)}` + zugleichHinweis(res), !!zugleichHinweis(res));
     if (res.node && n && res.node.id === n.id) { applyNodeUpdate(res.node); renderDetail(); }
     // Liste behalten (Position), Eintrag aktualisieren; passt er nicht mehr zum Statusfilter, ausblenden
     it.status = res.status; it.reviewedBy = user; it.reviewedAt = new Date().toISOString();
@@ -4416,6 +4449,69 @@ async function doProposalRetype(it, to) {
   if (res) searchProposals();
 }
 
+// ------------------------------------------------------------------ Reiter: Reihenfolge, versteckt, Start
+// Voreinstellung aus der Konfiguration (curation_config.json „reiter“, in der Demo demo.yaml lesen.reiter); jeder
+// Nutzer ändert das unter Anzeige → Reiter für sich (localStorage curator.reiter). Was es in dieser Oberfläche gar
+// nicht gibt (Demo ohne Kuration, Ontologie aus), bleibt immer verborgen.
+const REITER = ["nodes", "props", "review", "meta", "onto", "dec", "src", "gap"];
+function initReiter() {
+  state.reiterVerfuegbar = new Set(REITER.filter((r) => $(`tab-${r}`) && !$(`tab-${r}`).hidden));
+  applyReiter();
+}
+function reiterStand() {
+  const cfg = state.config.reiter || {};
+  let mein = {};
+  try { mein = JSON.parse(storage("curator.reiter") || "{}"); } catch { mein = {}; }
+  const folge = [...(mein.reihenfolge || cfg.reihenfolge || REITER)].filter((r) => REITER.includes(r));
+  for (const r of REITER) if (!folge.includes(r)) folge.push(r);
+  const versteckt = (mein.versteckt || cfg.versteckt || []).filter((r) => REITER.includes(r));
+  return { reihenfolge: folge, versteckt, start: cfg.start || "nodes" };
+}
+function applyReiter() {
+  const st = reiterStand(), leiste = $("tab-nodes").parentElement, da = state.reiterVerfuegbar || new Set(REITER);
+  for (const r of st.reihenfolge) { const b = $(`tab-${r}`); if (!b) continue; leiste.append(b); b.hidden = !da.has(r) || st.versteckt.includes(r); }
+  if (![...da].some((r) => !$(`tab-${r}`).hidden)) { const r = st.reihenfolge.find((x) => da.has(x)); if (r) $(`tab-${r}`).hidden = false; }
+}
+function saveReiter(st) {
+  storage("curator.reiter", JSON.stringify({ reihenfolge: st.reihenfolge, versteckt: st.versteckt }));
+  applyReiter();
+  if (state.tab && $(`tab-${state.tab}`)) $(`tab-${state.tab}`).hidden = false;   // der offene Reiter bleibt sichtbar
+}
+function startReiter() {
+  // Reiter beim Start: der eingestellte, sonst der erste sichtbare (wenn „Knoten“ versteckt ist)
+  const st = reiterStand(), da = state.reiterVerfuegbar || new Set(REITER);
+  const sichtbar = st.reihenfolge.filter((r) => da.has(r) && !st.versteckt.includes(r));
+  if (da.has(st.start) && st.start !== "nodes") return st.start;
+  return sichtbar.includes("nodes") || !sichtbar.length ? null : sichtbar[0];
+}
+function reiterTitel(r) { const b = $(`tab-${r}`); return b ? b.textContent.trim() : r; }
+function reiterAbschnitt() {
+  const st = reiterStand(), da = state.reiterVerfuegbar || new Set(REITER);
+  const liste = st.reihenfolge.filter((r) => da.has(r));
+  const zeile = (r, i) => {
+    const cb = h("input", { type: "checkbox", "aria-label": t("Reiter {r} anzeigen", { r: reiterTitel(r) }) });
+    cb.checked = !st.versteckt.includes(r);
+    cb.addEventListener("change", () => {
+      st.versteckt = cb.checked ? st.versteckt.filter((x) => x !== r) : [...st.versteckt, r];
+      if (liste.every((x) => st.versteckt.includes(x))) { st.versteckt = st.versteckt.filter((x) => x !== r); cb.checked = true; toast(t("Mindestens ein Reiter bleibt sichtbar."), true); }
+      saveReiter(st);
+    });
+    const schieben = (d) => {
+      const j = i + d;
+      if (j < 0 || j >= liste.length) return;
+      const neu = [...liste];
+      [neu[i], neu[j]] = [neu[j], neu[i]];
+      st.reihenfolge = [...neu, ...st.reihenfolge.filter((x) => !da.has(x))];
+      saveReiter(st); renderDisplay();
+    };
+    return h("div", { class: "reiter-zeile" }, h("label", {}, cb, reiterTitel(r)),
+      h("button", { type: "button", class: "link small", title: t("nach vorn"), "aria-label": t("{r} nach vorn", { r: reiterTitel(r) }), disabled: i === 0, onclick: () => schieben(-1) }, "↑"),
+      h("button", { type: "button", class: "link small", title: t("nach hinten"), "aria-label": t("{r} nach hinten", { r: reiterTitel(r) }), disabled: i === liste.length - 1, onclick: () => schieben(1) }, "↓"));
+  };
+  return h("div", { class: "disp-sec" }, h("strong", { text: t("Reiter") }),
+    h("span", { class: "muted small", text: t("anzeigen und Reihenfolge – gilt in diesem Browser") }), ...liste.map(zeile));
+}
+
 // ------------------------------------------------------------------ Anzeige-Einstellungen
 function loadDisplay() {
   const def = relCfg().display_defaults || {};
@@ -4455,6 +4551,7 @@ function renderDisplay() {
   max.addEventListener("change", () => { d.max_per_group = Math.max(5, Number(max.value || 50)); saveDisplay(); });
   const types = [...state.seenTypes].sort();
   box.replaceChildren(
+    state.reiterVerfuegbar ? reiterAbschnitt() : null,
     h("div", { class: "disp-sec" }, h("strong", { text: t("Gruppen") }),
       ...groups.map((g) => check(d.groups[g.id] !== false, g.title, (v) => { d.groups[g.id] = v; saveDisplay(); }))),
     h("div", { class: "disp-sec" }, h("strong", { text: t("Zuordnungen (Brücke)") }), sel,
@@ -4468,7 +4565,7 @@ function renderDisplay() {
       ...types.map((rt) => check(!d.hiddenTypes.includes(rt), `${rt} (${relCfg().rel_groups && Object.entries(relCfg().rel_groups).find(([, ts]) => ts.includes(rt))?.[0] || relCfg().default_group || "va"})`,
         (v) => { d.hiddenTypes = v ? d.hiddenTypes.filter((x) => x !== rt) : [...d.hiddenTypes, rt]; saveDisplay(); }))),
     h("div", { class: "disp-sec" }, h("button", { type: "button", class: "small", onclick: () => {
-      storage("curator.display", "{}"); loadDisplay(); renderDisplay(); if (state.node) renderDetail(); } }, t("Voreinstellungen"))));
+      storage("curator.display", "{}"); storage("curator.reiter", "{}"); loadDisplay(); applyReiter(); renderDisplay(); if (state.node) renderDetail(); } }, t("Voreinstellungen"))));
 }
 
 async function loadHistory(id) {
@@ -4651,6 +4748,7 @@ async function init() {
   if (state.config.about && $("about-link")) $("about-link").hidden = false;
   if (state.config.rules_page && $("rules-link")) $("rules-link").hidden = false;
   initSichten();
+  initReiter();
   loadDisplay();
   renderDisplay();
   $("f-herkunft").addEventListener("change", search);
@@ -4736,8 +4834,10 @@ async function init() {
   const nav = (performance.getEntriesByType && performance.getEntriesByType("navigation")[0]) || {};
   const restore = !hs || nav.type === "reload" || nav.type === "back_forward";
   const lastTab = restore ? storage("curator.tab") : null;
-  if (lastTab === "props" || lastTab === "review" || lastTab === "meta" || lastTab === "onto") setTab(lastTab);
+  const erster = startReiter();                        // eingestellter Start-Reiter (z. B. Demo: Lücken)
+  if ((lastTab === "props" || lastTab === "review" || lastTab === "meta" || lastTab === "onto") && !$(`tab-${lastTab}`).hidden) setTab(lastTab);
   else if (hs) storage("curator.tab", "nodes");
+  else if (erster && !ansichtAusHash() && !new URLSearchParams(location.search).get("tab") && !(lastTab && lastTab !== "nodes" && !$(`tab-${lastTab}`).hidden)) zuAnsicht(erster, null, false);
   if (hs) openNode(hs.id, { push: false, label: hs.label });
   const an = ansichtAusHash();                         // Ansicht aus der Adresse (#v=gap&k=suche – auch als Lesezeichen)
   if (an) zuAnsicht(an.tab, an.kat, false);
